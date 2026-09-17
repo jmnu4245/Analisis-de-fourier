@@ -23,7 +23,7 @@ jobs:
       - name: Generar fecha/hora y renombrar PDF
         run: |
           MARCA_TIEMPO=$(date +'%Y-%m-%d_%H-%M')
-          NUEVO_NOMBRE="TOPOAL_${MARCA_TIEMPO}.pdf"
+          NUEVO_NOMBRE="Analisis_fourier_${MARCA_TIEMPO}.pdf"
           mv main.pdf $NUEVO_NOMBRE
           echo "PDF_NAME=$NUEVO_NOMBRE" >> $GITHUB_ENV
           echo "MARCA_TIEMPO=$MARCA_TIEMPO" >> $GITHUB_ENV
