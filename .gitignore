@@ -1,0 +1,13 @@
+*.pdf
+*.aux
+*.log
+*.out
+*.fls
+*.fdb
+*.fdb_latexmk
+*.toc
+*.sh
+*.sz
+*.gz
+*.bbl
+.singularhistory

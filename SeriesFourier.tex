@@ -1,0 +1,82 @@
+\section{Series de Fourier}
+\subsection{Introducción}
+
+\subsubsection{Contexto Histórico}
+\begin{itemize}
+    \item $1750$: D. Bernoulli propone $f(x) = \sum_{n=1}^{\infty} a_n \sin(nx)$ para la ecuación de onda. Intervienen Euler, D'Alembert, Lagrange.
+    \item $\simeq 1800 - 1807$: Aparece la representación $f(x) = \frac{a_0}{2} + \sum_{n=1}^{\infty} (a_n \cos(nx) + b_n \sin(nx))$.
+    \item $1822$: ¿$a_n, b_n$?
+\end{itemize}
+Integrando en un periodo para hallar $a_0$:
+\begin{align*}
+    \int_{-\pi}^{\pi} f(x) dx &= \int_{-\pi}^{\pi} \left[ \frac{a_0}{2} + \sum_{n=1}^{\infty} (a_n \cos(nx) + b_n \sin(nx)) \right] dx \\
+    &= \int_{-\pi}^{\pi} \frac{a_0}{2} dx + 0 = \pi a_0
+\end{align*}
+De manera análoga, multiplicando por $\cos(mx)$ e integrando:
+\begin{align*}
+    \int_{-\pi}^{\pi} f(x) \cos(mx) dx &= \int_{-\pi}^{\pi} \left[ \frac{a_0}{2} + \sum_{n=1}^{\infty} (a_n \cos(nx) + b_n \sin(nx)) \right] \cos(mx) dx \\
+    &= \int_{-\pi}^{\pi} \frac{a_0}{2} \cos(mx) dx \\
+    &\quad + \sum_{n=1}^{\infty} \left( a_n \int_{-\pi}^{\pi} \cos(nx) \cos(mx) dx + b_n \int_{-\pi}^{\pi} \sin(nx) \cos(mx) dx \right) \\
+    &= 0 + a_m \int_{-\pi}^{\pi} \cos^2(mx) dx + 0 \\
+    &= a_m \pi \implies a_m = \frac{1}{\pi} \int_{-\pi}^{\pi} f(x) \cos(mx) dx
+\end{align*}
+
+Se puede desarrollar de forma análoga para $b_n$
+\subsubsection{Funciones Periódicas}
+
+\begin{definicion}{Función Periódica}{func_per}
+$f: \mathbb{R} \to \mathbb{C}$ es periódica si $\exists T > 0$ tal que $f(x) = f(x+T)$ para todo $x \in \mathbb{R}$. En este caso, $T$ es el Periodo de $f$ ($f$ es $T$-periódica).
+\end{definicion}
+
+\begin{nota}{Construcción de funciones periódicas}{constr_per}
+Para construir una función $T$-periódica basta con definir $\tilde{f}: [0, T[ \to \mathbb{C}$ y extenderla:
+$$ f(x) = \tilde{f}(x - kT) \quad \text{si } kT \le x < (k+1)T, \; k \in \mathbb{Z} $$
+También podemos considerar $\tilde{f}: [-T/2, T/2[ \to \mathbb{C}$ y \"copiar\".
+
+\textbf{Ejemplos:}
+\begin{enumerate}
+    \item $f(x) = 1$ para $0 \le x < 1$, y $f(x) = -1$ para $-1 \le x < 0$. ($2$-periódica).
+    \item $f(x) = x$ para $0 \le x < 1$. ($1$-periódica).
+    \item $f(x) = x$ para $-1/2 \le x < 1/2$. ($1$-periódica).
+\end{enumerate}
+\end{nota}
+
+\begin{observacion}{Cambio de Periodo}{cambio_per}
+Pregunta: ¿Puede descomponerse cualquier función periódica en términos de funciones periódicas elementales?
+
+Nota: Supongamos que $f: \mathbb{R} \to \mathbb{C}$ es $T$-periódica (la pienso como $f: [-T/2, T/2[ \to \mathbb{C}$ y extendida periódica). Tomo $L > 0$ y defino $g: [-L/2, L/2[ \to \mathbb{C}$ como $g(x) = f\left(\frac{T}{L}x\right)$.
+$$ -\frac{L}{2} \le x < \frac{L}{2} \implies -\frac{T}{2} \le \frac{T}{L}x < \frac{T}{2} $$
+¡El periodo no es relevante! A partir de ahora todas las funciones serán $2\pi$-periódicas:
+$f: [-\pi, \pi[ \to \mathbb{C}$ o $f: [0, 2\pi[ \to \mathbb{C}$.
+\end{observacion}
+
+\subsubsection{Coeficientes y Series de Fourier}
+
+\begin{definicion}{Coeficientes de Fourier}{coef_fourier}
+Dada $f: \mathbb{R} \to \mathbb{C}$ $2\pi$-periódica, se definen sus coeficientes de Fourier (si las integrales existen):
+\begin{align*}
+    a_n &= \frac{1}{\pi} \int_{-\pi}^{\pi} f(x) \cos(nx) dx \quad n = 0, 1, 2, \dots \\
+    b_n &= \frac{1}{\pi} \int_{-\pi}^{\pi} f(x) \sin(nx) dx \quad n = 1, 2, 3, \dots
+\end{align*}
+\end{definicion}
+
+\begin{nota}{Integración en un periodo}{int_per}
+Si $g: \mathbb{R} \to \mathbb{C}$ es $T$-periódica, entonces $\int_{-T/2}^{T/2} g(x) dx = \int_0^T g(x) dx$ (Para la demostración basta con hacer cambio de variable). En la definición de los coeficientes de Fourier se puede tomar $\int_0^{2\pi}$ o $\int_I$, con $I$ de longitud $2\pi$.
+\end{nota}
+
+\begin{definicion}{Serie de Fourier}{serie_fourier}
+Si $f: \mathbb{R} \to \mathbb{C}$ es $2\pi$-periódica, se define su serie de Fourier (serie formal):
+$$ f \sim \frac{a_0}{2} + \sum_{n=1}^{\infty} \left( a_n \cos(nx) + b_n \sin(nx) \right) $$
+\end{definicion}
+
+\subsubsection{Convergencia}
+
+\begin{nota}{Tipos de Convergencia}{conv}
+En un espacio normado $(V, ||\cdot||) \implies (v_n)_n$ converge a $v$ si $||v_n - v|| \xrightarrow{n \to \infty} 0$.
+
+Para funciones $g_n: \Omega \to \mathbb{C}$:
+\begin{itemize}
+    \item \textbf{Conv puntual:} $|g_n(x) - g(x)| \to 0 \quad \forall x \in \Omega$
+    \item \textbf{Conv unif:} $\sup_{x \in \Omega} |g_n(x) - g(x)| \to 0 \implies$ Intercambiar (límites, integrales, derivadas).
+\end{itemize}
+\end{nota}
