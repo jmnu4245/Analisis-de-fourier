@@ -129,12 +129,10 @@ Desarrollando la expresión para cada rango de $n$:
     \end{equation*}
 \end{itemize}
 
-\begin{proposicion}{Forma general unificada}{forma_general}
 Los coeficientes complejos quedan de la forma general unificada:
 \begin{equation*}
     \hat{f}(n) = \frac{1}{2\pi} \int_{-\pi}^{\pi} f(t) e^{-int} dt, \quad \forall n \in \mathbb{Z}
 \end{equation*}
-\end{proposicion}
 
 \begin{observacion}{Recuperación de coeficientes reales}{recuperacion_coeficientes}
 Si conocemos la sucesión $(\hat{f}(n))_{n \in \mathbb{Z}}$, ¿cómo encontramos $a_n$ y $b_n$?  
@@ -255,4 +253,157 @@ Para toda $f \in C(\mathbb{T})$ y todo $\epsilon > 0$, existe un $P \in \mathcal
     \sup_{t \in [-\pi, \pi]} |P(t) - f(t)| \le \epsilon
 \end{equation*}
 Es decir, $\|f - P\|_\infty \le \epsilon$.
+\end{nota}
+\begin{definicion}{El espacio $L_p(\mathbb{T})$}{espacio_lp}
+Para $1 \le p < \infty$, decimos que una función $2\pi$-periódica $f:\mathbb{R} \to \mathbb{C}$ pertenece al espacio $L_p(\mathbb{T})$ si es medible en el sentido de Lebesgue y la integral de su valor absoluto a la potencia $p$ es finita. Formalmente:
+\begin{equation*}
+    f \in L_p(\mathbb{T}) \iff \text{medible Lebesgue y } \underbrace{\left( \frac{1}{2\pi} \int_{-\pi}^{\pi} |f(t)|^p dt \right)^{1/p}}_{\|f\|_p} < \infty
+\end{equation*}
+\end{definicion}
+
+\begin{nota}{Propiedad en casi todas partes (c.p.p.)}{cpp}
+Decimos que una propiedad matemática se cumple \textbf{casi por todas partes} (c.p.p. o \textit{a.e.} en inglés) si el conjunto de puntos donde no se verifica es tan insignificante que tiene medida de Lebesgue igual a cero.
+\end{nota}
+
+\begin{observacion}{Clases de equivalencia}{clases_eq}
+En la práctica funcional, no distinguimos entre funciones que difieren en un conjunto de medida cero. Trabajamos sistemáticamente con clases de equivalencia, asumiendo que $f = g$ si coinciden casi por todas partes ($f \sim g$).
+\end{observacion}
+
+\begin{teorema}{Desigualdad de Hölder}{holder}
+Imaginemos dos funciones $f \in L_r(\mathbb{T})$ y $g \in L_{r'}(\mathbb{T})$, donde los exponentes son conjugados (cumplen la relación $\frac{1}{r} + \frac{1}{r'} = 1$). Entonces, su producto $f \cdot g$ siempre será integrable ($L_1$), y su norma quedará acotada por el producto de sus normas respectivas:
+\begin{equation*}
+    \frac{1}{2\pi} \int_{-\pi}^{\pi} |f(t)g(t)| dt \le \left( \frac{1}{2\pi} \int_{-\pi}^{\pi} |f(t)|^r dt \right)^{1/r} \left( \frac{1}{2\pi} \int_{-\pi}^{\pi} |g(t)|^{r'} dt \right)^{1/r'}
+\end{equation*}
+De forma más compacta, esto se escribe como $\|fg\|_1 \le \|f\|_r \cdot \|g\|_{r'}$.
+\end{teorema}
+
+\begin{proposicion}{Inclusión de espacios $L_p$ y densidad}{incl_dens_lp}
+Se cumplen las siguientes propiedades fundamentales para los espacios $L_p(\mathbb{T})$:
+\begin{enumerate}
+    \item \textbf{Inclusión de espacios:} Si un exponente es estrictamente menor que otro ($p < q$), el espacio $L_q$ está totalmente contenido en $L_p$. Es decir, si $\|f\|_q < \infty$, entonces $\|f\|_p < \infty$.
+    
+    \item \textbf{Caso del límite infinito:} Si asumimos que la función es continua en el toro ($f \in C(\mathbb{T})$) y por tanto acotada, su norma suprema domina a todas las demás normas $p$:
+    \begin{equation*}
+        \left( \frac{1}{2\pi} \int_{-\pi}^{\pi} |f(t)|^p dt \right)^{1/p} \le \left( \|f\|_\infty^p \frac{1}{2\pi} \int_{-\pi}^{\pi} dt \right)^{1/p} = \|f\|_\infty
+    \end{equation*}
+    
+    \item \textbf{Densidad:} Las funciones continuas $C(\mathbb{T})$ forman un conjunto denso en $L_1(\mathbb{T})$ (y, en general, en cualquier $L_p(\mathbb{T})$). Dicho de otra manera: dada una $f \in L_1$ y cualquier margen de error $\varepsilon > 0$, siempre podremos encontrar una función continua $g \in C(\mathbb{T})$ tal que $\|f - g\|_1 < \varepsilon$. 
+    
+    Como conclusión general de este apartado, la jerarquía de densidades es $\mathcal{P}(\mathbb{T}) \subseteq C(\mathbb{T}) \subseteq L_1(\mathbb{T})$.
+\end{enumerate}
+\end{proposicion}
+
+\begin{proof}
+\textbf{Demostración de (1):} Expresamos la integral de $|f|^p$ como el producto $|f|^p \cdot 1$. Aplicamos la desigualdad de Hölder con el exponente $r = q/p$ y su respectivo conjugado $r'$:
+\begin{align*}
+    \frac{1}{2\pi} \int_{-\pi}^{\pi} |f(t)|^p dt &= \frac{1}{2\pi} \int_{-\pi}^{\pi} |f(t)|^p \cdot 1 dt \\
+    &\le \left( \frac{1}{2\pi} \int_{-\pi}^{\pi} \left(|f(t)|^p\right)^r dt \right)^{1/r} \cdot \left( \frac{1}{2\pi} \int_{-\pi}^{\pi} 1^{r'} dt \right)^{1/r'} \\
+    &= \left( \frac{1}{2\pi} \int_{-\pi}^{\pi} |f(t)|^q dt \right)^{p/q} \cdot 1
+\end{align*}
+Elevando ambos lados a la potencia $1/p$, llegamos a la acotación directa $\|f\|_p \le \|f\|_q$.
+
+\medskip
+\textbf{Demostración de (3) (intuitiva en 3 pasos):}
+\begin{itemize}
+    \item \textbf{Caso 1:} Si $f$ es una función indicadora estricta $f = \chi_{[a,b]}$, construimos un trapecio continuo $g_\delta$ que valga $1$ en $[a,b]$ y caiga a $0$ de manera lineal a lo largo de un pequeño margen $\delta$. El área de discrepancia será $\|f - g_\delta\|_1 \le \frac{\delta}{\pi}$. Nos basta con tomar $\delta = \pi \varepsilon$.
+    \item \textbf{Caso 2:} Si $f$ es una función simple (combinación lineal finita de indicadores sobre intervalos disjuntos), aplicamos la técnica del trapecio a cada escalón.
+    \item \textbf{Caso 3:} Si $f \in L_1$ es cualquier función integrable, siempre se puede aproximar primero por una función simple $s$ tal que $\|f - s\|_1 < \varepsilon/2$. Por el Caso 2, aproximamos esa $s$ con una continua $g$ a distancia $\varepsilon/2$. Por la desigualdad triangular, el error total es menor a $\varepsilon$.
+\end{itemize}
+\end{proof}
+
+\begin{proposicion}{Coeficientes de un polinomio trigonométrico}{coef_pol_trig}
+Dado un polinomio trigonométrico $P(t) = \sum_{k=-M}^M c_k e^{ikt}$, sus coeficientes de Fourier $\hat{P}(n)$ coinciden de forma exacta con los propios coeficientes $c_n$.
+
+\textit{Demostración:} Al tratarse de una suma finita, la linealidad de la integral nos permite intercambiar sin problemas el sumatorio y la integración:
+\begin{equation*}
+    \hat{P}(n) = \frac{1}{2\pi} \int_{-\pi}^{\pi} \left( \sum_{k=-M}^M c_k e^{ikt} \right) e^{-int} dt = \sum_{k=-M}^M c_k \left( \frac{1}{2\pi} \int_{-\pi}^{\pi} e^{i(k-n)t} dt \right)
+\end{equation*}
+Por la ortogonalidad natural del sistema, la integral vale $1$ si $k=n$ y $0$ en el resto de casos, colapsando toda la suma a:
+\begin{equation*}
+    \hat{P}(n) = \begin{cases} c_n & \text{si } -M \le n \le M \\ 0 & \text{en cualquier otro caso} \end{cases}
+\end{equation*}
+\end{proposicion}
+
+\begin{observacion}{Recuperación mutua de coeficientes reales y complejos}{rel_coef_real_comp}
+Si tienes entre manos los coeficientes complejos $(\hat{f}(n))_{n \in \mathbb{Z}}$, puedes reconstruir inmediatamente los coeficientes de la serie real clásica ($\frac{a_0}{2} + \sum [a_n \cos(nt) + b_n \sin(nt)]$) mediante estas tres expresiones:
+\begin{align*}
+    a_0 &= 2\hat{f}(0) \\
+    a_n &= \hat{f}(n) + \hat{f}(-n) \\
+    b_n &= i(\hat{f}(n) - \hat{f}(-n))
+\end{align*}
+\end{observacion}
+
+\begin{nota}{Ejemplo práctico: Coeficientes de la función signo}{ejemplo_signo}
+Vamos a calcular explícitamente los coeficientes de Fourier $\hat{f}(n)$ para la función signo en el toro, definida como $f(t) = 1$ para $t \in [0, \pi)$ y $f(t) = -1$ para $t \in [-\pi, 0)$.
+
+Separamos la integral de evaluación en los dos hemiciclos:
+\begin{equation*}
+    \hat{f}(n) = \frac{1}{2\pi} \int_{-\pi}^{0} (-1) e^{-int} dt + \frac{1}{2\pi} \int_{0}^{\pi} (1) e^{-int} dt
+\end{equation*}
+
+Evaluando el término central nulo ($n = 0$), las áreas se anulan perfectamente:
+\begin{equation*}
+    \hat{f}(0) = -\frac{\pi}{2\pi} + \frac{\pi}{2\pi} = 0
+\end{equation*}
+
+Para cualquier frecuencia no nula ($n \ne 0$), integramos directamente la exponencial:
+\begin{align*}
+    \hat{f}(n) &= -\frac{1}{2\pi} \left[ \frac{e^{-int}}{-in} \right]_{-\pi}^{0} + \frac{1}{2\pi} \left[ \frac{e^{-int}}{-in} \right]_{0}^{\pi} \\
+    &= \frac{1}{2\pi i n} \left( 1 - e^{in\pi} \right) - \frac{1}{2\pi i n} \left( e^{-in\pi} - 1 \right)
+\end{align*}
+
+Sabiendo que la identidad de Euler nos dicta que $e^{-in\pi} = e^{in\pi} = (-1)^n$, podemos agrupar ambos corchetes:
+\begin{equation*}
+    \hat{f}(n) = \frac{1}{\pi i n} \left[ 1 - (-1)^n \right] = \begin{cases} 
+        0 & \text{si } n \text{ es par } (n=2k) \\ 
+        -\frac{2i}{\pi n} & \text{si } n \text{ es impar } (n=2k+1) 
+    \end{cases}
+\end{equation*}
+Esto nos genera una serie puramente impar, expresada como:
+\begin{equation*}
+    S(f)(t) = \sum_{k \in \mathbb{Z}} \frac{-2i}{(2k+1)\pi} e^{i(2k+1)t}
+\end{equation*}
+\end{nota}
+
+\begin{definicion}{El Coeficiente y la Serie de Fourier}{def_fourier_formal}
+Para toda función integrable $f \in L_1(\mathbb{T})$, definimos el \textbf{coeficiente de Fourier $n$-ésimo} (con $n \in \mathbb{Z}$) de la siguiente manera:
+\begin{equation*}
+    \hat{f}(n) = \frac{1}{2\pi} \int_{-\pi}^{\pi} f(t) e^{-int} dt
+\end{equation*}
+Esta operación está siempre bien definida porque la acotación modular $|f(t)e^{-int}| = |f(t)|$ garantiza que el integrando permanece dentro de las fronteras de $L_1$, produciendo que $\hat{f}(n) \in \mathbb{C}$ exista de manera finita.
+
+Con la colección de estos coeficientes generamos la \textbf{Serie de Fourier} asociada a $f$:
+\begin{equation*}
+    f(t) \sim \sum_{n=-\infty}^{\infty} \hat{f}(n) e^{int}
+\end{equation*}
+Para poder manejar y analizar esta serie infinita definimos la \textbf{suma parcial n-ésima}, $S(f,n)(t) = \sum_{k=-n}^{n} \hat{f}(k) e^{ikt}$, que resulta ser un polinomio trigonométrico que mapea $[-\pi,\pi] \to \mathbb{C}$.
+\end{definicion}
+
+\begin{observacion}{Dudas sobre la convergencia}{conv_uniforme_fourier}
+\textbf{Pregunta clave:} ¿Podemos asumir que la suma parcial $S(f,n)$ acabará convergiendo (y además uniformemente) de regreso hacia nuestra $f$ original? 
+
+La respuesta es un rotundo \textbf{no}. La razón profunda es topológica: si el límite uniforme de los polinomios trigonométricos $S(f,n)$ existiese siempre, forzosamente daría a luz una función continua. Sin embargo, el espacio $L_1(\mathbb{T})$ está completamente repleto de funciones discontinuas, por lo que la convergencia uniforme general es imposible de garantizar sin hipótesis de regularidad añadidas.
+\end{observacion}
+
+\begin{nota}{Ortogonalidad de la base exponencial}{ejemplo_base_exp}
+Para ver cómo funciona la maquinaria sobre sus propios cimientos, analicemos la función base $\phi_m(t) = e^{imt}$. Su coeficiente de Fourier $\hat{\phi}_m(n)$ evaluará la presencia de la frecuencia $n$ en la frecuencia $m$:
+\begin{equation*}
+    \hat{\phi}_m(n) = \frac{1}{2\pi} \int_{-\pi}^{\pi} e^{imt} e^{-int} dt = \frac{1}{2\pi} \int_{-\pi}^{\pi} e^{i(m-n)t} dt
+\end{equation*}
+
+\begin{itemize}
+    \item \textbf{Si $m = n$:} la integral colapsa a la unidad básica $\frac{1}{2\pi} \int_{-\pi}^{\pi} e^0 dt = 1$.
+    \item \textbf{Si $m \ne n$:} llamando a su diferencia no nula $k = m-n$, aplicamos la primitiva:
+    \begin{equation*}
+        \hat{\phi}_m(n) = \frac{1}{2\pi i k} \left[ e^{ikt} \right]_{-\pi}^{\pi} = \frac{1}{2\pi i k} \left( e^{ik\pi} - e^{-ik\pi} \right) = 0
+    \end{equation*}
+\end{itemize}
+
+El resultado es la clásica Delta de Kronecker, demostrando que las funciones armónicas filtran sus frecuencias de manera ortonormal:
+\begin{equation*}
+    \hat{\phi}_m(n) = \begin{cases} 
+        1 & \text{si } n=m \\ 
+        0 & \text{si } n \ne m 
+    \end{cases}
+\end{equation*}
 \end{nota}
