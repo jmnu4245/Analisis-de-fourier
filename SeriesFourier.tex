@@ -22,7 +22,7 @@ De manera análoga, multiplicando por $\cos(mx)$ e integrando:
 \end{align*}
 
 Se puede desarrollar de forma análoga para $b_n$
-\subsubsection{Funciones Periódicas}
+\subsection{Funciones Periódicas}
 
 \begin{definicion}{Función Periódica}{func_per}
 $f: \mathbb{R} \to \mathbb{C}$ es periódica si $\exists T > 0$ tal que $f(x) = f(x+T)$ para todo $x \in \mathbb{R}$. En este caso, $T$ es el Periodo de $f$ ($f$ es $T$-periódica).
@@ -50,7 +50,7 @@ $$ -\frac{L}{2} \le x < \frac{L}{2} \implies -\frac{T}{2} \le \frac{T}{L}x < \fr
 $f: [-\pi, \pi[ \to \mathbb{C}$ o $f: [0, 2\pi[ \to \mathbb{C}$.
 \end{observacion}
 
-\subsubsection{Coeficientes y Series de Fourier}
+\subsection{Coeficientes y Series de Fourier}
 
 \begin{definicion}{Coeficientes de Fourier}{coef_fourier}
 Dada $f: \mathbb{R} \to \mathbb{C}$ $2\pi$-periódica, se definen sus coeficientes de Fourier (si las integrales existen):
@@ -79,4 +79,180 @@ Para funciones $g_n: \Omega \to \mathbb{C}$:
     \item \textbf{Conv puntual:} $|g_n(x) - g(x)| \to 0 \quad \forall x \in \Omega$
     \item \textbf{Conv unif:} $\sup_{x \in \Omega} |g_n(x) - g(x)| \to 0 \implies$ Intercambiar (límites, integrales, derivadas).
 \end{itemize}
+\end{nota}
+\subsection{Forma compleja de la serie de Fourier}
+
+A partir de las identidades de Euler:
+\begin{equation*}
+    \cos(nt) = \frac{e^{int} + e^{-int}}{2}, \quad \sin(nt) = \frac{e^{int} - e^{-int}}{2i} = -i \frac{e^{int} - e^{-int}}{2}
+\end{equation*}
+
+Entonces la serie se desarrolla como:
+\begin{align*}
+    \frac{a_0}{2} + \sum_{n=1}^{\infty} (a_n \cos(nt) + b_n \sin(nt)) &= \frac{a_0}{2} + \sum_{n=1}^{\infty} \left( \frac{a_n}{2} e^{int} + \frac{a_n}{2} e^{-int} - \frac{b_n i}{2} e^{int} + \frac{b_n i}{2} e^{-int} \right) \\
+    &= \frac{a_0}{2} + \sum_{n=1}^{\infty} \frac{a_n - b_n i}{2} e^{int} + \sum_{n=1}^{\infty} \frac{a_n + b_n i}{2} e^{-int}
+\end{align*}
+
+Para el último sumatorio, aplicando el cambio de variable $-n=k$, se obtiene $\sum_{-\infty}^{-1} \frac{a_{-k} + b_{-k}i}{2} e^{ikt}$.
+
+\begin{nota}{Notación}{notacion_coeficientes}
+Se definen los coeficientes complejos de la siguiente manera:
+\begin{itemize}
+    \item Cuando $n = 0$: $\hat{f}(0) = \frac{a_0}{2}$
+    \item Cuando $n \ge 1$: $\hat{f}(n) = \frac{a_n - i b_n}{2}$
+    \item Cuando $n \le -1$: $\hat{f}(n) = \frac{a_{-n} + i b_{-n}}{2}$
+\end{itemize}
+\end{nota}
+
+Entonces, la fórmula compleja de la serie de Fourier queda expresada como:
+\begin{equation*}
+    f(t) \sim \sum_{n=-\infty}^{\infty} \hat{f}(n) e^{int}
+\end{equation*}
+
+\subsubsection{Coeficientes de la forma compleja}
+
+Desarrollando la expresión para cada rango de $n$:
+\begin{itemize}
+    \item Para $n = 0$:
+    \begin{equation*}
+        \hat{f}(0) = \frac{a_0}{2} = \frac{1}{2\pi} \int_{-\pi}^{\pi} f(t) dt
+    \end{equation*}
+    \item Para $n \ge 1$:
+    \begin{align*}
+        \hat{f}(n) &= \frac{1}{2}(a_n - ib_n) = \frac{1}{2\pi} \int_{-\pi}^{\pi} f(t) (\cos(nt) - i \sin(nt)) dt \\
+        &= \frac{1}{2\pi} \int_{-\pi}^{\pi} f(t) (\overline{\cos(nt) + i \sin(nt)}) dt \\
+        &= \frac{1}{2\pi} \int_{-\pi}^{\pi} f(t) \overline{e^{int}} dt = \frac{1}{2\pi} \int_{-\pi}^{\pi} f(t) e^{-int} dt
+    \end{align*}
+    \item Para $n \le -1$:
+    \begin{equation*}
+        \hat{f}(n) = \frac{1}{2}(a_{-n} + i b_{-n}) = \frac{1}{2\pi} \int_{-\pi}^{\pi} f(t) (\cos(nt) + i \sin(nt)) dt = \frac{1}{2\pi} \int_{-\pi}^{\pi} f(t) e^{-int} dt
+    \end{equation*}
+\end{itemize}
+
+\begin{proposicion}{Forma general unificada}{forma_general}
+Los coeficientes complejos quedan de la forma general unificada:
+\begin{equation*}
+    \hat{f}(n) = \frac{1}{2\pi} \int_{-\pi}^{\pi} f(t) e^{-int} dt, \quad \forall n \in \mathbb{Z}
+\end{equation*}
+\end{proposicion}
+
+\begin{observacion}{Recuperación de coeficientes reales}{recuperacion_coeficientes}
+Si conocemos la sucesión $(\hat{f}(n))_{n \in \mathbb{Z}}$, ¿cómo encontramos $a_n$ y $b_n$?  
+
+Sabemos que $a_0 = 2\hat{f}(0)$. Despejando en las ecuaciones para $n \ge 1$, obtenemos:
+\begin{align*}
+    a_n &= \hat{f}(n) + \hat{f}(-n) \\
+    b_n &= i(\hat{f}(n) - \hat{f}(-n))
+\end{align*}
+\end{observacion}
+
+\subsection{El grupo topológico $\mathbb{T}$ y el espacio $C(\mathbb{T})$}
+
+\begin{definicion}{El toro $\mathbb{T}$}{toro}
+Se define el toro como $\mathbb{T} = \{z \in \mathbb{C} : |z|=1\} = \partial \mathbb{D}$.
+\end{definicion}
+
+\begin{observacion}{Propiedades de $\mathbb{T}$}{prop_toro}
+El toro unidimensional $\mathbb{T} = \{z \in \mathbb{C} : |z|=1\} = \partial\mathbb{D}$ cumple las siguientes propiedades fundamentales:
+\begin{enumerate}
+    \item Como espacio topológico, es un subconjunto cerrado y acotado dentro de $\mathbb{C}$. Por tanto, es un espacio compacto.
+    \item Tiene estructura de \textbf{grupo abeliano} bajo la multiplicación de números complejos. Es decir, para cualesquiera $z_1, z_2 \in \mathbb{T}$, se cumple que $|z_1 \cdot z_2| = |z_1| \cdot |z_2| = 1 \cdot 1 = 1$, por lo que $z_1 \cdot z_2 \in \mathbb{T}$, además $z_1^{-1} \in \mathbb{T}$ y el elemento neutro es $1 \in \mathbb{T}$.
+\end{enumerate}
+\end{observacion}
+
+\begin{nota}{El homomorfismo $\Phi$ e isomorfismo con $\mathbb{R} / 2\pi\mathbb{Z}$}{homomorfismo_toro}
+Considérese la aplicación $\Phi: \mathbb{R} \to \mathbb{T}$ definida como $\Phi(t) = e^{it}$. Esta función cumple lo siguiente:
+\begin{enumerate}
+    \item \textbf{Es un homomorfismo de grupos:} Para cualesquiera $t_1, t_2 \in \mathbb{R}$, la exponencial compleja verifica que:
+    \begin{equation*}
+        \Phi(t_1 + t_2) = e^{i(t_1+t_2)} = e^{it_1}e^{it_2} = \Phi(t_1)\Phi(t_2)
+    \end{equation*}
+    \item \textbf{Es sobreyectivo:} Para todo $z \in \mathbb{T}$, existe al menos un $t \in \mathbb{R}$ tal que $z = e^{it}$ (basta con tomar $t = \arg(z)$).
+    \item \textbf{Núcleo de la aplicación:} El núcleo (o \textit{ker}) está formado por todos los valores de $t$ que se aplican en el elemento neutro de $\mathbb{T}$ (que es el $1$):
+    \begin{equation*}
+        \ker \Phi = \{t \in \mathbb{R} : e^{it} = 1\} = \{2\pi k : k \in \mathbb{Z}\} = 2\pi\mathbb{Z}
+    \end{equation*}
+\end{enumerate}
+Por el Primer Teorema de Isomorfía de grupos, al ser $\Phi$ un homomorfismo exhaustivo, el dominio cocientado por el núcleo es isomorfo a la imagen. Entonces:
+\begin{equation*}
+    \mathbb{T} \cong \mathbb{R} / 2\pi\mathbb{Z}
+\end{equation*}
+Como consecuencia directa de este isomorfismo, todo elemento del toro puede representarse de forma única en un periodo; es decir, para todo $z \in \mathbb{T}$, existe un único $t \in [-\pi, \pi[$ tal que $z = e^{it}$.
+\end{nota}
+
+\begin{nota}{Funciones en el Toro}{func_toro}
+Supongamos que tenemos $f:\mathbb{T} \to \mathbb{C}$ y definimos $g:\mathbb{R} \to \mathbb{C}$ como $g(t) = f(e^{it})$. La función $g$ es $2\pi$-periódica.
+
+Inversamente, si $g:\mathbb{R} \to \mathbb{C}$ es $2\pi$-periódica, se puede definir $f(e^{it}) = g(t)$ con $f:\mathbb{T} \to \mathbb{C}$.
+
+Además, $f$ es continua si y solo si $g$ es continua. De igual forma, $f$ es medible si y solo si $g$ es medible.
+
+A partir de aquí, utilizaremos la notación $f(z) = f(e^{it}) = f(t)$ indistintamente para $z \in \mathbb{T}$, $t \in [-\pi,\pi[$.
+\end{nota}
+
+\begin{definicion}{El espacio $C(\mathbb{T})$}{espacio_ct}
+Se define el espacio de funciones continuas sobre el toro como $C(\mathbb{T}) = \{f:\mathbb{T} \to \mathbb{C} \mid f \text{ continua}\}$.
+
+Esto es equivalente a $\{f:[-\pi,\pi] \to \mathbb{C} \mid f(\pi)=f(-\pi) \text{ y continua}\}$ y a $\{f:\mathbb{R} \to \mathbb{C} \mid 2\pi\text{-periódica y continua}\}$.
+
+Además, dotado de la norma del supremo $\|f\|_\infty = \sup_{z \in \mathbb{T}} |f(z)| = \sup_{t \in [-\pi,\pi[} |f(t)|$, el espacio $(C(\mathbb{T}), \|\cdot\|_\infty)$ es un espacio vectorial normado.
+\end{definicion}
+
+\subsection{Polinomios Trigonométricos y Densidad}
+
+\begin{definicion}{Polinomio trigonométrico}{pol_trig}
+Un polinomio trigonométrico es una función de la forma:
+\begin{equation*}
+    f(t) = \sum_{n=M}^N c_n e^{int} = \frac{a_0}{2} + \sum_{n=1}^{\max(N,M)} (a_n \cos(nt) + b_n \sin(nt))
+\end{equation*}
+Denotamos al conjunto de polinomios trigonométricos como $\mathcal{P}(\mathbb{T})$.
+\end{definicion}
+
+\begin{observacion}{Recordatorio de Topología y Densidad}{recordatorio_densidad}
+Supongamos un espacio topológico $X$, con $A, B \subseteq X$.
+\begin{itemize}
+    \item $A$ es denso $\iff \bar{A} = X$.
+    \item Si $X$ es normado, $A$ es denso $\iff$ Fijado $x \in X, \forall \epsilon > 0 \ \exists y \in A \text{ tq } \|x - y\| < \epsilon$.
+    \item Si $A$ es denso en $B$ y $B$ es denso en $C \implies A$ es denso en $C$.
+    \item Si $A$ es denso en $C$ y $A \subseteq B \subseteq C \implies B$ es denso en $C$.
+\end{itemize}
+
+Si $C(K) = \{f: K \to \mathbb{C} \mid \text{continua}\}$, un subconjunto $A \subseteq C(K)$ cumple:
+\begin{enumerate}
+    \item $f_1, f_2 \in A \implies f_1 + f_2 \in A$
+    \item $f_1, f_2 \in A \implies f_1 \cdot f_2 \in A$
+\end{enumerate}
+Entonces $A$ forma una \textbf{subálgebra}. Si además se cumple que:
+\begin{enumerate}
+    \setcounter{enumi}{2}
+    \item $f \in A \implies \bar{f} \in A$
+\end{enumerate}
+Entonces $A$ es denso en $C(K)$.
+\end{observacion}
+
+\begin{proposicion}{Densidad en $C(\mathbb{T})$}{densidad_ct}
+En nuestro caso $C(K) = C(\mathbb{T})$.
+
+Si $f, g$ son polinomios trigonométricos:
+\begin{align*}
+    f(t) &= \sum_{n=-N_1}^{N_1} c_n e^{int} \\
+    g(t) &= \sum_{n=-N_2}^{N_2} d_n e^{int}
+\end{align*}
+Se cumplen de manera directa las siguientes propiedades:
+\begin{enumerate}
+    \item $f + g \in \mathcal{P}(\mathbb{T})$
+    \item $f \cdot g \in \mathcal{P}(\mathbb{T})$
+    \item $\bar{f} = \sum_{n=-N_1}^{N_1} \overline{c_n e^{int}} = \sum_{n=-N_1}^{N_1} \overline{c_n} \cdot e^{-int} \in \mathcal{P}(\mathbb{T})$
+\end{enumerate}
+Por tanto, $\mathcal{P}(\mathbb{T})$ es denso en $C(\mathbb{T})$.
+\end{proposicion}
+
+\begin{nota}{Interpretación del Teorema de Densidad}{interpretacion_prop}
+El resultado de la proposición anterior quiere decir:
+
+Para toda $f \in C(\mathbb{T})$ y todo $\epsilon > 0$, existe un $P \in \mathcal{P}(\mathbb{T})$ (polinomio trigonométrico) tal que:
+\begin{equation*}
+    \sup_{t \in [-\pi, \pi]} |P(t) - f(t)| \le \epsilon
+\end{equation*}
+Es decir, $\|f - P\|_\infty \le \epsilon$.
 \end{nota}
