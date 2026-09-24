@@ -1,4 +1,5 @@
-\section{Series de Fourier}
+
+\portadaseccion{Series de Fourier}
 \subsection{Introducción}
 
 \subsubsection{Contexto Histórico}
@@ -294,7 +295,7 @@ Se cumplen las siguientes propiedades fundamentales para los espacios $L_p(\math
 \end{proposicion}
 
 \begin{proof}
-\textbf{Demostración de (1):} Expresamos la integral de $|f|^p$ como el producto $|f|^p \cdot 1$. Aplicamos la desigualdad de Hölder con el exponente $r = q/p$ y su respectivo conjugado $r'$:
+\textbf{(1):} Expresamos la integral de $|f|^p$ como el producto $|f|^p \cdot 1$. Aplicamos la desigualdad de Hölder con el exponente $r = q/p$ y su respectivo conjugado $r'$:
 \begin{align*}
     \frac{1}{2\pi} \int_{-\pi}^{\pi} |f(t)|^p dt &= \frac{1}{2\pi} \int_{-\pi}^{\pi} |f(t)|^p \cdot 1 dt \\
     &\le \left( \frac{1}{2\pi} \int_{-\pi}^{\pi} \left(|f(t)|^p\right)^r dt \right)^{1/r} \cdot \left( \frac{1}{2\pi} \int_{-\pi}^{\pi} 1^{r'} dt \right)^{1/r'} \\
@@ -303,7 +304,7 @@ Se cumplen las siguientes propiedades fundamentales para los espacios $L_p(\math
 Elevando ambos lados a la potencia $1/p$, llegamos a la acotación directa $\|f\|_p \le \|f\|_q$.
 
 \medskip
-\textbf{Demostración de (3) (intuitiva en 3 pasos):}
+\textbf{(3) :}
 \begin{itemize}
     \item \textbf{Caso 1:} Si $f$ es una función indicadora estricta $f = \chi_{[a,b]}$, construimos un trapecio continuo $g_\delta$ que valga $1$ en $[a,b]$ y caiga a $0$ de manera lineal a lo largo de un pequeño margen $\delta$. El área de discrepancia será $\|f - g_\delta\|_1 \le \frac{\delta}{\pi}$. Nos basta con tomar $\delta = \pi \varepsilon$.
     \item \textbf{Caso 2:} Si $f$ es una función simple (combinación lineal finita de indicadores sobre intervalos disjuntos), aplicamos la técnica del trapecio a cada escalón.
@@ -407,3 +408,252 @@ El resultado es la clásica Delta de Kronecker, demostrando que las funciones ar
     \end{cases}
 \end{equation*}
 \end{nota}
+
+\subsection{Series y Coeficientes de Fourier}
+
+\begin{ejemplo}{Función signo / Onda cuadrada}{onda_cuadrada}
+Consideremos la función periódica definida en $(-\pi, \pi)$ mediante:
+\[
+f(x) = \begin{cases} 
+-1, & \text{si } -\pi < x < 0, \\ 
+\phantom{-}1, & \text{si } 0 < x < \pi. 
+\end{cases}
+\]
+
+\begin{center}
+\begin{tikzpicture}[scale=1.1, >=latex]
+    % Rejilla suave de fondo (opcional, acorde al estilo)
+    \draw[very thin, gray!20, step=0.5] (-3.2,-1.6) grid (3.2,1.6);
+
+    % Ejes cartesianos
+    \draw[->, thick, gray!70!black] (-3.3, 0) -- (3.3, 0) node[right, black] {$x$};
+    \draw[->, thick, gray!70!black] (0, -1.6) -- (0, 1.6) node[above, black] {$y$};
+
+    % Marcas (ticks) y líneas discontinuas en los periodos
+    \draw[dashed, gray!60] (-1.57, 0) -- (-1.57, -1);
+    \draw[dashed, gray!60] (1.57, 0) -- (1.57, 1);
+    \node[below=2pt, font=\small] at (-1.57, 0) {$-\pi$};
+    \node[below=2pt, font=\small] at (1.57, 0) {$\pi$};
+
+    % Marcas en el eje Y
+    \draw[gray!60] (-0.08, 1) -- (0.08, 1) node[left=8pt, font=\small, black] {$1$};
+    \draw[gray!60] (-0.08, -1) -- (0.08, -1) node[left=8pt, font=\small, black] {$-1$};
+
+    % Trazos de la función
+    \draw[very thick, teal!90!black] (-1.57, -1) -- (0, -1);
+    \draw[very thick, teal!90!black] (0, 1) -- (1.57, 1);
+
+    % Nodos abiertos/cerrados en las discontinuidades (x = 0, x = \pm\pi)
+    \filldraw[fill=white, draw=teal!90!black, thick] (0, -1) circle (1.8pt);
+    \filldraw[fill=white, draw=teal!90!black, thick] (0, 1) circle (1.8pt);
+    \filldraw[fill=white, draw=teal!90!black, thick] (-1.57, -1) circle (1.8pt);
+    \filldraw[fill=white, draw=teal!90!black, thick] (1.57, 1) circle (1.8pt);
+\end{tikzpicture}
+\end{center}
+\end{ejemplo}
+\begin{ejemplo}{Desarrollo en serie de Fourier de $f(t) = t^2$}{fourier_t_cuadrado}
+Consideramos la función periódica $f(t) = t^2$, para $-1 \le t < 1$, con periodo $T = 2$.
+
+\begin{center}
+\begin{tikzpicture}[scale=0.8]
+    \begin{axis}[
+        axis lines = middle,
+        xmin = -2.5, xmax = 2.5,
+        ymin = -0.2, ymax = 1.5,
+        xtick = {-1, 1},
+        ytick = \empty,
+        width = 8cm, height = 4cm,
+        xlabel = {$t$},
+        ylabel = {$f(t)$}
+    ]
+        % Color ajustado a teal para mantener la coherencia con el entorno
+        \addplot[thick, teal!90!black, domain=-1:1, samples=100] {x^2};
+        \addplot[thick, teal!90!black, domain=1:2.5, samples=100] {(x-2)^2};
+        \addplot[thick, teal!90!black, domain=-2.5:-1, samples=100] {(x+2)^2};
+    \end{axis}
+\end{tikzpicture}
+\end{center}
+
+\textbf{Opción 1: Coeficientes complejos} \\
+Para $n \in \mathbb{Z}$, el coeficiente complejo es:
+\[
+\hat{f}(n) = \frac{1}{T} \int_{-T/2}^{T/2} f(t) e^{-i n \frac{2\pi}{T} t} \, dt = \frac{1}{2} \int_{-1}^{1} f(t) e^{-i n \pi t} \, dt.
+\]
+
+Para $n = 0$:
+\[
+\hat{f}(0) = \frac{1}{2} \int_{-1}^{1} t^2 \, dt = \frac{1}{2} \left[ \frac{t^3}{3} \right]_{-1}^{1} = \frac{1}{3}.
+\]
+
+Para $n \neq 0$, utilizando integración por partes con $a = i n \pi$ (donde $a^2 = -n^2\pi^2$ y $a^3 = -i n^3 \pi^3$):
+\begin{align*}
+\hat{f}(n) &= \frac{1}{2} \int_{-1}^{1} t^2 e^{-i n \pi t} \, dt = \frac{1}{2} \left[ \frac{a^2 t^2 + 2at + 2}{-a^3} e^{-a t} \right]_{-1}^{1} \\
+&= \frac{1}{2 i n^3 \pi^3} \left[ (-n^2\pi^2 + 2\pi i n + 2) e^{-i n \pi} - (-n^2\pi^2 - 2\pi i n + 2) e^{i n \pi} \right].
+\end{align*}
+
+Distinguiendo por paridad:
+\begin{itemize}
+    \item $n$ par ($n = 2k$): $e^{\pm(2k)\pi i} = 1$.
+    \[
+    \hat{f}(n) = \frac{1}{2 i (2k)^3 \pi^3} \Big[ (-(2k)^2\pi^2 + 2\pi i (2k) + 2) - (-(2k)^2\pi^2 - 2\pi i (2k) + 2) \Big] = \frac{2}{(2k)^2 \pi^2}.
+    \]
+    \item $n$ impar ($n = 2k+1$): $e^{\pm(2k+1)\pi i} = -1$.
+    \[
+    \hat{f}(n) = \frac{1}{2 i (2k+1)^3 \pi^3} \Big[ ((2k+1)^2\pi^2 + 2\pi i (2k+1) + 2)(-1) - \dots \Big] = -\frac{2}{(2k+1)^2 \pi^2}.
+    \]
+\end{itemize}
+
+En general, usando $e^{-i n \pi} = (-1)^n$, obtenemos $\hat{f}(n) = \frac{2(-1)^n}{n^2 \pi^2}$.
+La serie compleja resulta:
+\[
+f(t) \sim \frac{1}{3} + \sum_{\substack{n \in \mathbb{Z} \\ n \neq 0}} \frac{2(-1)^n}{n^2 \pi^2} e^{i n \pi t}.
+\]
+
+\vspace{0.3cm}
+\textbf{Opción 2: Coeficientes trigonométricos} \\
+\[
+a_n = \frac{2}{T} \int_{-T/2}^{T/2} f(t) \cos\left(n \frac{2\pi}{T} t\right) dt = \int_{-1}^{1} f(t) \cos(n \pi t) \, dt, \quad b_n = \int_{-1}^{1} f(t) \sin(n \pi t) \, dt = 0.
+\]
+
+A partir de los complejos:
+\begin{align*}
+a_0 &= 2 \hat{f}(0) = \frac{2}{3}, \\
+a_n &= \hat{f}(n) + \hat{f}(-n) = \frac{2(-1)^n}{n^2 \pi^2} + \frac{2(-1)^{-n}}{(-n)^2 \pi^2} = \frac{4(-1)^n}{n^2 \pi^2}, \\
+b_n &= i(\hat{f}(n) - \hat{f}(-n)) = 0.
+\end{align*}
+
+La serie trigonométrica es:
+\[
+f(t) \sim \frac{1}{3} + \sum_{n=1}^\infty \frac{4(-1)^n}{n^2 \pi^2} \cos(n \pi t).
+\]
+
+
+O no lo ha hecho en clase o no lo he copiado :p
+\end{ejemplo}
+
+\begin{observacion}{Convergencia de las sumas parciales $S_n(f)$}{obs_convergencia}
+\begin{enumerate}
+    \item [(1)]$f \in L_1$: ¿$\|f - S_n(f)\|_1 \to 0$? ¿$S_n(f) \to f$ en $L_1$? $\implies$ \textbf{NO} (Kolmogorov dio un ejemplo).
+    \item[(2)] $f \in L_1$: ¿$\|f - S_n(f)\|_1 \to 0$? ¿$S_n(f) \to f$ en $L_1$? $\implies$ \textbf{NO} (Shilov dio un ejemplo).
+    \item[(3)] $f \in L_2$: ¿$\|f - S_n(f)\|_2 \to 0$? ¿$S_n(f) \to f$ en $L_2$? $\implies$ \textbf{SÍ} (veremos).
+    \item[(4)] $f \in C(\mathbb{T})$: ¿$\lim_n \|f - S_n(f)\|_\infty = 0$ (Convergencia uniforme) o al menos $\lim_n |f(t) - S_n(f, t)| = 0, \; \forall t$? $\implies$ \textbf{NO} (Du Bois Reymond ejemplo (1873) func continua cuya suma parcial no converge en $t = 0$).
+    \item[(5)] Si $f \in C(\mathbb{T})$, ¿podemos recuperar $f$ a partir de sus coeficientes? $\implies$ \textbf{SÍ} Fejer (19 años).
+\end{enumerate}
+\end{observacion}
+
+\begin{proposicion}{Propiedad 1.4}{prop_1_4}
+Sea $f \in L_1(\mathbb{T})$. Se cumplen las siguientes propiedades:
+\begin{enumerate}
+    \item[(1)] \textbf{Acotación:} $|\hat{f}(n)| \le \|f\|_1$ para todo $n \in \mathbb{Z}$.
+    \item[(2)] \textbf{Lema de Riemann-Lebesgue:} Si tomo $\varepsilon > 0$, existe $n_0 \in \mathbb{N}$ tal que $|n| \ge n_0 \implies |\hat{f}(n)| < \varepsilon$.
+    \item[(3)] \textbf{Unicidad nula:} Si $\hat{f}(n) = 0$ para todo $n \in \mathbb{Z}$, entonces $f = 0$ casi por todas partes (a.e.). Creo, no lo he copiado
+    \item[(4)] \textbf{Unicidad general:} Dados $f, g \in L_1$, si $\hat{f}(n) = \hat{g}(n)$ para todo $n \in \mathbb{Z}$, entonces $f = g$ casi por todas partes (a.e.).
+\end{enumerate}
+\end{proposicion}
+
+\begin{proof}[Demostración de (1)]
+Aplicando el valor absoluto a la definición del coeficiente de Fourier y usando la desigualdad triangular para integrales:
+\[
+|\hat{f}(n)| = \left| \frac{1}{2\pi} \int_{-\pi}^\pi f(t) e^{-i n t} \, dt \right| \le \frac{1}{2\pi} \int_{-\pi}^\pi |f(t)| \cdot \underbrace{|e^{-i n t}|}_{1} \, dt \le \|f\|_1.
+\]
+\end{proof}
+
+\begin{proof}[Demostración de (2)]
+Sea $f \in L_1$ y tomo $\varepsilon > 0$. Quiero encontrar un $n_0$ tal que $|n| \ge n_0 \implies |\hat{f}(n)| < \varepsilon$. 
+
+Sabemos que el conjunto de los polinomios trigonométricos $\mathcal{P}(\mathbb{T})$ es denso en $L_1$, lo que implica que $\exists P \in \mathcal{P}(\mathbb{T})$ con $\|f - P\|_1 < \varepsilon$, donde $P(t) = \sum_{n=-N}^N c_n e^{i n t}$. 
+
+Ahora, sumando y restando $\hat{P}(n)$:
+\[
+|\hat{f}(n)| = |\hat{f}(n) - \hat{P}(n) + \hat{P}(n)| \le |\hat{f}(n) - \hat{P}(n)| + |\hat{P}(n)| = |\widehat{f - P}(n)| + |\hat{P}(n)|
+\]
+\[
+\le \|f - P\|_1 + |\hat{P}(n)| < \varepsilon + |\hat{P}(n)|, \quad \forall n \in \mathbb{Z}.
+\]
+Recordemos que los coeficientes del polinomio trigonométrico son:
+\[
+\hat{P}(n) = \begin{cases} c_n & \text{si } -N \le n \le N \\ 0 & \text{en otro caso} \end{cases}
+\]
+Si $|n| > N \implies \hat{P}(n) = 0$. (Nota: asumiendo $N$ como el grado máximo del polinomio). 
+
+Tomando $n_0 = N + 1$, si $|n| \ge n_0 \implies |\hat{f}(n)| < \varepsilon + 0 = \varepsilon$.
+\end{proof}
+
+\begin{proof}[Demostración de (3)]
+Más adelante. (No lo he copiado).
+\end{proof}
+
+\begin{proof}[Demostración de (4)]
+Dados $f, g \in L_1$, defino una nueva función $h = f - g$. Por la linealidad de los coeficientes:
+\[
+\hat{h}(n) = \widehat{f - g}(n) = \hat{f}(n) - \hat{g}(n) = 0 \quad \forall n \in \mathbb{Z}.
+\]
+Aplicando la propiedad (3) a la función $h$, obtenemos directamente que:
+\[
+\hat{h}(n) = 0 \implies h = 0 \text{ a.e.} \implies f = g \text{ a.e.}
+\]
+\end{proof}
+
+\begin{nota}{Límite de coeficientes}{nota_cvg}
+Si $f_n \to f$ en $L_1$ ($\|f_n - f\|_1 \to 0$), entonces para cada $k \in \mathbb{Z}$:
+\[
+|\hat{f}_n(k) - \hat{f}(k)| = |\widehat{f_n - f}(k)| \le \|f_n - f\|_1 \to 0.
+\]
+Es decir, $|\hat{f}_n(k) - \hat{f}(k)| \to 0 \implies \hat{f}_n(k) \to \hat{f}(k)$. \\
+Para cada $n$ tengo $f_n$. Para cada $k \in \mathbb{Z}$, $(\hat{f}_n(k))_n \subseteq \mathbb{C}$.
+\end{nota}
+
+\subsection{Convolución de Funciones}
+
+\begin{definicion}{Convolución}{def_convolucion}
+Tengo $f, g \in C(\mathbb{T})$. Para cada $t \in \mathbb{R}$ fijo considero $s \mapsto g(t - s) = g \circ \varphi$ (cont), donde $\varphi: \mathbb{R} \to \mathbb{R}$, $s \mapsto t - s$ (cont).
+\[
+\frac{1}{2\pi} \int_{-\pi}^\pi f(s) g(t - s) \, ds = (f * g)(t).
+\]
+\end{definicion}
+
+\begin{proposicion}{Prop 1.5: Convolución en $L_1$}{prop_1_5}
+Si $f, g \in L_1$, esta bien definida la convolución \\
+\textbf{Idea:} $F(t, s) = f(s) g(t - s)$, $h(t) = \frac{1}{2\pi} \int F(t, s) \, ds$ bien def para casi todo $t \in [-\pi, \pi]$. Además: $h \in L_1(\mathbb{T})$ y $\|h\|_1 \le \|f\|_1 \|g\|_1$.
+\end{proposicion}
+
+\begin{proof}
+Consideran las func:
+\[
+\varphi: [-\pi, \pi] \times [-\pi, \pi] \longrightarrow \mathbb{C}, \quad (t, s) \longmapsto e^{(t - s)i}
+\]
+\[
+\psi: [-\pi, \pi] \times [-\pi, \pi] \longrightarrow \mathbb{C}, \quad (t, s) \longmapsto e^{-si}
+\]
+Para $f, g \in L_1$, identificamos $f(x) = f(e^{i x})$. \\
+$g(t - s) = (g \circ \varphi)(t, s)$ y $f(s) = (f \circ \psi)(t, s)$ medibles porque composición de integrable con continua. \\
+Defino $F: [-\pi, \pi] \times [-\pi, \pi] \longrightarrow \mathbb{C}$ dada por $(t, s) \longmapsto F(t, s) = f(s) g(t - s)$ medible.
+
+Quiero aplicar Hobson-Tonelli. \\
+Antes observamos que para cada $t$ fijo:
+\[
+\frac{1}{2\pi} \int_{-\pi}^\pi |g(t - s)| \, ds \underset{u = t - s}{=} \frac{1}{2\pi} \int_{-\pi - t}^{\pi - t} |g(u)| \, du = \frac{1}{2\pi} \int_{-\pi}^\pi |g(u)| \, du = \|g\|_1,
+\]
+ya que si $g$ es $2\pi$-periódica y $I_1, I_2$ intervalos long $2\pi \implies \int_{I_1} g(u) \, du = \int_{I_2} g(u) \, du$.
+
+Integral doble:
+\[
+\int_{-\pi}^\pi \left( \int_{-\pi}^\pi |F(t, s)| \, dt \right) ds = \int_{-\pi}^\pi |f(s)| \left( \int_{-\pi}^\pi |g(t - s)| \, dt \right) ds = \int_{-\pi}^\pi |f(s)| \int_{-\pi}^\pi |g(u)| \, du < \infty 
+\]
+($\infty, f \in L_1 \quad \infty, g \in L_1$).
+
+Por Hobson-Tonelli: $F$ integrable Lebesgue. \\
+Fubini: Para casi todo $t \in [-\pi, \pi]$
+\begin{itemize}
+    \item $s \longmapsto F(t, s)$ integrable Lebesgue y $\hat{h}(t) = \int_{-\pi}^\pi F(t, s) \, ds$ es integrable Lebesgue.
+\end{itemize}
+Entonces $h(t) = \frac{1}{2\pi} \int_{-\pi}^\pi f(s) g(t - s) \, ds$ int Leb.
+
+Además:
+\[
+\|h\|_1 = \frac{1}{2\pi} \int_{-\pi}^\pi |h(t)| \, dt = \frac{1}{2\pi} \int_{-\pi}^\pi \left| \frac{1}{2\pi} \int_{-\pi}^\pi f(s) g(t - s) \, ds \right| dt \le \frac{1}{2\pi} \cdot \frac{1}{2\pi} \int_{-\pi}^\pi \int_{-\pi}^\pi |f(s)| \cdot |g(t - s)| \, ds \, dt
+\]
+\[
+= \frac{1}{2\pi} \cdot \frac{1}{2\pi} \int_{-\pi}^\pi \int_{-\pi}^\pi |f(s)| \cdot |g(t - s)| \, dt \, ds = \|f\|_1 \|g\|_1.
+\]
+\end{proof}

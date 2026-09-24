@@ -1,0 +1,177 @@
+\documentclass[11pt,a4paper]{article}
+
+% --- Codificación e idioma ---
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-nodecimaldot]{babel}
+
+% --- Matemáticas ---
+\usepackage{amsmath, amsthm, amssymb}
+
+% --- Iconos (requerido por \faEdit en el entorno ejemplo) ---
+\usepackage{fontawesome5}
+
+% --- Colores y Tipografía ---
+\usepackage{xcolor}
+\usepackage{lmodern}
+\renewcommand{\familydefault}{\sfdefault}
+
+% --- Gráficos ---
+\usepackage{tikz}
+\usetikzlibrary{babel} 
+\usetikzlibrary{patterns.meta}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18, colormap/viridis}
+
+% --- Cajas personalizadas ---
+\usepackage[many]{tcolorbox}
+\tcbuselibrary{skins, breakable, theorems}
+
+% --- Títulos y Secciones ---
+\usepackage{titlesec}
+\usepackage{etoc}
+
+% --- Formato decorativo para \section ---
+\newcommand{\neonrule}[1]{%
+    \begin{tikzpicture}[remember picture, overlay]
+        \fill[#1] (0,0.3) rectangle (0.2,0.45);
+        \fill[#1] (0.25,0.3) rectangle (0.45,0.45);
+        \fill[#1] (0.5,0.3) rectangle (0.7,0.45);
+        \draw[#1, line width=1pt] (1.2,0.375) -- ({\linewidth-0.4cm},0.375);
+        \fill[#1] ({\linewidth-0.5cm}, 0.3) rectangle (\linewidth,0.45);
+    \end{tikzpicture}%
+}
+
+\titleformat{\section}
+  {\normalfont\Large\bfseries}{\thesection}{1em}{}
+  [\neonrule{teal}]
+\titlespacing*{\section}{0pt}{3.5ex plus 1ex minus .2ex}{2.3ex plus .2ex}
+
+% --- Corrección de \portadaseccion ---
+\newcommand{\portadaseccion}[1]{%
+    \clearpage
+    \thispagestyle{empty}
+    \vspace*{2cm}
+    \section{#1}
+    \vspace{1.5cm}
+    \begingroup
+        \etocsettocstyle{\Large\bfseries Contenido del tema\par\vspace{0.5cm}\hrule\vspace{0.5cm}}{\vspace{0.5cm}\hrule}
+        \etocsetnexttocdepth{subsubsection}
+        \localtableofcontents
+    \endgroup
+    \clearpage
+}
+
+% --- Estilos de tcolorbox ---
+\tcbset{
+    futuristicbase/.style={
+        enhanced,
+        breakable,
+        boxrule=0.5pt,
+        arc=2pt,
+        fonttitle=\bfseries
+    }
+}
+
+% Entornos numerados
+\newtcbtheorem[number within=section]{teorema}{Teorema}{
+    futuristicbase,
+    colback=blue!2!white,
+    colframe=blue!85!black,
+    fuzzy shadow={1.2mm}{-1.2mm}{0mm}{0.3mm}{blue!50!black,opacity=0.5},
+    title style={left color=blue!90!black, right color=blue!60!black}
+}{thm}
+
+\newtcbtheorem[number within=section]{definicion}{Definición}{
+    futuristicbase,
+    colback=cyan!4!white,
+    colframe=cyan!80!black,
+    fuzzy shadow={1.2mm}{-1.2mm}{0mm}{0.3mm}{cyan!50!black,opacity=0.5},
+    title style={left color=cyan!80!black, right color=cyan!50!black}
+}{def}
+
+\newtcbtheorem[number within=section]{proposicion}{Proposición}{
+    futuristicbase,
+    colback=blue!2!gray!5!white,
+    colframe=blue!50!black,
+    fuzzy shadow={1.2mm}{-1.2mm}{0mm}{0.3mm}{gray!50!black,opacity=0.5},
+    title style={left color=blue!60!black, right color=blue!40!black}
+}{prop}
+
+\newtcbtheorem[number within=section]{observacion}{Observación}{
+    futuristicbase,
+    colback=yellow!5!white,
+    colframe=yellow!60!black,
+    boxrule=0.4pt,
+    coltitle=black,
+    fuzzy shadow={1.2mm}{-1.2mm}{0mm}{0.3mm}{yellow!50!black,opacity=0.5},
+    title style={left color=yellow!40!white, right color=yellow!5!white}
+}{obs}
+
+\newtcbtheorem[number within=section]{nota}{Nota}{
+    futuristicbase,
+    colback=yellow!15!orange!5!white,
+    colframe=yellow!50!orange!90!black,
+    boxrule=0.4pt,
+    coltitle=white,
+    fuzzy shadow={1.2mm}{-1.2mm}{0mm}{0.3mm}{orange!50!black,opacity=0.5},
+    title style={left color=yellow!40!orange!90!black, right color=yellow!60!orange!70!black}
+}{not}
+
+% Entorno corregido con \faEdit disponible
+\newtcbtheorem[number within=section]{ejemplo}{\faEdit\ Ejemplo}{
+    futuristicbase,
+    colback=teal!5!white,
+    colframe=teal!80!black,
+    boxrule=0pt,
+    borderline={1pt}{0pt}{teal, dashed},
+    coltitle=black,
+    colbacktitle=teal!15!white
+}{ej}
+
+% --- Referencias (deben cargarse al final) ---
+\usepackage{hyperref}
+\usepackage[capitalise, spanish]{cleveref}
+
+\hypersetup{
+    colorlinks        = true,
+    linkcolor         = blue!75!black,
+    citecolor         = yellow!60!black,
+    urlcolor          = cyan!70!black,
+    pdftitle          = {Apuntes},
+    pdfborder         = {0 0 0},
+    bookmarksnumbered = true,
+}
+
+\crefname{tcb@cnt@definicion}{definición}{definiciones}
+\crefname{tcb@cnt@observacion}{observación}{observaciones}
+\crefname{tcb@cnt@nota}{nota}{notas}
+\crefname{tcb@cnt@teorema}{teorema}{teoremas}
+\crefname{tcb@cnt@proposicion}{proposición}{proposiciones}
+\crefname{tcb@cnt@ejemplo}{ejemplo}{ejemplos}
+
+\Crefname{tcb@cnt@definicion}{Definición}{Definiciones}
+\Crefname{tcb@cnt@observacion}{Observación}{Observaciones}
+\Crefname{tcb@cnt@nota}{Nota}{Notas}
+\Crefname{tcb@cnt@teorema}{Teorema}{Teoremas}
+\Crefname{tcb@cnt@proposicion}{Proposición}{Proposiciones}
+\Crefname{tcb@cnt@ejemplo}{Ejemplo}{Ejemplos}
+
+% --- Cabeceras y pie de página ---
+\usepackage{fancyhdr}
+\setlength{\headheight}{15pt} % Ajustado para evitar warning de altura
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyhead[L]{\small\textcolor{gray}{\leftmark}}
+\fancyhead[R]{\small\textcolor{gray}{Apuntes}}
+\fancyfoot[C]{\small\textcolor{gray}{\thepage}}
+
+% --- Estilo global de página ---
+\pagecolor{gray!5}
+\color{black}
+
+% --- Metadatos ---
+\title{\Huge \textbf{Apuntes de Análisis de Fourier}}
+\author{\Large Juan Manuel Flores de la Cruz}
+\date{Curso 2026/27}
