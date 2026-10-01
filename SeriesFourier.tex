@@ -253,13 +253,21 @@ Para toda $f \in C(\mathbb{T})$ y todo $\epsilon > 0$, existe un $P \in \mathcal
 \begin{equation*}
     \sup_{t \in [-\pi, \pi]} |P(t) - f(t)| \le \epsilon
 \end{equation*}
+
+
 Es decir, $\|f - P\|_\infty \le \epsilon$.
 \end{nota}
+
+\textbf{Fecha: 22/09/26}
+
 \begin{definicion}{El espacio $L_p(\mathbb{T})$}{espacio_lp}
 Para $1 \le p < \infty$, decimos que una función $2\pi$-periódica $f:\mathbb{R} \to \mathbb{C}$ pertenece al espacio $L_p(\mathbb{T})$ si es medible en el sentido de Lebesgue y la integral de su valor absoluto a la potencia $p$ es finita. Formalmente:
 \begin{equation*}
     f \in L_p(\mathbb{T}) \iff \text{medible Lebesgue y } \underbrace{\left( \frac{1}{2\pi} \int_{-\pi}^{\pi} |f(t)|^p dt \right)^{1/p}}_{\|f\|_p} < \infty
 \end{equation*}
+
+
+
 \end{definicion}
 
 \begin{nota}{Propiedad en casi todas partes (c.p.p.)}{cpp}
@@ -304,13 +312,83 @@ Se cumplen las siguientes propiedades fundamentales para los espacios $L_p(\math
 Elevando ambos lados a la potencia $1/p$, llegamos a la acotación directa $\|f\|_p \le \|f\|_q$.
 
 \medskip
-\textbf{(3) :}
+\textbf{(3):}
 \begin{itemize}
-    \item \textbf{Caso 1:} Si $f$ es una función indicadora estricta $f = \chi_{[a,b]}$, construimos un trapecio continuo $g_\delta$ que valga $1$ en $[a,b]$ y caiga a $0$ de manera lineal a lo largo de un pequeño margen $\delta$. El área de discrepancia será $\|f - g_\delta\|_1 \le \frac{\delta}{\pi}$. Nos basta con tomar $\delta = \pi \varepsilon$.
-    \item \textbf{Caso 2:} Si $f$ es una función simple (combinación lineal finita de indicadores sobre intervalos disjuntos), aplicamos la técnica del trapecio a cada escalón.
-    \item \textbf{Caso 3:} Si $f \in L_1$ es cualquier función integrable, siempre se puede aproximar primero por una función simple $s$ tal que $\|f - s\|_1 < \varepsilon/2$. Por el Caso 2, aproximamos esa $s$ con una continua $g$ a distancia $\varepsilon/2$. Por la desigualdad triangular, el error total es menor a $\varepsilon$.
+    \item \textbf{Caso 1:} Si $f$ es una función indicadora estricta $f = \chi_{[a,b]}$, construimos una función continua $g_\delta(t)$ que aproxima a $f$ mediante un perfil trapezoidal. Definimos $g_\delta(t)$ explícitamente fijando un margen $\delta > 0$ en los extremos del intervalo:
+    \begin{equation*}
+        g_\delta(t) = \begin{cases} 
+        0, & t \le a-\delta \\
+        \frac{t - (a-\delta)}{\delta}, & a-\delta < t < a \\
+        1, & a \le t \le b \\
+        \frac{b+\delta - t}{\delta}, & b < t < b+\delta \\
+        0, & t \ge b+\delta 
+        \end{cases}
+    \end{equation*}
+    
+    A continuación, evaluamos la norma $L_1$ de la discrepancia entre ambas funciones. Dado que $f(t) = g_\delta(t)$ tanto dentro del intervalo cerrado $[a,b]$ como fuera de $[a-\delta, b+\delta]$, el error se concentra exclusivamente en las dos franjas de transición (los triángulos sombreados):
+    \begin{align*}
+        \|f - g_\delta\|_1 &= \frac{1}{2\pi} \int_{-\pi}^{\pi} |f(t) - g_\delta(t)| dt \\
+        &= \frac{1}{2\pi} \left( \int_{a-\delta}^{a} |0 - g_\delta(t)| dt + \int_{b}^{b+\delta} |0 - g_\delta(t)| dt \right) \\
+        &= \frac{1}{2\pi} \left( \int_{a-\delta}^{a} \frac{t - a + \delta}{\delta} dt + \int_{b}^{b+\delta} \frac{b + \delta - t}{\delta} dt \right)
+    \end{align*}
+    Cada una de estas integrales representa el área de un triángulo de base $\delta$ y altura $1$. Por lo tanto, el área de cada uno es $\frac{\delta}{2}$. Sumando ambas contribuciones:
+    \begin{equation*}
+        \|f - g_\delta\|_1 = \frac{1}{2\pi} \left( \frac{\delta}{2} + \frac{\delta}{2} \right) = \frac{\delta}{2\pi}
+    \end{equation*}
+    Para garantizar que la norma del error sea estrictamente menor que un $\varepsilon$ arbitrario ($\|f - g_\delta\|_1 < \varepsilon$), basta con escoger el parámetro de transición como $\delta < 2\pi\varepsilon$.
+    
+    \begin{center}
+    \begin{tikzpicture}
+        \begin{axis}[
+            width=12cm, height=5.5cm,
+            axis lines=middle,
+            xmin=-0.5, xmax=6.5,
+            ymin=-0.2, ymax=1.4,
+            xlabel={$t$}, ylabel={$y$},
+            xtick={1, 2, 4, 5},
+            xticklabels={$a-\delta$, $a$, $b$, $b+\delta$},
+            ytick={1},
+            enlargelimits=false,
+            legend style={at={(0.98,0.95)}, anchor=north east, draw=gray!50, fill=gray!5}
+        ]
+            % Sombreado del error (franjas de transición)
+            \fill[orange!40, opacity=0.5] (axis cs:1,0) -- (axis cs:2,1) -- (axis cs:2,0) -- cycle;
+            \fill[orange!40, opacity=0.5] (axis cs:4,1) -- (axis cs:5,0) -- (axis cs:4,0) -- cycle;
+            
+            % Función indicadora f(t)
+            \addplot[thick, dashed, purple!80!black] coordinates {(-0.5,0) (2,0) (2,1) (4,1) (4,0) (6.5,0)};
+            \addlegendentry{$f(t) = \chi_{[a,b]}$}
+            
+            % Función trapezoidal continua g_delta(t)
+            \addplot[thick, teal] coordinates {(-0.5,0) (1,0) (2,1) (4,1) (5,0) (6.5,0)};
+            \addlegendentry{$g_\delta(t)$}
+        \end{axis}
+    \end{tikzpicture}
+    \end{center}
+
+    \item \textbf{Caso 2:} Si $f$ es una función simple, es decir, una combinación lineal finita de funciones características de intervalos disjuntos $f = \sum_{j=1}^n c_j \chi_{[a_j, b_j]}$, podemos aplicar el resultado del Caso 1 a cada uno de los términos. Dado $\varepsilon > 0$, construimos para cada $j$ una función continua $g_{\delta,j}$ tal que $\|\chi_{[a_j, b_j]} - g_{\delta,j}\|_1 < \frac{\varepsilon}{n|c_j|}$. Definiendo $g = \sum_{j=1}^n c_j g_{\delta,j}$, la función $g$ será continua y:
+    \begin{equation*}
+        \|f - g\|_1 = \left\| \sum_{j=1}^n c_j \chi_{[a_j, b_j]} - \sum_{j=1}^n c_j g_{\delta,j} \right\|_1 \le \sum_{j=1}^n |c_j| \left\| \chi_{[a_j, b_j]} - g_{\delta,j} \right\|_1 < \sum_{j=1}^n |c_j| \frac{\varepsilon}{n|c_j|} = \varepsilon
+    \end{equation*}
+
+    \item \textbf{Caso 3:} Si $f \in L_1(\mathbb{T})$ es cualquier función integrable, sabemos (por resultados clásicos de teoría de la medida o de la integral de Riemann) que siempre se puede aproximar por una función simple $s$ tal que $\|f - s\|_1 < \varepsilon/2$. Por el Caso 2, dado que $s$ es una función simple, podemos encontrar una función continua $g$ tal que $\|s - g\|_1 < \varepsilon/2$. Ahora, aplicando la desigualdad triangular:
+    \begin{equation*}
+        \|f - g\|_1 = \|f - s + s - g\|_1 \le \|f - s\|_1 + \|s - g\|_1 < \frac{\varepsilon}{2} + \frac{\varepsilon}{2} = \varepsilon
+    \end{equation*}
+    Con esto demostramos que para cualquier función $f \in L_1$, existe una función continua $g$ que se encuentra a una distancia menor que $\varepsilon$ en la norma $L_1$, lo que concluye la demostración de la densidad.
 \end{itemize}
 \end{proof}
+
+\begin{observacion}{Jerarquía de espacios funcionales}{obs_jerarquia_espacios}
+    Para el análisis de Fourier, se tiene la siguiente cadena de inclusiones densas en el toro $\mathbb{T}$:
+    \[
+    \mathcal{P}(\mathbb{T}) \subset \mathcal{C}(\mathbb{T}) \subset L_1(\mathbb{T})
+    \]
+    Es decir, los polinomios trigonométricos $\mathcal{P}(\mathbb{T})$ son densos en el espacio de funciones continuas $\mathcal{C}(\mathbb{T})$, el cual a su vez es denso en el espacio de funciones integrables $L_1(\mathbb{T})$.
+\end{observacion}
+
+
+\subsection{Series y Coeficientes de Fourier}
 
 \begin{proposicion}{Coeficientes de un polinomio trigonométrico}{coef_pol_trig}
 Dado un polinomio trigonométrico $P(t) = \sum_{k=-M}^M c_k e^{ikt}$, sus coeficientes de Fourier $\hat{P}(n)$ coinciden de forma exacta con los propios coeficientes $c_n$.
@@ -334,85 +412,9 @@ Si tienes entre manos los coeficientes complejos $(\hat{f}(n))_{n \in \mathbb{Z}
 \end{align*}
 \end{observacion}
 
-\begin{nota}{Ejemplo práctico: Coeficientes de la función signo}{ejemplo_signo}
-Vamos a calcular explícitamente los coeficientes de Fourier $\hat{f}(n)$ para la función signo en el toro, definida como $f(t) = 1$ para $t \in [0, \pi)$ y $f(t) = -1$ para $t \in [-\pi, 0)$.
+\begin{ejemplo}{Coeficientes de la función signo}{ejemplo_signo}
 
-Separamos la integral de evaluación en los dos hemiciclos:
-\begin{equation*}
-    \hat{f}(n) = \frac{1}{2\pi} \int_{-\pi}^{0} (-1) e^{-int} dt + \frac{1}{2\pi} \int_{0}^{\pi} (1) e^{-int} dt
-\end{equation*}
-
-Evaluando el término central nulo ($n = 0$), las áreas se anulan perfectamente:
-\begin{equation*}
-    \hat{f}(0) = -\frac{\pi}{2\pi} + \frac{\pi}{2\pi} = 0
-\end{equation*}
-
-Para cualquier frecuencia no nula ($n \ne 0$), integramos directamente la exponencial:
-\begin{align*}
-    \hat{f}(n) &= -\frac{1}{2\pi} \left[ \frac{e^{-int}}{-in} \right]_{-\pi}^{0} + \frac{1}{2\pi} \left[ \frac{e^{-int}}{-in} \right]_{0}^{\pi} \\
-    &= \frac{1}{2\pi i n} \left( 1 - e^{in\pi} \right) - \frac{1}{2\pi i n} \left( e^{-in\pi} - 1 \right)
-\end{align*}
-
-Sabiendo que la identidad de Euler nos dicta que $e^{-in\pi} = e^{in\pi} = (-1)^n$, podemos agrupar ambos corchetes:
-\begin{equation*}
-    \hat{f}(n) = \frac{1}{\pi i n} \left[ 1 - (-1)^n \right] = \begin{cases} 
-        0 & \text{si } n \text{ es par } (n=2k) \\ 
-        -\frac{2i}{\pi n} & \text{si } n \text{ es impar } (n=2k+1) 
-    \end{cases}
-\end{equation*}
-Esto nos genera una serie puramente impar, expresada como:
-\begin{equation*}
-    S(f)(t) = \sum_{k \in \mathbb{Z}} \frac{-2i}{(2k+1)\pi} e^{i(2k+1)t}
-\end{equation*}
-\end{nota}
-
-\begin{definicion}{El Coeficiente y la Serie de Fourier}{def_fourier_formal}
-Para toda función integrable $f \in L_1(\mathbb{T})$, definimos el \textbf{coeficiente de Fourier $n$-ésimo} (con $n \in \mathbb{Z}$) de la siguiente manera:
-\begin{equation*}
-    \hat{f}(n) = \frac{1}{2\pi} \int_{-\pi}^{\pi} f(t) e^{-int} dt
-\end{equation*}
-Esta operación está siempre bien definida porque la acotación modular $|f(t)e^{-int}| = |f(t)|$ garantiza que el integrando permanece dentro de las fronteras de $L_1$, produciendo que $\hat{f}(n) \in \mathbb{C}$ exista de manera finita.
-
-Con la colección de estos coeficientes generamos la \textbf{Serie de Fourier} asociada a $f$:
-\begin{equation*}
-    f(t) \sim \sum_{n=-\infty}^{\infty} \hat{f}(n) e^{int}
-\end{equation*}
-Para poder manejar y analizar esta serie infinita definimos la \textbf{suma parcial n-ésima}, $S(f,n)(t) = \sum_{k=-n}^{n} \hat{f}(k) e^{ikt}$, que resulta ser un polinomio trigonométrico que mapea $[-\pi,\pi] \to \mathbb{C}$.
-\end{definicion}
-
-\begin{observacion}{Dudas sobre la convergencia}{conv_uniforme_fourier}
-\textbf{Pregunta clave:} ¿Podemos asumir que la suma parcial $S(f,n)$ acabará convergiendo (y además uniformemente) de regreso hacia nuestra $f$ original? 
-
-La respuesta es un rotundo \textbf{no}. La razón profunda es topológica: si el límite uniforme de los polinomios trigonométricos $S(f,n)$ existiese siempre, forzosamente daría a luz una función continua. Sin embargo, el espacio $L_1(\mathbb{T})$ está completamente repleto de funciones discontinuas, por lo que la convergencia uniforme general es imposible de garantizar sin hipótesis de regularidad añadidas.
-\end{observacion}
-
-\begin{nota}{Ortogonalidad de la base exponencial}{ejemplo_base_exp}
-Para ver cómo funciona la maquinaria sobre sus propios cimientos, analicemos la función base $\phi_m(t) = e^{imt}$. Su coeficiente de Fourier $\hat{\phi}_m(n)$ evaluará la presencia de la frecuencia $n$ en la frecuencia $m$:
-\begin{equation*}
-    \hat{\phi}_m(n) = \frac{1}{2\pi} \int_{-\pi}^{\pi} e^{imt} e^{-int} dt = \frac{1}{2\pi} \int_{-\pi}^{\pi} e^{i(m-n)t} dt
-\end{equation*}
-
-\begin{itemize}
-    \item \textbf{Si $m = n$:} la integral colapsa a la unidad básica $\frac{1}{2\pi} \int_{-\pi}^{\pi} e^0 dt = 1$.
-    \item \textbf{Si $m \ne n$:} llamando a su diferencia no nula $k = m-n$, aplicamos la primitiva:
-    \begin{equation*}
-        \hat{\phi}_m(n) = \frac{1}{2\pi i k} \left[ e^{ikt} \right]_{-\pi}^{\pi} = \frac{1}{2\pi i k} \left( e^{ik\pi} - e^{-ik\pi} \right) = 0
-    \end{equation*}
-\end{itemize}
-
-El resultado es la clásica Delta de Kronecker, demostrando que las funciones armónicas filtran sus frecuencias de manera ortonormal:
-\begin{equation*}
-    \hat{\phi}_m(n) = \begin{cases} 
-        1 & \text{si } n=m \\ 
-        0 & \text{si } n \ne m 
-    \end{cases}
-\end{equation*}
-\end{nota}
-
-\subsection{Series y Coeficientes de Fourier}
-
-\begin{ejemplo}{Función signo / Onda cuadrada}{onda_cuadrada}
-Consideremos la función periódica definida en $(-\pi, \pi)$ mediante:
+    Consideremos la función periódica definida en $(-\pi, \pi)$ mediante:
 \[
 f(x) = \begin{cases} 
 -1, & \text{si } -\pi < x < 0, \\ 
@@ -449,8 +451,81 @@ f(x) = \begin{cases}
     \filldraw[fill=white, draw=teal!90!black, thick] (-1.57, -1) circle (1.8pt);
     \filldraw[fill=white, draw=teal!90!black, thick] (1.57, 1) circle (1.8pt);
 \end{tikzpicture}
+
 \end{center}
+Separamos la integral de evaluación en los dos hemiciclos:
+\begin{equation*}
+    \hat{f}(n) = \frac{1}{2\pi} \int_{-\pi}^{0} (-1) e^{-int} dt + \frac{1}{2\pi} \int_{0}^{\pi} (1) e^{-int} dt
+\end{equation*}
+
+Evaluando el término central nulo ($n = 0$), las áreas se anulan perfectamente:
+\begin{equation*}
+    \hat{f}(0) = -\frac{\pi}{2\pi} + \frac{\pi}{2\pi} = 0
+\end{equation*}
+
+Para cualquier frecuencia no nula ($n \ne 0$), integramos directamente la exponencial:
+\begin{align*}
+    \hat{f}(n) &= -\frac{1}{2\pi} \left[ \frac{e^{-int}}{-in} \right]_{-\pi}^{0} + \frac{1}{2\pi} \left[ \frac{e^{-int}}{-in} \right]_{0}^{\pi} \\
+    &= \frac{1}{2\pi i n} \left( 1 - e^{in\pi} \right) - \frac{1}{2\pi i n} \left( e^{-in\pi} - 1 \right)
+\end{align*}
+
+Sabiendo que la identidad de Euler nos dicta que $e^{-in\pi} = e^{in\pi} = (-1)^n$, podemos agrupar ambos corchetes:
+\begin{equation*}
+    \hat{f}(n) = \frac{1}{\pi i n} \left[ 1 - (-1)^n \right] = \begin{cases} 
+        0 & \text{si } n \text{ es par } (n=2k) \\ 
+        -\frac{2i}{\pi n} & \text{si } n \text{ es impar } (n=2k+1) 
+    \end{cases}
+\end{equation*}
+Esto nos genera una serie puramente impar, expresada como:
+\begin{equation*}
+    S(f)(t) = \sum_{k \in \mathbb{Z}} \frac{-2i}{(2k+1)\pi} e^{i(2k+1)t}
+\end{equation*}
 \end{ejemplo}
+
+\begin{definicion}{El Coeficiente y la Serie de Fourier}{def_fourier_formal}
+Para toda función integrable $f \in L_1(\mathbb{T})$, definimos el \textbf{coeficiente de Fourier $n$-ésimo} (con $n \in \mathbb{Z}$) de la siguiente manera:
+\begin{equation*}
+    \hat{f}(n) = \frac{1}{2\pi} \int_{-\pi}^{\pi} f(t) e^{-int} dt
+\end{equation*}
+Esta operación está siempre bien definida porque la acotación modular $|f(t)e^{-int}| = |f(t)|$ garantiza que el integrando permanece dentro de las fronteras de $L_1$, produciendo que $\hat{f}(n) \in \mathbb{C}$ exista de manera finita.
+
+Con la colección de estos coeficientes generamos la \textbf{Serie de Fourier} asociada a $f$:
+\begin{equation*}
+    f(t) \sim \sum_{n=-\infty}^{\infty} \hat{f}(n) e^{int}
+\end{equation*}
+Para poder manejar y analizar esta serie infinita definimos la \textbf{suma parcial n-ésima}, $S(f,n)(t) = \sum_{k=-n}^{n} \hat{f}(k) e^{ikt}$, que resulta ser un polinomio trigonométrico que mapea $[-\pi,\pi] \to \mathbb{C}$.
+\end{definicion}
+
+\begin{observacion}{Dudas sobre la convergencia}{conv_uniforme_fourier}
+\textbf{Pregunta clave:} ¿Podemos asumir que la suma parcial $S(f,n)$ acabará convergiendo (y además uniformemente) de regreso hacia nuestra $f$ original? 
+
+La respuesta es un rotundo \textbf{no}. La razón profunda es topológica: si el límite uniforme de los polinomios trigonométricos $S(f,n)$ existiese siempre, forzosamente daría a luz una función continua. Sin embargo, el espacio $L_1(\mathbb{T})$ está completamente repleto de funciones discontinuas, por lo que la convergencia uniforme general es imposible de garantizar sin hipótesis de regularidad añadidas.
+\end{observacion}
+
+\begin{ejemplo}{Ortogonalidad de la base exponencial}{ejemplo_base_exp}
+Para ver cómo funciona la maquinaria sobre sus propios cimientos, analicemos la función base $\phi_m(t) = e^{imt}$. Su coeficiente de Fourier $\hat{\phi}_m(n)$ evaluará la presencia de la frecuencia $n$ en la frecuencia $m$:
+\begin{equation*}
+    \hat{\phi}_m(n) = \frac{1}{2\pi} \int_{-\pi}^{\pi} e^{imt} e^{-int} dt = \frac{1}{2\pi} \int_{-\pi}^{\pi} e^{i(m-n)t} dt
+\end{equation*}
+
+\begin{itemize}
+    \item \textbf{Si $m = n$:} la integral colapsa a la unidad básica $\frac{1}{2\pi} \int_{-\pi}^{\pi} e^0 dt = 1$.
+    \item \textbf{Si $m \ne n$:} llamando a su diferencia no nula $k = m-n$, aplicamos la primitiva:
+    \begin{equation*}
+        \hat{\phi}_m(n) = \frac{1}{2\pi i k} \left[ e^{ikt} \right]_{-\pi}^{\pi} = \frac{1}{2\pi i k} \left( e^{ik\pi} - e^{-ik\pi} \right) = 0
+    \end{equation*}
+\end{itemize}
+
+El resultado es la clásica Delta de Kronecker, demostrando que las funciones armónicas filtran sus frecuencias de manera ortonormal:
+\begin{equation*}
+    \hat{\phi}_m(n) = \begin{cases} 
+        1 & \text{si } n=m \\ 
+        0 & \text{si } n \ne m 
+    \end{cases}
+\end{equation*}
+\end{ejemplo}
+
+\textbf{24/09/26}
 \begin{ejemplo}{Desarrollo en serie de Fourier de $f(t) = t^2$}{fourier_t_cuadrado}
 Consideramos la función periódica $f(t) = t^2$, para $-1 \le t < 1$, con periodo $T = 2$.
 
@@ -494,13 +569,18 @@ Para $n \neq 0$, utilizando integración por partes con $a = i n \pi$ (donde $a^
 Distinguiendo por paridad:
 \begin{itemize}
     \item $n$ par ($n = 2k$): $e^{\pm(2k)\pi i} = 1$.
-    \[
-    \hat{f}(n) = \frac{1}{2 i (2k)^3 \pi^3} \Big[ (-(2k)^2\pi^2 + 2\pi i (2k) + 2) - (-(2k)^2\pi^2 - 2\pi i (2k) + 2) \Big] = \frac{2}{(2k)^2 \pi^2}.
-    \]
+    \begin{align*}
+        \hat{f}(n) &= \frac{1}{2 i (2k)^3 \pi^3} \Big[ \left(-(2k)^2\pi^2 + 2\pi i (2k) + 2\right) \\
+        &\quad - \left(-(2k)^2\pi^2 - 2\pi i (2k) + 2\right) \Big] \\
+        &= \frac{1}{2 i (2k)^3 \pi^3} \big[ 4\pi i (2k) \big] = \frac{2}{(2k)^2 \pi^2}.
+    \end{align*}
+    
     \item $n$ impar ($n = 2k+1$): $e^{\pm(2k+1)\pi i} = -1$.
-    \[
-    \hat{f}(n) = \frac{1}{2 i (2k+1)^3 \pi^3} \Big[ ((2k+1)^2\pi^2 + 2\pi i (2k+1) + 2)(-1) - \dots \Big] = -\frac{2}{(2k+1)^2 \pi^2}.
-    \]
+    \begin{align*}
+        \hat{f}(n) &= \frac{1}{2 i (2k+1)^3 \pi^3} \Big[ \left(-(2k+1)^2\pi^2 + 2\pi i (2k+1) + 2\right)(-1) \\
+        &\quad - \left(-(2k+1)^2\pi^2 - 2\pi i (2k+1) + 2\right)(-1) \Big] \\
+        &= \frac{1}{2 i (2k+1)^3 \pi^3} \big[ -4\pi i (2k+1) \big] = -\frac{2}{(2k+1)^2 \pi^2}.
+    \end{align*}
 \end{itemize}
 
 En general, usando $e^{-i n \pi} = (-1)^n$, obtenemos $\hat{f}(n) = \frac{2(-1)^n}{n^2 \pi^2}$.
@@ -511,9 +591,10 @@ f(t) \sim \frac{1}{3} + \sum_{\substack{n \in \mathbb{Z} \\ n \neq 0}} \frac{2(-
 
 \vspace{0.3cm}
 \textbf{Opción 2: Coeficientes trigonométricos} \\
-\[
-a_n = \frac{2}{T} \int_{-T/2}^{T/2} f(t) \cos\left(n \frac{2\pi}{T} t\right) dt = \int_{-1}^{1} f(t) \cos(n \pi t) \, dt, \quad b_n = \int_{-1}^{1} f(t) \sin(n \pi t) \, dt = 0.
-\]
+\begin{align*}
+a_n =& \frac{2}{T} \int_{-T/2}^{T/2} f(t) \cos\left(n \frac{2\pi}{T} t\right) dt = \int_{-1}^{1} f(t) \cos(n \pi t) \, dt, \\
+& \quad b_n = \int_{-1}^{1} f(t) \sin(n \pi t) \, dt = 0.
+\end{align*}
 
 A partir de los complejos:
 \begin{align*}
@@ -527,8 +608,6 @@ La serie trigonométrica es:
 f(t) \sim \frac{1}{3} + \sum_{n=1}^\infty \frac{4(-1)^n}{n^2 \pi^2} \cos(n \pi t).
 \]
 
-
-O no lo ha hecho en clase o no lo he copiado :p
 \end{ejemplo}
 
 \begin{observacion}{Convergencia de las sumas parciales $S_n(f)$}{obs_convergencia}
@@ -574,13 +653,13 @@ Recordemos que los coeficientes del polinomio trigonométrico son:
 \[
 \hat{P}(n) = \begin{cases} c_n & \text{si } -N \le n \le N \\ 0 & \text{en otro caso} \end{cases}
 \]
-Si $|n| > N \implies \hat{P}(n) = 0$. (Nota: asumiendo $N$ como el grado máximo del polinomio). 
+Si $|n| > max\{M, N\}$ valdría con N? $ \implies \hat{P}(n) = 0$. (Nota: asumiendo $max(M,N)$ como el grado máximo del polinomio). 
 
-Tomando $n_0 = N + 1$, si $|n| \ge n_0 \implies |\hat{f}(n)| < \varepsilon + 0 = \varepsilon$.
+Tomando $n_0 = max\{M, N\} + 1$, si $|n| \ge n_0 \implies |\hat{f}(n)| < \varepsilon + 0 = \varepsilon$.
 \end{proof}
 
 \begin{proof}[Demostración de (3)]
-Más adelante. (No lo he copiado).
+Más adelante en el curso.
 \end{proof}
 
 \begin{proof}[Demostración de (4)]
@@ -640,7 +719,8 @@ Integral doble:
 \[
 \int_{-\pi}^\pi \left( \int_{-\pi}^\pi |F(t, s)| \, dt \right) ds = \int_{-\pi}^\pi |f(s)| \left( \int_{-\pi}^\pi |g(t - s)| \, dt \right) ds = \int_{-\pi}^\pi |f(s)| \int_{-\pi}^\pi |g(u)| \, du < \infty 
 \]
-($\infty, f \in L_1 \quad \infty, g \in L_1$).
+($f \in L_1 \quad, g \in L_1$). 
+
 
 Por Hobson-Tonelli: $F$ integrable Lebesgue. \\
 Fubini: Para casi todo $t \in [-\pi, \pi]$
@@ -657,3 +737,385 @@ Además:
 = \frac{1}{2\pi} \cdot \frac{1}{2\pi} \int_{-\pi}^\pi \int_{-\pi}^\pi |f(s)| \cdot |g(t - s)| \, dt \, ds = \|f\|_1 \|g\|_1.
 \]
 \end{proof}
+
+\textbf{30/09/2026}
+
+\subsection{Convolución y Núcleo de Dirichlet}
+
+\begin{definicion}{Convolución en $L_1(\mathbb{T})$}{conv_l1}
+Sean $f, g \in L_1(\mathbb{T})$. Se define la convolución de $f$ y $g$ como la función dada por:
+\[
+(f * g)(t) = \frac{1}{2\pi} \int_{-\pi}^\pi f(s) g(t - s) \, ds.
+\]
+Se cumple además la desigualdad:
+\[
+\|f * g\|_1 \le \|f\|_1 \|g\|_1.
+\]
+\end{definicion}
+
+\subsubsection*{Ejemplos de Convolución}
+
+\begin{ejemplo}{Exponenciales complejas}{exp_complejas}
+Para cada $n \in \mathbb{Z}$, definimos $\phi_n(t) = e^{int}$. Calculando la convolución de dos exponenciales complejas:
+\begin{align*}
+(\phi_n * \phi_m)(t) &= \frac{1}{2\pi} \int_{-\pi}^\pi \phi_n(s) \phi_m(t - s) \, ds = \frac{1}{2\pi} \int_{-\pi}^\pi e^{ins} e^{im(t - s)} \, ds \\
+&= \frac{1}{2\pi} e^{imt} \int_{-\pi}^\pi e^{i(n - m)s} \, ds \\
+&= \frac{1}{2\pi} \cdot 2\pi \delta_{nm} e^{imt} = \delta_{nm} e^{imt}.
+\end{align*}
+Por tanto:
+\[
+\phi_n * \phi_m (t) = \delta_{nm} \phi_m(t).
+\]
+\end{ejemplo}
+
+\begin{ejemplo}{Función característica epsicircular}{caract_epsicircular}
+Sea $0 < \varepsilon < \pi$ y consideremos la función $\rho_\varepsilon = \frac{1}{2\varepsilon} \chi_{[-\varepsilon, \varepsilon]}$. Para $g \in L_1(\mathbb{T})$:
+\begin{align*}
+(\rho_\varepsilon * g)(t) &= \frac{1}{2\pi} \int_{-\pi}^\pi \rho_\varepsilon(s) g(t - s) \, ds = \frac{1}{2\pi} \int_{-\varepsilon}^\varepsilon \frac{1}{2\varepsilon} g(t - s) \, ds \\
+&= \frac{1}{4\pi\varepsilon} \int_{-\varepsilon}^\varepsilon g(t - s) \, ds.
+\end{align*}
+Efectuando el cambio de variable $u = t - s$ ($du = -ds$, con $s = -\varepsilon \mapsto u = t + \varepsilon$ y $s = \varepsilon \mapsto u = t - \varepsilon$):
+\[
+(\rho_\varepsilon * g)(t) = -\frac{1}{4\pi\varepsilon} \int_{t+\varepsilon}^{t-\varepsilon} g(u) \, du = \frac{1}{4\pi\varepsilon} \int_{t-\varepsilon}^{t+\varepsilon} g(u) \, du.
+\]
+\end{ejemplo}
+
+\begin{observacion}{Unidad en el álgebra de convolución}{unidad_conv}
+\textbf{Pregunta:} En $(L_1(\mathbb{T}), *)$, ¿existe elemento neutro (unidad)? Es decir, ¿existe $f \in L_1(\mathbb{T})$ tal que $f * g = g$ para toda $g \in L_1(\mathbb{T})$?
+
+\textbf{Respuesta:} \textbf{No}. Se puede demostrar como consecuencia de la \cref{prop:fourier_conv} (ver ejercicio a continuación).
+\end{observacion}
+
+\begin{proposicion}{Coeficientes de Fourier de una convolución}{fourier_conv}
+Sean $f, g \in L_1(\mathbb{T})$ y $n \in \mathbb{Z}$. Entonces:
+\[
+\widehat{(f * g)}(n) = \hat{f}(n) \cdot \hat{g}(n).
+\]
+\end{proposicion}
+
+\begin{proof}
+Para $n \in \mathbb{Z}$, por definición de los coeficientes de Fourier:
+\begin{align*}
+\widehat{(f * g)}(n) &= \frac{1}{2\pi} \int_{-\pi}^\pi (f * g)(t) e^{-int} \, dt \\
+&= \frac{1}{2\pi} \int_{-\pi}^\pi \left[ \frac{1}{2\pi} \int_{-\pi}^\pi f(s) g(t - s) \, ds \right] e^{-int} \, dt.
+\end{align*}
+Puesto que $e^{-int} = e^{-ins} e^{-in(t - s)}$ no depende de $s$ de forma directa respecto a la medida completa, por el teorema de Fubini se intercambia el orden de integración:
+\begin{align*}
+\widehat{(f * g)}(n) &= \frac{1}{2\pi} \int_{-\pi}^\pi \frac{1}{2\pi} \left[ \int_{-\pi}^\pi f(s) e^{-ins} g(t - s) e^{-in(t - s)} \, dt \right] ds \\
+&= \left(\frac{1}{2\pi}\right)^2 \int_{-\pi}^\pi f(s) e^{-ins} \left[ \int_{-\pi}^\pi g(t - s) e^{-in(t - s)} \, dt \right] ds.
+\end{align*}
+Para cada $s$ fijo, efectuando el cambio de variable $u = t - s$ y utilizando la $2\pi$-periodicidad de las funciones:
+\[
+\int_{-\pi}^\pi g(t - s) e^{-in(t - s)} \, dt = \int_{-\pi}^\pi g(u) e^{-inu} \, du = 2\pi \hat{g}(n).
+\]
+Sustituyendo en la expresión anterior:
+\begin{align*}
+\widehat{(f * g)}(n) &= \left(\frac{1}{2\pi}\right)^2 \int_{-\pi}^\pi f(s) e^{-ins} \cdot 2\pi \hat{g}(n) \, ds \\
+&= \left( \frac{1}{2\pi} \int_{-\pi}^\pi f(s) e^{-ins} \, ds \right) \hat{g}(n) = \hat{f}(n) \cdot \hat{g}(n).
+\end{align*}
+\end{proof}
+
+\begin{nota}{Ejercicio sobre periodicidad de integrales}{ej_per_int}
+Demostrar que si $h\colon \mathbb{R} \to \mathbb{C}$ es $2\pi$-periódica e $I_1, I_2$ son intervalos de longitud $2\pi$, entonces:
+\[
+\int_{I_1} h(t) \, dt = \int_{I_2} h(t) \, dt.
+\]
+\end{nota}
+
+\subsection{Convergencia de la Serie de Fourier y Núcleo de Dirichlet}
+
+Estudio de la convergencia de $S_N(f, t)$:
+\begin{align*}
+S_N(f, t) &= \sum_{k=-N}^N \hat{f}(k) e^{ikt} = \sum_{k=-N}^N \left( \frac{1}{2\pi} \int_{-\pi}^\pi f(s) e^{-iks} \, ds \right) e^{ikt} \\
+&= \frac{1}{2\pi} \int_{-\pi}^\pi f(s) \sum_{k=-N}^N e^{-iks} e^{ikt} \, ds \\
+&= \frac{1}{2\pi} \int_{-\pi}^\pi f(s) \left( \sum_{k=-N}^N e^{ik(t - s)} \right) ds.
+\end{align*}
+
+\begin{definicion}{Núcleo de Dirichlet}{nucleo_dirichlet}
+Para cada $N \in \mathbb{N}$, se define el \textbf{núcleo de Dirichlet $N$-ésimo} como:
+\[
+D_N(t) = \sum_{k=-N}^N e^{ikt}.
+\]
+\end{definicion}
+
+La suma parcial se expresa como una convolución:
+\[
+S_N(f, t) = \frac{1}{2\pi} \int_{-\pi}^\pi f(s) D_N(t - s) \, ds = (f * D_N)(t).
+\]
+
+\begin{nota}{Notación asintótica}{notacion_asintotica}
+Si $(a_n)_n, (b_n)_n \subseteq \mathbb{C}$, se define:
+\[
+(a_n) \sim (b_n) \iff \exists A, B > 0 \text{ tales que } A a_n \le b_n \le B a_n.
+\]
+\end{nota}
+
+\begin{proposicion}{Propiedades del núcleo de Dirichlet}{prop_dirichlet}
+\begin{enumerate}
+    \item $S_N(f, t) = (f * D_N)(t)$ para toda $f \in L_1(\mathbb{T})$.
+    \item Expresión cerrada:
+    \[
+    D_N(t) = \begin{cases}
+    2N + 1, & \text{si } t = 2k\pi, \; k \in \mathbb{Z}, \\[1ex]
+    \dfrac{e^{i\left(N + \frac{1}{2}\right)t} - e^{-i\left(N + \frac{1}{2}\right)t}}{e^{i t/2} - e^{-i t/2}} = \dfrac{\operatorname{sen}\left(\left(N + \frac{1}{2}\right)t\right)}{\operatorname{sen}(t/2)}, & \text{en otro caso.}
+    \end{cases}
+    \]
+    \item $D_N(t)$ es continua, $2\pi$-periódica y par ($D_N(t) = D_N(-t)$).
+    \item Masa total unitaria:
+    \[
+    \frac{1}{2\pi} \int_{-\pi}^\pi D_N(t) \, dt = 1.
+    \]
+    \item $\|D_N\|_1 \sim \log N$.
+    \item $\|D_N\|_\infty = 2N + 1$.
+\end{enumerate}
+\end{proposicion}
+
+\begin{proof}
+\textbf{Demostración de (1):} Directa a partir de la inversión de sumatorio e integral mostrada anteriormente.
+
+\medskip
+\textbf{Demostración de (2):}
+\begin{itemize}
+    \item Si $t = 2n\pi$ para $n \in \mathbb{Z}$:
+    \[
+    e^{ikt} = e^{ik(2n\pi)} = 1 \implies D_N(t) = \sum_{k=-N}^N 1 = 2N + 1.
+    \]
+    \item Si $t \neq 2k\pi$:
+    \begin{align*}
+    D_N(t) &= \sum_{k=-N}^N e^{ikt} = e^{-iNt} \sum_{u=0}^{2N} (e^{it})^u = e^{-iNt} \frac{(e^{it})^{2N+1} - 1}{e^{it} - 1} \\
+    &= \frac{e^{i(N+1)t} - e^{-iNt}}{e^{it} - 1} = \frac{e^{-it/2}}{e^{-it/2}} \cdot \frac{e^{i(N+1)t} - e^{-iNt}}{e^{it} - 1} \\
+    &= \frac{e^{i\left(N+\frac{1}{2}\right)t} - e^{-i\left(N+\frac{1}{2}\right)t}}{e^{it/2} - e^{-it/2}} = \frac{\operatorname{sen}\left(\left(N + \frac{1}{2}\right)t\right)}{\operatorname{sen}(t/2)}.
+    \end{align*}
+\end{itemize}
+
+\medskip
+\textbf{Demostración de (3):} Se deduce inmediatamente de la expresión trigonométrica en (2).
+
+\medskip
+\textbf{Demostración de (4):}
+Intercambiando integral y sumatorio:
+\[
+\frac{1}{2\pi} \int_{-\pi}^\pi D_N(t) \, dt = \frac{1}{2\pi} \sum_{k=-N}^N \int_{-\pi}^\pi e^{ikt} \, dt.
+\]
+Para $k \neq 0$, $\int_{-\pi}^\pi e^{ikt} \, dt = 0$; para $k = 0$, $\int_{-\pi}^\pi 1 \, dt = 2\pi$. Por tanto:
+\[
+\frac{1}{2\pi} \int_{-\pi}^\pi D_N(t) \, dt = \frac{1}{2\pi} (2\pi) = 1.
+\]
+\textbf{Demostración de (5):}
+Por paridad del núcleo de Dirichlet ($D_N(-t) = D_N(t)$), calculamos su norma $L_1$:
+
+
+$$\begin{aligned}\Vert{}D_N\Vert{}_1 &= \frac{1}{2\pi} \int_{-\pi}^\pi \vert{}D_N(t)\vert{} \, dt = \frac{2}{2\pi} \int_0^\pi \vert{}D_N(t)\vert{} \, dt \\ &= \frac{1}{\pi} \int_0^\pi \left\vert{} \frac{\operatorname{sen}\left(\left(N + \frac{1}{2}\right)t\right)}{\operatorname{sen}(t/2)} \right\vert{} dt.\end{aligned}$$
+
+Efectuando el cambio de variable $u = t/2$ (con lo que $dt = 2\,du$, y los límites pasan a ser $u \in [0, \pi/2]$):
+
+
+$$\Vert{}D_N\Vert{}_1 = \frac{1}{\pi} \int_0^{\pi/2} \frac{\left\vert{}\operatorname{sen}\left((2N + 1)u\right)\right\vert{}}{\left\vert{}\operatorname{sen} u\right\vert{}} 2\,du = \frac{2}{\pi} \int_0^{\pi/2} \frac{\left\vert{}\operatorname{sen}\left((2N + 1)u\right)\right\vert{}}{\operatorname{sen} u} \, du$$
+
+\medskip
+\textbf{Paso 1: Equivalencia asintótica del denominador.}
+Recordemos que:
+
+
+$$\lim_{x \to 0} \frac{\operatorname{sen} x}{x} = 1$$
+
+Fijando $\varepsilon = \frac{1}{2}$, por definición de límite existe $\delta > 0$ tal que si $0 < \vert{}x\vert{} < \delta$:
+
+
+$$\left\vert{} \frac{\operatorname{sen} x}{x} - 1 \right\vert{} < \frac{1}{2} \implies \frac{1}{2} < \frac{\operatorname{sen} x}{x} < \frac{3}{2}$$
+
+Para el resto del intervalo, si $0 < \delta \le x \le \pi/2$, la función $x \mapsto \frac{\operatorname{sen} x}{x}$ es continua en el compacto $[\delta, \pi/2]$, por lo que alcanza un mínimo y un máximo estrictamente positivos:
+
+
+$$\exists\, M_1, M_2 > 0 \quad \text{tales que} \quad M_1 \le \frac{\operatorname{sen} x}{x} \le M_2, \quad \forall x \in [\delta, \pi/2]$$
+
+Combinando ambas regiones, existen constantes globales $A, B > 0$ tales que:
+
+
+$$A \le \frac{\operatorname{sen} x}{x} \le B, \quad \forall x \in (0, \pi/2] \implies Ax \le \operatorname{sen} x \le Bx$$
+
+De aquí, invirtiendo la desigualdad se deduce:
+
+
+$$\frac{1}{B u} \le \frac{1}{\operatorname{sen} u} \le \frac{1}{A u}, \quad \forall u \in (0, \pi/2]$$
+
+Multiplicando por $\vert{}\operatorname{sen}((2N+1)u)\vert{} \ge 0$ e integrando en $[0, \pi/2]$:
+
+
+$$\frac{1}{B} \int_0^{\pi/2} \frac{\vert{}\operatorname{sen}((2N+1)u)\vert{}}{u} \, du \le \int_0^{\pi/2} \frac{\vert{}\operatorname{sen}((2N+1)u)\vert{}}{\operatorname{sen} u} \, du \le \frac{1}{A} \int_0^{\pi/2} \frac{\vert{}\operatorname{sen}((2N+1)u)\vert{}}{u} \, du$$
+
+Por definición de equivalencia asintótica:
+
+
+$$\frac{2}{\pi} \int_0^{\pi/2} \frac{\vert{}\operatorname{sen}((2N + 1)u)\vert{}}{\operatorname{sen} u} \, du \sim \frac{2}{\pi} \int_0^{\pi/2} \frac{\vert{}\operatorname{sen}((2N + 1)u)\vert{}}{u} \, du$$
+
+\medskip
+\textbf{Paso 2: Cambio de escala y descomposición en partición.}
+Haciendo el cambio de variable $v = (2N + 1)u$, de donde $u = \frac{v}{2N+1}$ y $du = \frac{1}{2N + 1} \, dv$ (con $u = 0 \mapsto v = 0$ y $u = \pi/2 \mapsto v = (2N+1)\pi/2$):
+
+
+$$\begin{aligned}\frac{2}{\pi} \int_0^{\pi/2} \frac{\vert{}\operatorname{sen}((2N + 1)u)\vert{}}{u} \, du &= \frac{2}{\pi} \int_0^{(2N+1)\pi/2} \frac{\vert{}\operatorname{sen} v\vert{}}{\frac{v}{2N + 1}} \frac{1}{2N + 1} \, dv \\ &= \frac{2}{\pi} \int_0^{(2N+1)\pi/2} \frac{\vert{}\operatorname{sen} v\vert{}}{v} \, dv\end{aligned}$$
+
+Particionamos el intervalo de integración $[0, (2N+1)\pi/2]$ en submúltiplos de $\pi/2$, correspondientes a los intervalos $\left[ \frac{k\pi}{2}, \frac{(k+1)\pi}{2} \right]$ para $k = 0, 1, \dots, 2N$:
+
+
+$$\frac{2}{\pi} \int_0^{(2N+1)\pi/2} \frac{\vert{}\operatorname{sen} v\vert{}}{v} \, dv = \frac{2}{\pi} \sum_{k=0}^{2N} \int_{k\pi/2}^{(k+1)\pi/2} \frac{\vert{}\operatorname{sen} v\vert{}}{v} \, dv$$
+
+\medskip
+\textbf{Paso 3: Acotación de $1/v$ en cada semionda.}
+En cada subintervalo $\left[ \frac{k\pi}{2}, \frac{(k+1)\pi}{2} \right]$, puesto que $v > 0$, la función $v \mapsto \frac{1}{v}$ es decreciente:
+
+
+$$\frac{k\pi}{2} \le v \le (k+1)\frac{\pi}{2} \implies \frac{2}{\pi} \frac{1}{k+1} \le \frac{1}{v} \le \frac{2}{\pi} \frac{1}{k}$$
+
+Observemos que para $k \ge 1$:
+
+
+$$\frac{k+1}{k} = 1 + \frac{1}{k} \le 1 + 1 = 2 \implies \frac{1}{k+1} \ge \frac{1}{2k}$$
+
+Por lo tanto, la cota inferior se reduce a:
+
+
+$$\frac{1}{v} \ge \frac{2}{\pi} \frac{1}{k+1} \ge \frac{1}{\pi} \frac{1}{k}, \quad \text{es decir,} \quad \frac{2}{\pi} \frac{1}{k} \ge \frac{1}{v} \ge \frac{1}{\pi} \frac{1}{k} \quad (\forall k \ge 1)$$
+
+Esto establece que para cada $k \ge 1$, el factor $\frac{1}{v}$ es asintóticamente equivalente a $\frac{1}{k}$:
+
+
+$$\frac{1}{v} \sim \frac{1}{k}$$
+
+\medskip
+\textbf{Paso 4: Integral de las semiondas trigonométricas y conclusión.}
+En cada intervalo $\left[ \frac{k\pi}{2}, \frac{(k+1)\pi}{2} \right]$, la función $\operatorname{sen} v$ no cambia de signo, por lo que el valor absoluto de su integral coincide con la integral de una semionda:
+
+
+$$\int_{k\pi/2}^{(k+1)\pi/2} \vert{}\operatorname{sen} v\vert{} \, dv = \left\vert{} \int_{k\pi/2}^{(k+1)\pi/2} \operatorname{sen} v \, dv \right\vert{} = 1$$
+
+Sustituyendo esto en la suma (descartando el término $k=0$, que es una integral finita que solo aporta una constante acotada):
+
+
+$$\begin{aligned}\frac{2}{\pi} \sum_{k=0}^{2N} \int_{k\pi/2}^{(k+1)\pi/2} \frac{\vert{}\operatorname{sen} v\vert{}}{v} \, dv &\sim \frac{2}{\pi} \sum_{k=1}^{2N} \frac{1}{k} \int_{k\pi/2}^{(k+1)\pi/2} \vert{}\operatorname{sen} v\vert{} \, dv \\ &= \frac{2}{\pi} \sum_{k=1}^{2N} \frac{1}{k}\end{aligned}$$
+
+Para estudiar la convergencia, observamos la relación entre la integral y la suma:
+
+
+$$\int_1^M \frac{1}{x} dx = \sum_{k=1}^{M-1} \int_k^{k+1} \frac{1}{x} dx \le \sum_{k=1}^{M-1} \int_k^{k+1} \frac{1}{k} dx = \sum_{k=1}^{M-1} \frac{1}{k} \le \sum_{k=1}^M \frac{1}{k}$$
+
+Sabemos que $\int_1^M \frac{1}{x} dx = \log(M)$, ya que para $k \le x \le k+1$, se tiene $\frac{1}{k} \ge \frac{1}{x} \ge \frac{1}{k+1}$. Queremos ver que $\sum_{k=1}^M \frac{1}{k} \sim \log M$.
+Por otro lado:
+
+
+$$\log(M) = \int_1^M \frac{1}{x} dx \ge \frac{1}{2} \sum_{k=1}^{M-1} \frac{1}{k} = \frac{1}{2} \left( \sum_{k=1}^M \frac{1}{k} - \frac{1}{M} \right) \le \frac{1}{2} \left( \sum_{k=1}^M \frac{1}{k} - \frac{1}{2} \sum_{k=1}^M \frac{1}{k} \right)$$
+
+Observemos que:
+
+
+$$\frac{1}{M} \le \sum_{k=1}^{M-1} \frac{1}{k}, \quad \frac{1}{2M} \le \frac{1}{2} \sum_{k=1}^{M-1} \frac{1}{k}, \quad \frac{1}{M} \le \frac{1}{2} \sum_{k=1}^{M-1} \frac{1}{k} + \frac{1}{2M} = \frac{1}{2} \sum_{k=1}^M \frac{1}{k}$$
+
+
+Luego $A_1 = \frac{1}{4} \sum_{k=1}^M \frac{1}{k}$.
+
+Aplicando esto para $M=2N$, se concluye finalmente, por el comportamiento de la serie armónica, que:
+
+
+$$\sum_{k=1}^{2N} \frac{1}{k} \sim \log(2N) = \log 2 + \log N \sim \log N$$
+
+Concluimos que:
+
+
+$$\Vert{}D_N\Vert{}_1 \sim \log N$$
+
+\medskip
+\textbf{Demostración de (6):}
+Por la desigualdad triangular:
+
+
+$$\vert{}D_N(t)\vert{} \le \sum_{k=-N}^N \vert{}e^{ikt}\vert{} = 2N + 1 \implies \Vert{}D_N\Vert{}_\infty \le 2N + 1$$
+
+
+Como $D_N(0) = 2N + 1$, el supremo se alcanza:
+
+
+$$\Vert{}D_N\Vert{}_\infty = 2N + 1$$
+
+
+\end{proof}
+
+\textbf{1/10/26} 
+\\
+Queremos estudiar la convergencia de $(S_N(f,t))_N$. Hemos visto que $S_N(f,t) = (f * D_N)(t)$
+
+\begin{teorema}{}{thm19}
+$\exists f \in C(\mathbb{T})$ t.q. $(S_n(f,0))_n$ no converge.
+\end{teorema}
+
+\begin{proof}
+Utilizamos el Principio de Acotación Uniforme (Banach-Steinhaus). Consideremos:
+
+
+$$T_n : C(\mathbb{T}) \longrightarrow \mathbb{C}$$
+
+
+donde se mapea de un espacio vectorial topológico a otro. Si $f \in C(\mathbb{T}) \implies T_n(f) \in \mathbb{C}$ y $(T_n(f))_n \subseteq \mathbb{C}$.
+
+Supongamos que $(S_n(f,0))_n$ converge $\forall f \in C(\mathbb{T})$. Para cada $n \in \mathbb{N}$ considero $T_n: C(\mathbb{T}) \longrightarrow \mathbb{C}$ dada por $T_n(f) = S_n(f,0) = \sum_{k=-n}^n \hat{f}(k)$.
+
+\begin{enumerate}
+\item[(a)] $T_n$ es lineal $\forall n$ (inmediato porque $\hat{f}$ es lineal).
+\item[(b)] $T_n$ es continua. Si $f_j \xrightarrow{\Vert{}\cdot\Vert{}_\infty} f \implies T_n(f_j) \rightarrow T_n(f)$.
+En efecto, si $f_j \xrightarrow{\Vert{}\cdot\Vert{}_\infty} f \implies \hat{f}_j(k) \rightarrow \hat{f}(k) \quad \forall k \implies \sum_{k=-n}^n \hat{f}_j(k) \rightarrow \sum_{k=-n}^n \hat{f}(k) = T_n(f)$.
+\item[(c)] Para $f \in C(\mathbb{T})$, $\exists C_f > 0$ t.q $\vert{}T_n(f)\vert{} < C_f \quad \forall n$. Suponemos que $(S_n(f,0))_n$ es convergente, lo que implica que está acotada, por tanto $\vert{}S_n(f,0)\vert{} < C_f \quad \forall n$.
+\end{enumerate}
+
+Por el Teorema de Banach-Steinhaus, $\exists C > 0$ t.q. $\Vert{}T_n\Vert{} \le C \quad \forall n$, $\forall f \in C(\mathbb{T})$ con $\Vert{}f\Vert{}_\infty \le 1$. Vamos a ver que:
+
+
+$$\forall N \in \mathbb{N}, \exists n \in \mathbb{N}, \exists f \in C(\mathbb{T}), \Vert{}f\Vert{}_\infty \le 1 \text{ t.q. } \vert{}S_n(f,0)\vert{} \ge N $$
+
+Fijo $k \in \mathbb{N}$ y $g: [-\pi, \pi] \rightarrow \mathbb{C}$ definida por:
+
+
+$$g(t) = \begin{cases} 1 & D_k(t) \ge 0 \\ -1 & D_k(t) < 0 \end{cases} $$
+
+
+Esta función es continua salvo en una cantidad finita de puntos. Puedes construir una sucesión $(g_j)_{j=1}^\infty$ tal que:
+\begin{enumerate}
+\item[(a)] $g_j: [-\pi, \pi] \rightarrow \mathbb{C}$
+\item[(b)] $g_j \in C(\mathbb{T})$
+\item[(c)] $-1 \le g_j(t) \le 1 \quad \forall t, \forall j$
+\item[(d)] $\lim_{j\to\infty} g_j(t) = g(t) \quad \forall t \in [-\pi, \pi]$
+\end{enumerate}
+
+Para cada $j \in \mathbb{N}$ defino $h_j(t) = g_j(t) \cdot D_k(t)$, la cual es continua.
+Se cumple que $h(t) = \lim_{j\to\infty} h_j(t) = \lim_{j\to\infty} g_j(t) D_k(t) = \vert{}D_k(t)\vert{}$.
+Además, $\vert{}h_j(t)\vert{} \le \vert{}D_k(t)\vert{}$ y $D_k(t)$ es integrable.
+Por el Teorema de Convergencia Dominada (TCD) de Lebesgue, $\int_{-\pi}^\pi h(t) dt = \lim_{j\to\infty} \int_{-\pi}^\pi h_j(t) dt$.
+
+Ahora tenemos:
+
+\begin{align*}
+\vert{}T_k(g_j)\vert{} = & \vert{}S_k(g_j, 0)\vert{} = \vert{}(g_j * D_k)(0)\vert{} = \left\vert{} \frac{1}{2\pi} \int_{-\pi}^\pi g_j(s) D_k(-s) ds \right\vert{}  =  \frac{1}{2\pi} \left\vert{} \int_{-\pi}^\pi g_j(s) D_k(s) ds \right\vert{} \\ = & \frac{1}{2\pi} \left\vert{} \int_{-\pi}^\pi h_j(s) ds \right\vert{}
+\end{align*}
+Fijo $k \in \mathbb{N}$:
+
+
+$$\lim_{j\to\infty} \vert{}S_k(g_j, 0)\vert{} = \frac{1}{2\pi} \lim_{j\to\infty} \left\vert{} \int_{-\pi}^\pi h_j(t) dt \right\vert{} = \frac{1}{2\pi} \int_{-\pi}^\pi \vert{}D_k(s)\vert{} ds = \Vert{}D_k\Vert{}_1 \ge A \log(k)$$
+
+Entonces $\exists j_0$ t.q. $\vert{}S_k(g_j, 0)\vert{} \ge \frac{A \log k}{2} \quad \forall j \ge j_0$.
+Dado $N \in \mathbb{N}$:
+\begin{itemize}
+\item Elijo $n_0$ t.q. $\frac{A \log n_0}{2} > N$
+\item Elijo $j_0$ t.q. $\vert{}S_{n_0}(g_{j_0}, 0)\vert{} \ge \frac{A \log n_0}{2}$
+\item Sea $f_N = g_{j_0} \in C(\mathbb{T})$, $\Vert{}f_N\Vert{}_\infty \le 1$
+\end{itemize}
+Con todo, $\vert{}S_{n_0}(f_N, 0)\vert{} \ge N$.
+
+\end{proof}
+
+\begin{observacion}{}{}
+El Teorema de Banach-Steinhaus funciona si se reemplaza $C(\mathbb{T})$ por $L_1(\mathbb{T})$ con su norma. Luego, puedo tomar:
+
+
+$$f_k(t) = \begin{cases} 1 & D_k(t) \ge 0 \\ -1 & D_k(t) < 0 \end{cases} \quad \text{con } f_k \in L_1 $$
+
+
+\end{observacion}
