@@ -913,6 +913,7 @@ Efectuando el cambio de variable $u = t/2$ (con lo que $dt = 2\,du$, y los lími
 $$\Vert{}D_N\Vert{}_1 = \frac{1}{\pi} \int_0^{\pi/2} \frac{\left\vert{}\operatorname{sen}\left((2N + 1)u\right)\right\vert{}}{\left\vert{}\operatorname{sen} u\right\vert{}} 2\,du = \frac{2}{\pi} \int_0^{\pi/2} \frac{\left\vert{}\operatorname{sen}\left((2N + 1)u\right)\right\vert{}}{\operatorname{sen} u} \, du$$
 
 \medskip
+
 \textbf{Paso 1: Equivalencia asintótica del denominador.}
 Recordemos que:
 
@@ -1119,3 +1120,581 @@ $$f_k(t) = \begin{cases} 1 & D_k(t) \ge 0 \\ -1 & D_k(t) < 0 \end{cases} \quad \
 
 
 \end{observacion}
+\subsection{Resultados positivos de convergencia}
+
+\textbf{06/10/2026}
+
+\textbf{Pregunta:} ¿$(S_N(f))_N$ converge en algún sentido? \textbf{Negativo.}
+¿Hay resultados positivos?
+
+\begin{teorema}{M. Weierstraß}{}
+Si $f_n: [a,b] \to \mathbb{C}$ son continuas y satisfacen:
+\begin{enumerate}
+\item $\sup_{t \in [a,b]} \vert{}f_n(t)\vert{} \le M_n$
+\item $\sum_{n=1}^\infty M_n < \infty$
+\end{enumerate}
+Entonces, la serie $\sum_{n=1}^\infty f_n$ converge uniformemente en $[a,b]$.
+\end{teorema}
+
+\begin{ejemplo}{Convergencia uniforme}{}
+Sea $f(t) = t^2$ en $[-1, 1]$ (extendida periódicamente). Su desarrollo en serie de Fourier es:
+
+
+$$f(t) \sim \frac{1}{3} + \sum_{\substack{n \in \mathbb{Z} \\ n \neq 0}} \frac{2(-1)^n}{n^2\pi^2} e^{in\pi t}$$
+
+
+Para los términos $f_n: [-1, 1] \to \mathbb{C}$, que son funciones continuas, tenemos:
+
+
+$$\sup_{t \in [-1,1]} \vert{}f_n(t)\vert{} = \sup_{t \in [-1,1]} \left\vert{} \frac{2 (-1)^n}{n^2 \pi^2} e^{in\pi t} \right\vert{} = \frac{2}{n^2\pi^2}$$
+
+
+Tomando $M_n = \frac{2}{n^2\pi^2}$, comprobamos la convergencia de la serie de cotas:
+\begin{align*}
+\sum_{\substack{n \in \mathbb{Z} \ n \neq 0}} M_n &= \sum_{n=1}^\infty M_n + \sum_{n=-\infty}^{-1} M_n = \sum_{n=1}^\infty M_n + \sum_{n=1}^\infty M_{-n} \
+&= \sum_{n=1}^\infty \frac{2}{n^2\pi^2} + \sum_{n=1}^\infty \frac{2}{n^2\pi^2} = \frac{2}{\pi^2} \underbrace{\sum_{n=1}^\infty \frac{1}{n^2}}*{\pi^2/6} + \frac{2}{\pi^2} \underbrace{\sum*{n=1}^\infty \frac{1}{n^2}}_{\pi^2/6} < \infty
+\end{align*}
+Por tanto, la sucesión de sumas parciales $(S_N(f))_N$ converge uniformemente.
+\end{ejemplo}
+
+\begin{observacion}{}{}
+Si $\sum_{n \in \mathbb{Z}} \vert{}\hat{f}(n)\vert{}^2 < \infty \Rightarrow$ la serie $(S_n(f))$ converge uniformemente y $f \in \mathcal{C}(\mathbb{T})$.
+\end{observacion}
+
+\begin{proposicion}{Lema 1.11 (Lema de Riemann-Lebesgue)}{}
+Sea $I \subseteq \mathbb{R}$ un intervalo con $\mathring{I} \neq \emptyset$ y $f \in L_1(I)$.
+
+
+$$\lim_{\alpha \to \infty} \int_I f(t) \cos(\alpha t + \beta) dt = 0 \quad \forall \beta \in \mathbb{R}$$
+
+
+\end{proposicion}
+
+\begin{proof}
+\textbf{Caso 1:} $\sup [a,b] \subseteq I$ y $f = \chi_{[a,b]}$.
+\begin{align*}
+\int_I f(t) \cos(\alpha t + \beta) dt &= \int_I \chi_{[a,b]}(t) \cos(\alpha t + \beta) dt = \int_a^b \cos(\alpha t + \beta) dt \
+&= \left[ \frac{\sen(\alpha t + \beta)}{\alpha} \right]_a^b = \frac{\sen(\alpha b + \beta)}{\alpha} - \frac{\sen(\alpha a + \beta)}{\alpha}
+\end{align*}
+Acotando en valor absoluto:
+
+
+$$0 \le \left\vert{} \int_I \chi_{[a,b]}(t) \cos(\alpha t + \beta) dt \right\vert{} = \frac{\vert{}\sen(\alpha b + \beta) - \sen(\alpha a + \beta)\vert{}}{\alpha} \le \frac{2}{\alpha} \xrightarrow{\alpha \to \infty} 0$$
+
+\textbf{Caso 2:} $f$ es escalonada.
+Si $f = \sum_{k=1}^N \lambda_k \chi_{[a_k, b_k]}$, el resultado es cierto por linealidad de la integral y el límite.
+
+\textbf{Caso 3:} $f \in L_1(\mathbb{T})$ arbitraria.
+Fijamos $\varepsilon > 0$. Existe una función escalonada $\phi$ tal que $\Vert{}f - \phi\Vert{}_1 < \varepsilon/2$, es decir:
+
+
+$$\int_I \vert{}f(t) - \phi(t)\vert{} dt < \frac{\varepsilon}{2}$$
+
+
+Por el Caso 2, existe $\alpha_0 > 0$ tal que para $\alpha > \alpha_0$:
+
+
+$$\left\vert{} \int_I \phi(t) \cos(\alpha t + \beta) dt \right\vert{} < \frac{\varepsilon}{2}$$
+
+
+Por tanto, utilizando la desigualdad triangular:
+\begin{align*}
+\left| \int_I f(t) \cos(\alpha t + \beta) dt \right| &= \left| \int_I (f(t) - \phi(t) + \phi(t)) \cos(\alpha t + \beta) dt \right| \
+&\le \left| \int_I (f(t) - \phi(t)) \cos(\alpha t + \beta) dt \right| + \underbrace{\left| \int_I \phi(t) \cos(\alpha t + \beta) dt \right|}_{< \varepsilon/2} \
+&\le \int_I |f(t) - \phi(t)| |\cos(\alpha t + \beta)| dt + \frac{\varepsilon}{2} \
+&\le \int_I |f(t) - \phi(t)| dt + \frac{\varepsilon}{2} < \frac{\varepsilon}{2} + \frac{\varepsilon}{2} = \varepsilon
+\end{align*}
+\end{proof}
+
+\begin{teorema}{Teorema 1.12}{}
+Sea $f \in L_1(\mathbb{T})$ y $0 < \delta < \pi$. Entonces $S_n(f,t)$ converge si y solo si:
+
+
+$$\exists \lim_{n \to \infty} \frac{1}{2\pi} \int_0^\delta (f(t+s) + f(t-s)) D_n(s) ds$$
+
+
+Además, en este caso, la serie $S_n(f,t)$ converge a dicho límite.
+\end{teorema}
+
+\begin{proof}
+Usando la convolución con el núcleo de Dirichlet $D_n(s)$:
+\begin{align*}
+S_n(f,t) &= (D_n * f)(t) = \frac{1}{2\pi} \int_{-\pi}^\pi f(t-s) D_n(s) ds \
+&= \frac{1}{2\pi} \left( \int_{-\pi}^0 f(t-s) D_n(s) ds + \int_0^\pi f(t-s) D_n(s) ds \right)
+\end{align*}
+Haciendo el cambio de variable $u = -s$ en la primera integral y usando que $D_n$ es par ($D_n(-u) = D_n(u)$):
+\begin{align*}
+S_n(f,t) &= \frac{1}{2\pi} \left( \int_0^\pi f(t+s) D_n(s) ds + \int_0^\pi f(t-s) D_n(s) ds \right) \
+&= \frac{1}{2\pi} \int_0^\pi (f(t+s) + f(t-s)) D_n(s) ds \
+&= \frac{1}{2\pi} \left( \int_0^\delta (f(t+s) + f(t-s)) D_n(s) ds + \int_\delta^\pi (f(t+s) + f(t-s)) D_n(s) ds \right)
+\end{align*}
+Veamos que el segundo término tiende a cero cuando $n \to \infty$:
+
+
+$$\lim_{n \to \infty} \int_\delta^\pi (f(t+s) + f(t-s)) D_n(s) ds = 0 \quad (*)$$
+
+
+Sustituyendo el núcleo de Dirichlet $D_n(s) = \frac{\sen((n+1/2)s)}{\sen(s/2)}$:
+
+
+$$\int_\delta^\pi (f(t+s) + f(t-s)) \frac{\sen((n+1/2)s)}{\sen(s/2)} ds = \int_\delta^\pi \varphi(s) \sen((n+1/2)s) ds$$
+
+
+Donde $\varphi(s) = \frac{f(t+s) + f(t-s)}{\sen(s/2)}$. Al ser $\varphi \in L_1([\delta, \pi])$ (como se justifica en la observación posterior), esta integral tiende a 0 por el Lema de Riemann-Lebesgue.
+
+Sabiendo que (*) es cierto, $S_n(f,t)$ convergerá si y solo si la integral sobre $[0, \delta]$ converge.
+
+Estudiamos el comportamiento del límite aislando los valores laterales. Si sumamos y restamos $f(t+)$ y $f(t-)$, el término queda descompuesto en tres integrales. Nos enfocamos en la tercera:
+\begin{align*}
+\int_0^\delta (f(t+) + f(t-)) D_n(s) ds &= (f(t+) + f(t-)) \left( \int_0^\pi D_n(s) ds - \int_\delta^\pi D_n(s) ds \right) \
+&= (f(t+) + f(t-)) \left( \frac{1}{2} - \frac{1}{\pi} \int_\delta^\pi \frac{\sen((n+1/2)s)}{\sen(s/2)} ds \right)
+\end{align*}
+Aplicando Riemann-Lebesgue a la última integral obtenemos que tiende a 0. Así:
+
+
+$$\lim_{n \to \infty} \frac{1}{2\pi} \int_0^\delta (f(t+s) + f(t-s)) D_n(s) ds = \frac{f(t+) + f(t-)}{2}$$
+
+
+Las dos integrales restantes tienden a 0 asumiendo condiciones de integrabilidad local (ver Test de Dini).
+\end{proof}
+
+\begin{observacion}{}{}
+\begin{itemize}
+\item La función $\sen(x)$ es creciente y $\sen(x) \ge 0$ para todo $x \in [0, \pi/2]$.
+\item Para $\varphi(s) = \frac{f(t+s) + f(t-s)}{\sen(s/2)}$, si $0 < \delta \le s \le \pi \implies 0 < \delta/2 \le s/2 \le \pi/2 \implies \sen(s/2) \neq 0$ en $[\delta, \pi]$.
+\end{itemize}
+Además, $\vert{}\varphi(s)\vert{} \le \frac{\vert{}f(t+s) + f(t-s)\vert{}}{\sen(\delta/2)}$, que es integrable. Luego $\varphi \in L_1([\delta, \pi])$.
+\end{observacion}
+
+\begin{teorema}{Test de Dini}{}
+Sean $f \in L_1(\mathbb{T})$ y $t \in \mathbb{R}$ tales que existen los límites laterales:
+
+
+$$f(t-) = \lim_{s \to t^-} f(s) \quad \text{y} \quad f(t+) = \lim_{s \to t^+} f(s)$$
+
+
+Si existe un $\delta > 0$ tal que las siguientes integrales son convergentes:
+
+
+$$\int_0^\delta \frac{f(t+s) - f(t+)}{s} ds \quad \text{y} \quad \int_0^\delta \frac{f(t-s) - f(t-)}{s} ds$$
+
+
+Entonces:
+
+
+$$\exists \lim_{n \to \infty} S_n(f,t) = \frac{f(t+) + f(t-)}{2}$$
+
+
+\end{teorema}
+
+\begin{proof}
+Por el Teorema 1.12, sabemos que $\lim_{n \to \infty} S_n(f,t) = L \iff \lim_{n \to \infty} \frac{1}{2\pi} \int_0^\delta (f(t+s) + f(t-s)) D_n(s) ds = L$.
+Descomponiendo la integral:
+\begin{align*}
+\int_0^\delta (f(t+s) + f(t-s)) D_n(s) ds &= \int_0^\delta (f(t+s) - f(t+)) D_n(s) ds \
+&\quad + \int_0^\delta (f(t-s) - f(t-)) D_n(s) ds \
+&\quad + \int_0^\delta (f(t+) + f(t-)) D_n(s) ds
+\end{align*}
+Reescribiendo la primera de estas tres integrales:
+
+
+$$\int_0^\delta (f(t+s) - f(t+)) D_n(s) ds = \int_0^\delta \underbrace{\left[ \frac{f(t+s) - f(t+)}{s} \right]}_{\mathcal{C}_1} \underbrace{\frac{s}{\sen(s/2)}}_{\mathcal{C}_2} \sen((n+1/2)s) ds$$
+
+
+Dado que $\lim_{s \to 0} \frac{s}{\sen(s/2)} = 2$, la función $\mathcal{C}_2$ es acotada e integrable en $[0, \delta]$. Como por hipótesis $\mathcal{C}_1$ es integrable, el producto $\mathcal{C}_1 \cdot \mathcal{C}_2$ es integrable en $[0, \delta]$.
+Aplicando el Lema de Riemann-Lebesgue, esta integral tiende a 0. Análogamente, la segunda integral tiende a 0.
+Como ya se demostró en el Teorema 1.12, la tercera integral tiende al valor $\frac{f(t+) + f(t-)}{2}$.
+\end{proof}
+
+\begin{proposicion}{Corolario 1.14}{}
+Sea $f \in L_1(\mathbb{T})$ y $t \in \mathbb{R}$ tal que existen $f(t+)$ y $f(t-)$. Supongamos que existen las derivadas laterales:
+
+
+$$f'_-(t) = \lim_{s \to 0^-} \frac{f(t+s) - f(t-)}{s} \quad \text{y} \quad f'_+(t) = \lim_{s \to 0^+} \frac{f(t+s) - f(t+)}{s}$$
+
+
+Entonces:
+
+
+$$S_n(f,t) \xrightarrow{n \to \infty} \frac{f(t+) + f(t-)}{2}$$
+
+
+\end{proposicion}
+
+\begin{proof}
+Puesto que existe el límite $f'_-(t)$, fijado un valor límite, existe un $\delta > 0$ tal que para todo $0 < s \le \delta$:
+
+
+$$\left\vert{} \frac{f(t-s) - f(t-)}{-s} - f'_-(t) \right\vert{} < 1$$
+
+
+De aquí se deduce que:
+
+
+$$\left\vert{} \frac{f(t-s) - f(t-)}{s} \right\vert{} \le 1 + \vert{}f'_-(t)\vert{}$$
+
+
+La función integrando es acotada en $[0, \delta]$, y por tanto, integrable. Razonando de forma análoga con $f'_+(t)$, se satisfacen plenamente las condiciones exigidas por el Test de Dini, garantizando la convergencia del desarrollo de Fourier a la semisuma de los límites laterales.
+\end{proof}
+
+\textbf{08/10/2026}
+
+\subsubsection{Aplicaciones del test de Dini}
+
+\begin{nota}{Ubicación de estos ejemplos según el temario}{ubic_ejemplos_dini}
+Los tres ejemplos siguientes aplican el Corolario 1.14 (y el test de Dini) y sirven para calcular sumas de series numéricas. No aparecen en el pdf de teoría (AF\_1), donde tras el Corolario 1.14 viene directamente la proposición sobre funciones con condición de Hölder y después Cesàro. Por eso se dejan aquí, justo detrás del Corolario 1.14, como ejemplos de clase.
+\end{nota}
+
+\begin{ejemplo}{Función signo: Dini en $t=0$ y $t=\pi/2$}{dini_signo}
+Sea
+\[
+f(t) = \begin{cases} 1, & 0 \le t < \pi, \\ -1, & -\pi \le t < 0, \end{cases}
+\]
+extendida $2\pi$-periódicamente. Su serie de Fourier es
+\[
+f(t) \sim \frac{4}{\pi} \sum_{k=1}^\infty \frac{1}{2k-1} \operatorname{sen}\big((2k-1)t\big).
+\]
+
+\textbf{Caso $t=0$.} Existen los límites laterales
+\[
+f(0+) = \lim_{t \to 0^+} f(t) = 1, \qquad f(0-) = \lim_{t \to 0^-} f(t) = -1,
+\]
+luego se cumplen las dos primeras condiciones del test de Dini. Además existen las derivadas laterales:
+\[
+f'_+(0) = \lim_{s \to 0^+} \frac{f(0+s) - f(0+)}{s} = \lim_{s \to 0^+} \frac{1-1}{s} = 0, \qquad f'_-(0) = \lim_{s \to 0^-} \frac{f(0+s) - f(0-)}{s} = \lim_{s \to 0^-} \frac{-1-(-1)}{s} = 0.
+\]
+Podemos aplicar el Corolario 1.14:
+\[
+S_n(f,0) \longrightarrow \frac{f(0+) + f(0-)}{2} = \frac{1 + (-1)}{2} = 0.
+\]
+De hecho, comprobándolo con la serie, $\operatorname{sen}((2k-1)\cdot 0) = 0$, luego $S_n(f,0) = 0$ para todo $n$.
+
+\textbf{Caso $t=\pi/2$.} $f$ es continua y derivable en $\pi/2$ (es constante igual a $1$ en un entorno), así que existen los límites laterales
+\[
+\lim_{t \to \frac{\pi}{2}^-} f(t) = 1 = f\!\left(\tfrac{\pi}{2}-\right), \qquad \lim_{t \to \frac{\pi}{2}^+} f(t) = 1 = f\!\left(\tfrac{\pi}{2}+\right),
+\]
+y las derivadas laterales valen $0$. Por Dini,
+\[
+S_n\!\left(f,\tfrac{\pi}{2}\right) \to \frac{f\left(\frac{\pi}{2}+\right) + f\left(\frac{\pi}{2}-\right)}{2} = \frac{1+1}{2} = 1 = f\!\left(\tfrac{\pi}{2}\right).
+\]
+Comprobémoslo con la serie: como $\operatorname{sen}\!\big((2k-1)\tfrac{\pi}{2}\big) = \operatorname{sen}\!\big(k\pi - \tfrac{\pi}{2}\big) = -\cos(k\pi) = (-1)^{k+1}$,
+\[
+1 = f\!\left(\tfrac{\pi}{2}\right) = S\!\left(f,\tfrac{\pi}{2}\right) = \frac{4}{\pi} \sum_{k=1}^\infty \frac{(-1)^{k+1}}{2k-1} \implies \sum_{k=1}^\infty \frac{(-1)^{k+1}}{2k-1} = \frac{\pi}{4}.
+\]
+\end{ejemplo}
+
+\begin{ejemplo}{$f(t)=t^2$ en $[-1,1[$: Dini en $t=0$}{dini_t2_simetrico}
+Sea $f(t) = t^2$ para $-1 \le t < 1$, extendida con periodo $2$. Su serie (ver el ejemplo del 24/09) es
+\[
+f(t) \sim \frac{1}{3} + \sum_{n=1}^\infty \frac{4(-1)^n}{n^2\pi^2} \cos(n\pi t).
+\]
+En $t=0$ la función es continua y derivable, luego por Dini $S_n(f,0) \to f(0) = 0$. Evaluando la serie en $t=0$:
+\[
+0 = f(0) = \frac{1}{3} + \sum_{n=1}^\infty \frac{4(-1)^n}{n^2\pi^2} \implies -\frac{1}{3} = \frac{4}{\pi^2}\sum_{n=1}^\infty \frac{(-1)^n}{n^2} \implies \sum_{n=1}^\infty \frac{(-1)^{n+1}}{n^2} = \frac{\pi^2}{12}.
+\]
+\end{ejemplo}
+
+\begin{ejemplo}{$f(t)=t^2$ en $[0,2\pi[$: Dini en $t=0$}{dini_t2_2pi}
+Sea ahora $f(t) = t^2$ para $0 \le t < 2\pi$, extendida con periodo $2\pi$.
+
+\textbf{Coeficientes.} Como $f$ es $2\pi$-periódica, se puede integrar en $[0,2\pi]$ en lugar de $[-\pi,\pi]$. (En clase surgió la pregunta de por qué cambian los límites: es válido precisamente por la periodicidad, ver la nota de integración en un periodo.)
+\[
+\hat{f}(0) = \frac{1}{2\pi} \int_0^{2\pi} t^2 \, dt = \frac{1}{2\pi} \cdot \frac{(2\pi)^3}{3} = \frac{4\pi^2}{3}.
+\]
+Para $n \ne 0$, integrando por partes dos veces,
+\[
+\int t^2 e^{-int} dt = -e^{-int}\left( \frac{t^2}{in} + \frac{2t}{(in)^2} + \frac{2}{(in)^3} \right),
+\]
+y evaluando entre $0$ y $2\pi$ (usando $e^{-2\pi i n} = 1$) resulta
+\[
+\hat{f}(n) = \frac{2}{n^2} + \frac{2\pi i}{n}.
+\]
+Pasando a coeficientes reales,
+\[
+a_n = \hat{f}(n) + \hat{f}(-n) = \frac{4}{n^2}, \qquad b_n = i\big(\hat{f}(n) - \hat{f}(-n)\big) = i \cdot \frac{4\pi i}{n} = -\frac{4\pi}{n},
+\]
+y $a_0/2 = \hat{f}(0) = 4\pi^2/3$.
+
+\textbf{Aplicación de Dini en $t=0$.} Los límites laterales en $0$ son
+\[
+f(0+) = \lim_{t \to 0^+} t^2 = 0, \qquad f(0-) = \lim_{t \to 0^-} f(t) = \lim_{t \to 2\pi^-} t^2 = 4\pi^2 \quad \text{(por ser $2\pi$-periódica)},
+\]
+y existen las derivadas laterales:
+$f'_+(0) = \lim_{s \to 0^+} \frac{f(0+s)-0}{s} = \lim_{s\to 0^+} s = 0$ y
+$f'_-(0) = \lim_{s \to 0^-} \frac{f(0+s) - 4\pi^2}{s} = \lim_{s\to 0^-} \frac{(2\pi+s)^2 - 4\pi^2}{s} = 4\pi$
+(existe porque $x \mapsto x^2$ es derivable en $2\pi$). Por el Corolario 1.14,
+\[
+S_n(f,0) \to \frac{f(0+) + f(0-)}{2} = \frac{0 + 4\pi^2}{2} = 2\pi^2.
+\]
+Evaluando la serie en $t=0$ ($\cos 0 = 1$, $\operatorname{sen} 0 = 0$):
+\[
+2\pi^2 = \frac{4\pi^2}{3} + \sum_{n=1}^\infty \frac{4}{n^2} \implies \sum_{n=1}^\infty \frac{4}{n^2} = 2\pi^2 - \frac{4\pi^2}{3} = \frac{2\pi^2}{3} \implies \sum_{n=1}^\infty \frac{1}{n^2} = \frac{\pi^2}{6}.
+\]
+\end{ejemplo}
+
+\subsection{Convergencia de Cesàro}
+
+\subsubsection{Sucesiones y series escalares}
+
+\begin{definicion}{Sucesión Cesàro convergente}{cesaro_sucesion}
+Una sucesión $(\lambda_n)_n \subseteq \mathbb{C}$ es \textbf{Cesàro convergente} a $\lambda \in \mathbb{C}$ si la sucesión de medias aritméticas converge a $\lambda$:
+\[
+\frac{1}{n}(\lambda_1 + \lambda_2 + \cdots + \lambda_n) \xrightarrow{n\to\infty} \lambda.
+\]
+\end{definicion}
+
+\begin{proposicion}{Proposición 1.17}{prop_1_17}
+Si $(\lambda_n)_n \to \lambda$, entonces $(\lambda_n)_n$ converge Cesàro a $\lambda$.
+\end{proposicion}
+
+\begin{proof}
+Hay que estudiar $\left| \frac{1}{n} \sum_{k=1}^n \lambda_k - \lambda \right|$ y ver que tiende a cero. Se tiene
+\[
+\left| \frac{1}{n} \sum_{k=1}^n \lambda_k - \lambda \right| = \left| \sum_{k=1}^n \frac{\lambda_k - \lambda}{n} \right|.
+\]
+Fijo $\varepsilon > 0$. Existe $n_0 \in \mathbb{N}$ tal que $|\lambda_n - \lambda| < \varepsilon/2$ para todo $n \ge n_0$. Como $(\lambda_n)$ converge, está acotada: existe $M > 0$ con $|\lambda_n| < M$ para todo $n$, y por tanto $|\lambda_k - \lambda| \le |\lambda_k| + |\lambda| \le 2M$ (tomando $M$ también mayor que $|\lambda|$).
+
+Entonces, si $n \ge n_0$, separando la suma en dos partes:
+\[
+\left| \sum_{k=1}^n \frac{\lambda_k - \lambda}{n} \right| \le \sum_{k=1}^{n_0} \frac{|\lambda_k - \lambda|}{n} + \sum_{k=n_0+1}^n \frac{|\lambda_k - \lambda|}{n} \le \sum_{k=1}^{n_0} \frac{2M}{n} + \sum_{k=n_0+1}^n \frac{\varepsilon/2}{n} \le \frac{2M n_0}{n} + \frac{\varepsilon}{2}.
+\]
+Como $\frac{2Mn_0}{n} \to 0$, existe $n_1$ tal que $\frac{2Mn_0}{n} < \varepsilon/2$ para todo $n \ge n_1$. Entonces, si $n \ge \max(n_0,n_1)$,
+\[
+\left| \frac{1}{n} \sum_{k=1}^n \lambda_k - \lambda \right| < \frac{\varepsilon}{2} + \frac{\varepsilon}{2} = \varepsilon,
+\]
+es decir, $\lim_{n\to\infty} \frac{1}{n}\sum_{k=1}^n \lambda_k = \lambda$.
+\end{proof}
+
+\begin{ejemplo}{La sucesión $(-1)^n$}{ej_cesaro_menos_uno}
+La sucesión $(\lambda_n) = ((-1)^n)$ \textbf{no converge}. Veamos que sí converge Cesàro. Sus sumas parciales (sumando desde $n=1$) son
+\[
+\lambda_1 = -1, \quad \lambda_1 + \lambda_2 = 0, \quad \lambda_1+\lambda_2+\lambda_3 = -1, \quad \lambda_1+\lambda_2+\lambda_3+\lambda_4 = 0, \dots
+\]
+es decir
+\[
+\sum_{k=1}^n \lambda_k = \begin{cases} 0, & n \text{ par}, \\ -1, & n \text{ impar}, \end{cases} \quad \Longrightarrow \quad 0 \le \left| \frac{1}{n} \sum_{k=1}^n \lambda_k \right| \le \frac{1}{n} \to 0.
+\]
+Luego $((-1)^n)_n$ es convergente Cesàro (y converge a $0$). Esto muestra que el recíproco de la Proposición 1.17 es falso.
+\end{ejemplo}
+
+\begin{definicion}{Serie Cesàro convergente}{cesaro_serie}
+Dada $(\lambda_n)_{n=1}^\infty$, se considera la sucesión de sumas parciales $s_1 = \lambda_1$, $s_2 = \lambda_1 + \lambda_2$, $s_3 = \lambda_1+\lambda_2+\lambda_3, \dots$, es decir $s_N = \sum_{k=1}^N \lambda_k$. Si $(s_N)_N$ converge Cesàro, decimos que la serie $\sum_k \lambda_k$ \textbf{converge Cesàro}. Es decir, si
+\[
+\sigma_N = \frac{1}{N}\left( s_1 + s_2 + \cdots + s_N \right) \quad \text{converge.}
+\]
+\end{definicion}
+
+\begin{nota}{Índices desde 0 y fórmula de $\sigma_N$}{nota_indices_cesaro}
+Cuando se empieza con $(\lambda_n)_{n=0}^\infty$ las sumas parciales son $s_0 = \lambda_0$, $s_1 = \lambda_0+\lambda_1, \dots, s_N = \lambda_0 + \cdots + \lambda_N$, y
+\[
+\sigma_0 = s_0, \quad \sigma_1 = \tfrac{1}{2}(s_0 + s_1), \quad \sigma_2 = \tfrac{1}{3}(s_0+s_1+s_2), \quad \dots, \quad \sigma_N = \frac{1}{N+1}(s_0 + s_1 + \cdots + s_N).
+\]
+Si esto converge, $\sum \lambda_n$ es Cesàro convergente. Desarrollando los primeros términos:
+\[
+\sigma_1 = \tfrac{1}{2}(2\lambda_0 + \lambda_1), \quad \sigma_2 = \tfrac{1}{3}(3\lambda_0 + 2\lambda_1 + \lambda_2), \quad \sigma_3 = \tfrac{1}{4}(4\lambda_0 + 3\lambda_1 + 2\lambda_2 + \lambda_3),
+\]
+lo que sugiere
+\[
+\sigma_N = \frac{1}{N+1} \sum_{k=0}^N (N+1-k)\lambda_k = \sum_{k=0}^N \left(1 - \frac{k}{N+1}\right) \lambda_k.
+\]
+Se demostraría por inducción (\textbf{ejercicio importante}) que esta fórmula es cierta. Es la que se usará para las sumas de Fourier.
+\end{nota}
+
+\textbf{15/10/2026}
+
+\begin{nota}{Repetición de la clase del 08/10}{repeticion_cesaro_1510}
+Al empezar la clase se repite la introducción a Cesàro de la clase del 08/10 (definición de convergencia Cesàro para sucesiones y series y el ejemplo $(-1)^n$), esta vez empezando en $n=0$ y con la notación $m_n$ para las medias. En AF\_1 la convergencia de Cesàro aparece una sola vez (Definición y Proposición 1.17, y la definición de serie Cesàro convergente), por lo que \textbf{la teoría no se duplica}. Se incluye aquí como ejemplo, junto a la motivación, porque en clase se insiste en estos puntos.
+\end{nota}
+
+\begin{ejemplo}{Motivación: pulsos $f_\delta$ y sus coeficientes}{ej_pulso_f_delta}
+Dado $0 < \delta < \pi$, sea $f_\delta : [-\pi,\pi] \to \mathbb{C}$,
+\[
+f_\delta(t) = \begin{cases} \dfrac{1}{2\delta}, & -\delta \le t \le \delta, \\[1ex] 0, & \text{otro caso.} \end{cases}
+\]
+Sus coeficientes de Fourier son
+\[
+\hat{f}_\delta(0) = \frac{1}{2\pi} \int_{-\delta}^{\delta} \frac{1}{2\delta} \, dt = \frac{1}{2\pi},
+\]
+y para $n \ne 0$,
+\[
+\hat{f}_\delta(n) = \frac{1}{2\pi} \int_{-\delta}^{\delta} \frac{1}{2\delta} e^{-int} dt = \frac{1}{2\pi} \cdot \frac{1}{2\delta} \cdot \frac{-1}{in} \left( e^{-in\delta} - e^{in\delta} \right) = \frac{1}{2\pi} \cdot \frac{\operatorname{sen}(n\delta)}{n\delta}.
+\]
+Cuando $\delta \to 0$, $f_\delta$ tiende a ``$\infty$'' en $t=0$ y a $0$ en $t \ne 0$, mientras que
+\[
+\lim_{\delta \to 0} \hat{f}_\delta(n) = \frac{1}{2\pi} \quad \forall n \in \mathbb{Z}.
+\]
+\end{ejemplo}
+
+\begin{nota}{¿Va en este punto?}{nota_ubic_f_delta}
+Este ejemplo no está en AF\_1. Se hace al principio de la clase como motivación de los núcleos que se concentran en el origen (la idea que formaliza la definición de núcleo de sumabilidad). Su sitio natural en los apuntes sería después de esa definición; se deja aquí por seguir el orden de la clase.
+\end{nota}
+
+\begin{ejemplo}{Cesàro para sucesiones: $1,-1,1,\dots$}{ej_cesaro_media}
+Sean $\lambda_0, \lambda_1, \ldots \in \mathbb{C}$ una sucesión. ¿Converge?
+
+\begin{enumerate}
+\item[(a)] Convergencia ``normal'': $\forall \varepsilon > 0$, $\exists n_0 \in \mathbb{N}$ tal que \dots
+\item[(b)] Cesàro: tomo las medias aritméticas
+\[
+m_0 = \lambda_0, \quad m_1 = \frac{\lambda_0 + \lambda_1}{2}, \quad m_2 = \frac{1}{3}(\lambda_0 + \lambda_1 + \lambda_2), \quad \dots, \quad m_n = \frac{1}{n+1}(\lambda_0 + \cdots + \lambda_n),
+\]
+y la pregunta es si $(m_n)_n$ converge.
+\end{enumerate}
+
+Para $\lambda_n = (-1)^n$ ($1,-1,1,-1,\dots$): no converge, pero $m_0 = 1$, $m_1 = 0$, $m_2 = \tfrac{1}{3}$, \dots,
+\[
+m_n = \begin{cases} \dfrac{1}{n+1}, & n \text{ par}, \\[1ex] 0, & n \text{ impar}, \end{cases} \quad \longrightarrow 0,
+\]
+luego $(-1)^n \xrightarrow{\,n\to\infty\,} 0$ en el sentido de Cesàro.
+\end{ejemplo}
+
+\begin{ejemplo}{La serie $\sum (-1)^n$ en el sentido de Cesàro}{ej_cesaro_serie}
+Dada una serie $\lambda_0 + \lambda_1 + \cdots + \lambda_n + \cdots$, ¿cuánto suma? Se considera la sucesión de sumas parciales $s_0 = \lambda_0$, $s_1 = \lambda_0 + \lambda_1$, $s_2 = \lambda_0+\lambda_1+\lambda_2$, \dots, $s_n = \sum_{k=0}^n \lambda_k$.
+\begin{enumerate}
+\item[(a)] $s_n \to L \iff \sum \lambda_n$ converge y $\sum_{n=0}^\infty \lambda_n = L$.
+\item[(b)] Cesàro: $s_n \xrightarrow{\text{Cesàro}} L \iff \mathcal{C}\text{-}\sum \lambda_n = L$. Es decir, las medias aritméticas de $(s_n)$:
+\[
+\sigma_0 = s_0, \quad \sigma_1 = \tfrac{1}{2}(s_0+s_1), \quad \sigma_2 = \tfrac{1}{3}(s_0+s_1+s_2), \quad \dots, \quad \sigma_n = \tfrac{1}{n+1}(s_0+\cdots+s_n),
+\]
+verifican $\sigma_n \to L \iff s_n \xrightarrow{\mathcal{C}} L \iff \mathcal{C}\text{-}\sum \lambda_n = L$.
+\end{enumerate}
+
+Para $1,-1,1,-1,\dots$ las sumas parciales son $s_0 = 1$, $s_1 = 0$, $s_2 = 1$, \dots, y
+\[
+\sigma_0 = 1, \quad \sigma_1 = \tfrac{1}{2}, \quad \sigma_2 = \tfrac{2}{3}, \quad \sigma_3 = \tfrac{1}{2}, \quad \sigma_4 = \tfrac{3}{5}, \quad \sigma_5 = \tfrac{1}{2}, \qquad \sigma_n = \begin{cases} \tfrac{1}{2}, & n \text{ impar}, \\[0.5ex] \dfrac{n/2+1}{n+1}, & n \text{ par}, \end{cases} \quad \xrightarrow{n\to\infty} \tfrac{1}{2}.
+\]
+Luego $\displaystyle\sum_{n=0}^\infty (-1)^n = \tfrac{1}{2}$ en el sentido de Cesàro. Usando la fórmula de la nota anterior, $\sigma_n = \frac{1}{n+1}\sum_{k=0}^n (n+1-k)\lambda_k$.
+\end{ejemplo}
+
+\subsection{Medias de Cesàro de una serie de Fourier}
+
+\textbf{Idea.} Si $f \in L_1$ tengo su serie de Fourier, que no tiene por qué converger. Aplico el ``método de Cesàro'' a la sucesión de sumas parciales $(S_n(f,t))_n$.
+
+\begin{definicion}{Media de Cesàro de $f$}{media_cesaro_f}
+Si $f \in L_1(\mathbb{T})$ y $N \in \mathbb{N}$, se define la $N$-ésima media de Cesàro de $f$ como
+\[
+\sigma_N(f,t) = \sigma_N(f)(t) = \frac{1}{N+1}\Big( S_0(f,t) + S_1(f,t) + \cdots + S_N(f,t) \Big).
+\]
+\end{definicion}
+
+\textbf{Pregunta:} ¿$\sigma_N(f) \to f$ en algún sentido? Observamos primero que, escribiendo $S_n(f,t) = \sum_{k=-n}^n \hat{f}(k) e^{ikt} = \frac{a_0}{2} + \sum_{k=1}^n \underbrace{\big(a_k \cos(kt) + b_k \operatorname{sen}(kt)\big)}_{\lambda_k}$, la media de Cesàro es la media de las sumas parciales de $\sum \lambda_k$, y por la fórmula de la nota anterior:
+\[
+\sigma_N(f,t) = \frac{a_0}{2} + \sum_{k=1}^N \left(1 - \frac{k}{N+1}\right)\big(a_k \cos(kt) + b_k \operatorname{sen}(kt)\big) = \sum_{k=-N}^{N} \left(1 - \frac{|k|}{N+1}\right) \hat{f}(k) e^{ikt}.
+\]
+
+\textbf{Paso 1: escribir $\sigma_N(f)$ como una convolución.} Usando $S_n(f,t) = (f * D_n)(t)$:
+\[
+\sigma_N(f,t) = \frac{1}{N+1}\sum_{n=0}^N S_n(f,t) = \frac{1}{N+1}\sum_{n=0}^N \frac{1}{2\pi}\int_{-\pi}^{\pi} f(s) D_n(t-s)\, ds = \frac{1}{2\pi}\int_{-\pi}^{\pi} f(s) \underbrace{\frac{1}{N+1}\sum_{n=0}^N D_n(t-s)}_{F_N(t-s)} ds = (f * F_N)(t).
+\]
+
+\subsubsection{El núcleo de Fejér}
+
+\begin{definicion}{Núcleo de Fejér}{nucleo_fejer}
+Para cada $N \in \mathbb{N}$ se define el \textbf{núcleo de Fejér} $N$-ésimo como
+\[
+F_N(t) = \frac{1}{N+1}\sum_{n=0}^N D_n(t).
+\]
+Por lo anterior, $\sigma_N(f,t) = (f * F_N)(t)$. (Observación de clase: se suele escribir también $(K_N)_N$, \emph{Fejér kernel}.)
+\end{definicion}
+
+\begin{proposicion}{Proposición 1.18: propiedades del núcleo de Fejér}{prop_1_18}
+$F_N$ es $2\pi$-periódica, continua, no negativa ($F_N(t) \ge 0$) y par ($F_N(t) = F_N(-t)$). Además
+\[
+F_N(t) = \begin{cases} N+1, & t = 2k\pi, \; k \in \mathbb{Z}, \\[1ex] \dfrac{1}{N+1}\left( \dfrac{\operatorname{sen}\left(\frac{N+1}{2}t\right)}{\operatorname{sen}(t/2)} \right)^2, & \text{otro caso.} \end{cases}
+\]
+\end{proposicion}
+
+\begin{proof}
+\begin{itemize}
+\item \textbf{$2\pi$-periódica:} obvio, es una suma finita de funciones $2\pi$-periódicas.
+\item \textbf{Continua:} suma finita de funciones continuas.
+\item \textbf{Par:} suma finita de funciones pares.
+\item $F_N(t) \ge 0$: es obvio a partir de la descripción (un cuadrado dividido por $N+1>0$).
+\end{itemize}
+\textbf{Caso $t = 2k\pi$, $k \in \mathbb{Z}$.} Como $D_n(2k\pi) = 2n+1$,
+\[
+F_N(2k\pi) = \frac{1}{N+1}\sum_{n=0}^N (2n+1) = \frac{1}{N+1}\left( 2\sum_{n=0}^N n + \sum_{n=0}^N 1 \right) = \frac{1}{N+1}\left( N(N+1) + (N+1) \right) = N+1.
+\]
+\textbf{Otro $t$.} Usando $D_n(t) = \frac{\operatorname{sen}((n+\frac{1}{2})t)}{\operatorname{sen}(t/2)}$:
+\[
+F_N(t) = \frac{1}{N+1}\sum_{n=0}^N \frac{\operatorname{sen}((n+\frac{1}{2})t)}{\operatorname{sen}(t/2)} = \frac{1}{N+1} \cdot \frac{1}{\operatorname{sen}(t/2)} \cdot \operatorname{Im}\left( \sum_{n=0}^N e^{i(n+\frac{1}{2})t} \right),
+\]
+ya que $e^{ia} = \cos a + i\operatorname{sen} a$ y $\operatorname{sen} a = \operatorname{Im}(e^{ia})$. Sumando la progresión geométrica:
+\begin{align*}
+\sum_{n=0}^N e^{i(n+\frac{1}{2})t} &= e^{it/2}\sum_{n=0}^N (e^{it})^n = e^{it/2}\,\frac{(e^{it})^{N+1} - 1}{e^{it} - 1} = e^{it/2}\,\frac{e^{i\frac{N+1}{2}t}\left( e^{i\frac{N+1}{2}t} - e^{-i\frac{N+1}{2}t} \right)}{e^{it/2}\left( e^{it/2} - e^{-it/2} \right)} \\
+&= e^{i\frac{N+1}{2}t} \,\frac{\operatorname{sen}\left(\frac{N+1}{2}t\right)}{\operatorname{sen}(t/2)} = \left( \cos\left(\tfrac{N+1}{2}t\right) + i\operatorname{sen}\left(\tfrac{N+1}{2}t\right) \right)\frac{\operatorname{sen}\left(\frac{N+1}{2}t\right)}{\operatorname{sen}(t/2)}.
+\end{align*}
+Tomando la parte imaginaria,
+\[
+\operatorname{Im}\left( \sum_{n=0}^N e^{i(n+\frac{1}{2})t} \right) = \frac{\left(\operatorname{sen}\left(\frac{N+1}{2}t\right)\right)^2}{\operatorname{sen}(t/2)},
+\]
+y por tanto
+\[
+F_N(t) = \frac{1}{N+1}\cdot\frac{1}{\operatorname{sen}(t/2)}\cdot\frac{\left(\operatorname{sen}\left(\frac{N+1}{2}t\right)\right)^2}{\operatorname{sen}(t/2)} = \frac{1}{N+1}\left( \frac{\operatorname{sen}\left(\frac{N+1}{2}t\right)}{\operatorname{sen}(t/2)} \right)^2. \qedhere
+\]
+\end{proof}
+
+\begin{teorema}{Teorema 1.19: núcleo de Fejér}{thm_1_19}
+\begin{enumerate}
+\item[(1)] $\displaystyle\frac{1}{2\pi}\int_{-\pi}^{\pi} F_N(t)\,dt = 1$ para todo $N \in \mathbb{N}$.
+\item[(2)] $\displaystyle F_N(t) \le \frac{1}{N+1}\,\frac{1}{(\operatorname{sen}(\delta/2))^2}$ para todo $\delta < |t| \le \pi$.
+\item[(3)] $F_N \xrightarrow{N\to\infty} 0$ uniformemente en $[-\pi,-\delta]\cup[\delta,\pi]$, para todo $\delta$.
+\item[(4)] $\displaystyle\lim_{N}\left( \frac{1}{2\pi}\int_{\delta < |t| < \pi} F_N(t)\,dt \right) = 0$, para todo $\delta$.
+\end{enumerate}
+\end{teorema}
+
+\begin{proof}
+\textbf{(1)} Por la propiedad (4) del núcleo de Dirichlet,
+\[
+\frac{1}{2\pi}\int_{-\pi}^{\pi} F_N(t)\,dt = \frac{1}{2\pi}\int_{-\pi}^{\pi}\frac{1}{N+1}\sum_{n=0}^N D_n(t)\,dt = \frac{1}{N+1}\sum_{n=0}^N \underbrace{\frac{1}{2\pi}\int_{-\pi}^{\pi} D_n(t)\,dt}_{1} = \frac{1}{N+1}(N+1) = 1.
+\]
+\textbf{(2)} Fijo $\delta > 0$ y tomo $\delta < |t| \le \pi$ (en particular $t \notin \{2k\pi\}$). Entonces
+\[
+0 \le F_N(t) = \frac{1}{N+1}\left( \frac{\operatorname{sen}\left(\frac{N+1}{2}t\right)}{\operatorname{sen}(t/2)} \right)^2 \le \frac{1}{N+1}\,\frac{1}{(\operatorname{sen}(t/2))^2} \le \frac{1}{N+1}\,\frac{1}{(\operatorname{sen}(\delta/2))^2},
+\]
+donde la última desigualdad se debe a que $\operatorname{sen}$ es creciente en $[0,\pi/2]$: de $\delta < |t| \le \pi$ se deduce $\delta/2 < |t|/2 \le \pi/2$ y $\operatorname{sen}(|t|/2) > \operatorname{sen}(\delta/2)$.
+
+\textbf{(3)} y \textbf{(4)} se deducen de (2): la cota depende de $N$ solo a través de $\frac{1}{N+1} \to 0$, y no depende de $t$ (de ahí la convergencia uniforme); además la integral en $\{\delta<|t|<\pi\}$ está acotada por $\frac{1}{2\pi}\cdot 2\pi \cdot \frac{1}{(N+1)\operatorname{sen}^2(\delta/2)} \to 0$.
+\end{proof}
+
+\begin{observacion}{Norma $L_1$ de $F_N$ y acotación de $\sigma_N(f)$}{obs_norma_fejer}
+Como $\frac{1}{2\pi}\int_{-\pi}^{\pi}F_N(t)\,dt = 1$ y $F_N(t) \ge 0$ para todo $t$, se tiene
+\[
+\frac{1}{2\pi}\int_{-\pi}^{\pi}|F_N(t)|\,dt = 1 \implies \|F_N\|_1 = 1.
+\]
+Además, por la desigualdad de la norma de la convolución,
+\[
+\|\sigma_N(f)\|_1 = \|f * F_N\|_1 \le \|f\|_1\,\|F_N\|_1 = \|f\|_1.
+\]
+\end{observacion}
+
+\begin{nota}{Resumen: propiedades fundamentales de $(F_N)_N$}{resumen_prop_fejer}
+Las propiedades que se usarán (y que definen el siguiente concepto) son:
+\begin{enumerate}
+\item[(1)] $\|F_N\|_1$ acotada (Observación anterior).
+\item[(2)] Integra $1$ (Teorema 1.19 (1)).
+\item[(3)] Se acumula la masa en el centro (Teorema 1.19 (4)).
+\end{enumerate}
+\end{nota}
+
+\subsection{Núcleos de sumabilidad}
+
+\begin{definicion}{Núcleo de sumabilidad}{nucleo_sumabilidad}
+Una familia de funciones $(K_\varepsilon)_{\varepsilon>0}$ (numerable o no numerable) es un \textbf{núcleo de sumabilidad} sobre $\mathbb{T}$ si:
+\begin{enumerate}
+\item[(1)] $\displaystyle\sup_{\varepsilon>0}\left( \frac{1}{2\pi}\int_{-\pi}^{\pi}|K_\varepsilon(t)|\,dt \right) = \sup_{\varepsilon>0}\|K_\varepsilon\|_1 < \infty$.
+\item[(2)] $\displaystyle\frac{1}{2\pi}\int_{-\pi}^{\pi}K_\varepsilon(t)\,dt = 1$ para todo $\varepsilon > 0$.
+\item[(3)] Para cada $0 < \delta < \pi$ fijo se tiene $\displaystyle\lim_{\varepsilon\to 0^+}\left( \frac{1}{2\pi}\int_{\delta<|t|<\pi}|K_\varepsilon(t)|\,dt \right) = 0$.
+\end{enumerate}
+\end{definicion}
+
+\begin{teorema}{Teorema 1.20}{thm_1_20}
+Si $(K_\varepsilon)_{\varepsilon>0}$ es un núcleo de sumabilidad y $f \in C(\mathbb{T})$, entonces
+\[
+f * K_\varepsilon \xrightarrow{\text{unif}} f.
+\]
+\end{teorema}
+
+\begin{nota}{Sucesiones como núcleos de sumabilidad}{nota_sucesion_nucleo}
+Además, tomando $\varepsilon_N = 1/N$ y $K_N = K_{\varepsilon_N}$ se cubre el caso de una sucesión $(K_N)_N$ (como $(F_N)_N$, donde $N$ juega el papel de $1/\varepsilon$). Por el Teorema 1.19 y la Observación anterior, $(F_N)_N$ cumple (1), (2) y (3), luego es un núcleo de sumabilidad y, por el Teorema 1.20, $\sigma_N(f) \to f$ uniformemente para $f \in C(\mathbb{T})$. El enunciado del teorema ya está en la clase del 15/10; su demostración queda para la siguiente clase (no está en los apuntes).
+\end{nota}

@@ -11,3 +11,4 @@
 *.gz
 *.bbl
 .singularhistory
+v*
