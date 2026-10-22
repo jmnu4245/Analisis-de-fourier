@@ -135,6 +135,8 @@ Los coeficientes complejos quedan de la forma general unificada:
     \hat{f}(n) = \frac{1}{2\pi} \int_{-\pi}^{\pi} f(t) e^{-int} dt, \quad \forall n \in \mathbb{Z}
 \end{equation*}
 
+\textbf{18/09/26} (la clase empieza con el caso $n \le -1$ anterior)
+
 \begin{observacion}{Recuperación de coeficientes reales}{recuperacion_coeficientes}
 Si conocemos la sucesión $(\hat{f}(n))_{n \in \mathbb{Z}}$, ¿cómo encontramos $a_n$ y $b_n$?  
 
@@ -228,6 +230,14 @@ Entonces $A$ forma una \textbf{subálgebra}. Si además se cumple que:
 \end{enumerate}
 Entonces $A$ es denso en $C(K)$.
 \end{observacion}
+
+\begin{nota}{Stone--Weierstraß y el caso clásico}{nota_stone_weierstrass}
+En los apuntes del 18/09 el resultado anterior aparece con nombre: es el \textbf{Teorema de Stone--Weierstraß} (en AF\_1: \emph{sea $K$ compacto; toda subálgebra autoadjunta de $C(K)$ es densa en $C(K)$}). La hipótesis de que $K$ sea compacto no aparece escrita en los apuntes pero es necesaria.
+
+Como ejemplo clásico se recordó en clase el caso real: $C([a,b]) = \{f : [a,b] \to \mathbb{R} \text{ continua}\}$ con la norma $\|f\| = \sup_{x \in [a,b]} |f(x)|$ y $\mathcal{P}(\mathbb{R}) = \{\text{polinomios con coeficientes reales}\}$; los polinomios son densos en $C([a,b])$ (Teorema de Weierstraß).
+
+La proposición siguiente es la \textbf{Proposición 1.1} de los apuntes y de AF\_1.
+\end{nota}
 
 \begin{proposicion}{Densidad en $C(\mathbb{T})$}{densidad_ct}
 En nuestro caso $C(K) = C(\mathbb{T})$.
@@ -659,7 +669,7 @@ Tomando $n_0 = max\{M, N\} + 1$, si $|n| \ge n_0 \implies |\hat{f}(n)| < \vareps
 \end{proof}
 
 \begin{proof}[Demostración de (3)]
-Más adelante en el curso.
+Más adelante en el curso: es el Corolario 1.27 (consecuencia del Teorema de Fejér en $L_1$).
 \end{proof}
 
 \begin{proof}[Demostración de (4)]
@@ -1696,5 +1706,309 @@ f * K_\varepsilon \xrightarrow{\text{unif}} f.
 \end{teorema}
 
 \begin{nota}{Sucesiones como núcleos de sumabilidad}{nota_sucesion_nucleo}
-Además, tomando $\varepsilon_N = 1/N$ y $K_N = K_{\varepsilon_N}$ se cubre el caso de una sucesión $(K_N)_N$ (como $(F_N)_N$, donde $N$ juega el papel de $1/\varepsilon$). Por el Teorema 1.19 y la Observación anterior, $(F_N)_N$ cumple (1), (2) y (3), luego es un núcleo de sumabilidad y, por el Teorema 1.20, $\sigma_N(f) \to f$ uniformemente para $f \in C(\mathbb{T})$. El enunciado del teorema ya está en la clase del 15/10; su demostración queda para la siguiente clase (no está en los apuntes).
+Además, tomando $\varepsilon_N = 1/N$ y $K_N = K_{\varepsilon_N}$ se cubre el caso de una sucesión $(K_N)_N$ (como $(F_N)_N$, donde $N$ juega el papel de $1/\varepsilon$). Por el Teorema 1.19 y la Observación anterior, $(F_N)_N$ cumple (1), (2) y (3), luego es un núcleo de sumabilidad y, por el Teorema 1.20, $\sigma_N(f) \to f$ uniformemente para $f \in C(\mathbb{T})$. El enunciado del teorema se dio en la clase del 15/10; la demostración se hizo el 20/10 (ver a continuación).
 \end{nota}
+
+\textbf{20/10/2026}
+
+\begin{observacion}{El núcleo de Fejér es un núcleo de sumabilidad}{obs_fejer_sumabilidad}
+Tenemos $(F_N)_N$ (núcleo de Fejér). Para cada $N \in \mathbb{N}$ hago $\varepsilon_N = \frac{1}{N}$ (es decir, $N = \frac{1}{\varepsilon_N}$). Entonces, definiendo $K_{\varepsilon_N} = F_N$, la familia $(K_{\varepsilon_N})_N$ es un núcleo de sumabilidad.
+\end{observacion}
+
+\begin{nota}{Repetición}{nota_rep_fejer_sumab}
+Esta observación repite lo dicho al final de la clase del 15/10 (nota anterior). Se mantiene aquí porque en clase se vuelve a enunciar justo antes de la demostración del Teorema 1.20, que es donde se usa.
+\end{nota}
+
+\begin{proof}[Demostración del Teorema 1.20 (20/10)]
+Equivalentemente, sea $f \in C(\mathbb{T})$; hay que ver que $\lim_{\varepsilon\to 0}\|K_\varepsilon * f - f\|_\infty = 0$, es decir,
+\[
+\lim_{\varepsilon \to 0}\ \sup_{t \in [-\pi,\pi]} |(K_\varepsilon * f)(t) - f(t)| = 0.
+\]
+Fijo $\eta > 0$. Quiero encontrar $\varepsilon_0 > 0$ tal que si $0 < \varepsilon < \varepsilon_0$, entonces $|f(t) - (K_\varepsilon * f)(t)| < \eta$ para todo $t \in [-\pi,\pi]$.
+
+\textbf{1) Reescribimos lo que está dentro del módulo.} Por definición, $(K_\varepsilon * f)(t) = \frac{1}{2\pi}\int_{-\pi}^{\pi} K_\varepsilon(s) f(t-s)\,ds$. Además, por la propiedad (2) del núcleo de sumabilidad,
+\[
+f(t) = f(t)\cdot 1 = f(t)\cdot\frac{1}{2\pi}\int_{-\pi}^{\pi}K_\varepsilon(s)\,ds = \frac{1}{2\pi}\int_{-\pi}^{\pi} f(t) K_\varepsilon(s)\,ds.
+\]
+Luego
+\[
+f(t) - (K_\varepsilon * f)(t) = \frac{1}{2\pi}\int_{-\pi}^{\pi} K_\varepsilon(s)\big(f(t) - f(t-s)\big)\,ds \implies |f(t) - (K_\varepsilon*f)(t)| \le \frac{1}{2\pi}\int_{-\pi}^{\pi}|K_\varepsilon(s)|\,|f(t)-f(t-s)|\,ds.
+\]
+\textbf{Idea:} elegir $\delta > 0$ y separar $\int_{-\pi}^{\pi} \cdots\,ds = \int_{-\delta}^{\delta}\cdots\,ds + \int_{\delta<|s|<\pi}\cdots\,ds$, e intentar controlar cada integral.
+
+\textbf{Lema} (probado en Topología I). Si $K \subseteq \mathbb{C}$ es compacto y $f : K \to \mathbb{C}$ es continua, entonces $f$ es uniformemente continua en $K$.
+
+Como $f$ es continua en $\mathbb{T}$ y $\mathbb{T} \subseteq \mathbb{C}$ es compacto, $f$ es uniformemente continua en $\mathbb{T}$. Llamando $M = \sup_{\varepsilon>0}\|K_\varepsilon\|_1 < \infty$ (propiedad (1)), dado $\eta > 0$ existe $\delta > 0$ tal que si $|s| < \delta$ entonces
+\[
+|f(t) - f(t-s)| < \frac{\eta}{2M} \quad \text{para todo } t.
+\]
+
+\textbf{\textcircled{1} Integral cerca del origen.} Como $[-\delta,\delta] \subseteq [-\pi,\pi]$ y $|K_\varepsilon| \ge 0$,
+\[
+\frac{1}{2\pi}\int_{-\delta}^{\delta}|K_\varepsilon(s)|\,|f(t)-f(t-s)|\,ds < \frac{\eta}{2M}\cdot\frac{1}{2\pi}\int_{-\delta}^{\delta}|K_\varepsilon(s)|\,ds \le \frac{\eta}{2M}\cdot\underbrace{\frac{1}{2\pi}\int_{-\pi}^{\pi}|K_\varepsilon(s)|\,ds}_{\|K_\varepsilon\|_1 \le M} \le \frac{\eta}{2}.
+\]
+
+\textbf{\textcircled{2} Integral lejos del origen.} Por la desigualdad triangular, $|f(t)-f(t-s)| \le |f(t)| + |f(t-s)| \le 2\|f\|_\infty$, luego
+\[
+\frac{1}{2\pi}\int_{\delta<|s|<\pi}|K_\varepsilon(s)|\,|f(t)-f(t-s)|\,ds \le 2\|f\|_\infty\,\frac{1}{2\pi}\int_{\delta<|s|<\pi}|K_\varepsilon(s)|\,ds.
+\]
+Por la propiedad (3) del núcleo de sumabilidad, existe $\varepsilon_0 > 0$ tal que si $0 < \varepsilon < \varepsilon_0$ entonces $\frac{1}{2\pi}\int_{\delta<|s|<\pi}|K_\varepsilon(s)|\,ds < \frac{\eta}{4\|f\|_\infty}$ (si $f \equiv 0$ no hay nada que probar). Con esto, si $0<\varepsilon<\varepsilon_0$,
+\[
+\frac{1}{2\pi}\int_{\delta<|s|<\pi}|K_\varepsilon(s)|\,|f(t)-f(t-s)|\,ds < \frac{\eta}{2}.
+\]
+
+\textbf{3) Acabamos.} Si $0 < \varepsilon < \varepsilon_0$, para todo $t$:
+\[
+\frac{1}{2\pi}\int_{-\pi}^{\pi}|K_\varepsilon(s)|\,|f(t)-f(t-s)|\,ds = \frac{1}{2\pi}\int_{-\delta}^{\delta}\cdots\,ds + \frac{1}{2\pi}\int_{\delta<|s|<\pi}\cdots\,ds < \frac{\eta}{2} + \frac{\eta}{2} = \eta. \qedhere
+\]
+\end{proof}
+
+\begin{teorema}{Teorema 1.21 (Fejér)}{cor_fejer}
+Si $f \in C(\mathbb{T})$, entonces $\sigma_N(f) \to f$ uniformemente en $\mathbb{T}$.
+\end{teorema}
+
+\begin{proof}
+$(F_N)_N$ es un núcleo de sumabilidad (observación anterior) y $\sigma_N(f) = F_N * f$; basta aplicar el Teorema 1.20.
+\end{proof}
+
+\begin{observacion}{Corolario 1.22: otra prueba de la densidad de $\mathcal{P}(\mathbb{T})$}{obs_fejer_densidad}
+Esto quiere decir que para todo $\varepsilon > 0$ existe $N \in \mathbb{N}$ con $\|\sigma_N(f) - f\|_\infty < \varepsilon$. Pero
+\[
+\sigma_N(f)(t) = \sum_{k=-N}^{N}\left(1 - \frac{|k|}{N+1}\right)\hat{f}(k)e^{ikt}
+\]
+es un polinomio trigonométrico. Es decir: para todo $\varepsilon > 0$ existe $P$ polinomio trigonométrico tal que $\|P - f\|_\infty < \varepsilon$ (se recupera la Proposición 1.1 sin usar Stone--Weierstraß).
+\end{observacion}
+
+\begin{proposicion}{Corolario 1.23}{cor_1_23}
+\begin{enumerate}
+\item[(1)] Si $f \in C(\mathbb{T})$ y $\hat{f}(n) = 0$ para todo $n \in \mathbb{Z}$, entonces $f = 0$.
+\item[(2)] Si $f, g \in C(\mathbb{T})$ y $\hat{f}(n) = \hat{g}(n)$ para todo $n \in \mathbb{Z}$, entonces $f = g$.
+\end{enumerate}
+\end{proposicion}
+
+\begin{proof}[Demostración de (1) (vista en clase)]
+Supongamos que $\hat{f}(n) = 0$ para todo $n \in \mathbb{Z}$, con $f \in C(\mathbb{T})$.
+\begin{enumerate}
+\item[1)] Sabemos que $\sigma_N(f) \to f$ uniformemente en $\mathbb{T}$.
+\item[2)] $\sigma_N(f)(t) = \sum_{k=-N}^{N}\left(1-\frac{|k|}{N+1}\right)\hat{f}(k)e^{ikt} = 0$.
+\end{enumerate}
+Luego $f = 0$. El apartado (2) se obtiene aplicando (1) a $f - g$. (Es la Proposición 1.4 (3)--(4) para funciones continuas; responde también a la pregunta (5) de la lista de preguntas sobre convergencia.)
+\end{proof}
+
+\textbf{Pregunta:} si $f \in L_1(\mathbb{T})$, ¿$\sigma_N(f) \to f$ en $L_1$? Es decir, ¿$\|\sigma_N(f) - f\|_1 \to 0$?
+
+\begin{teorema}{Teorema 1.24}{thm_1_24}
+Sea $(K_\varepsilon)_{\varepsilon>0}$ un núcleo de sumabilidad y $f \in L_1(\mathbb{T})$. Entonces $\|f - K_\varepsilon * f\|_1 \to 0$.
+\end{teorema}
+
+\begin{proof}
+Sabemos que:
+\begin{enumerate}
+\item[\textcircled{1}] $C(\mathbb{T})$ es denso en $L_1(\mathbb{T})$.
+\item[\textcircled{2}] Si $g \in C(\mathbb{T})$, entonces $\|g - K_\varepsilon * g\|_\infty \to 0$ (Teorema 1.20).
+\item[\textcircled{3}] Si $h \in C(\mathbb{T})$, entonces $\|h\|_\infty \ge \|h\|_1$.
+\end{enumerate}
+Quiero: dado $\eta > 0$, existe $\varepsilon_0 > 0$ tal que $0 < \varepsilon < \varepsilon_0 \implies \|f - K_\varepsilon * f\|_1 < \eta$.
+
+Sea $M = \sup_\varepsilon \|K_\varepsilon\|_1$. Como $C(\mathbb{T})$ es denso, existe $g \in C(\mathbb{T})$ tal que $\|f - g\|_1 < \frac{\eta}{2(1+M)}$. Sumando y restando $g$ y $K_\varepsilon * g$ y usando la desigualdad triangular:
+\begin{align*}
+\|f - K_\varepsilon * f\|_1 &= \|(f-g) + (g - K_\varepsilon * g) + (K_\varepsilon * g - K_\varepsilon * f)\|_1 \\
+&\le \|f-g\|_1 + \|g - K_\varepsilon * g\|_1 + \|K_\varepsilon * (g-f)\|_1 \\
+&\le \|f-g\|_1 + \|g - K_\varepsilon * g\|_\infty + \|K_\varepsilon\|_1\,\|g-f\|_1 \\
+&\le \|f-g\|_1\,(1 + \|K_\varepsilon\|_1) + \|g - K_\varepsilon * g\|_\infty,
+\end{align*}
+donde se ha usado \textcircled{3} (pues $g - K_\varepsilon * g$ es continua) y la Proposición 1.6 ($\|K_\varepsilon * h\|_1 \le \|K_\varepsilon\|_1\|h\|_1$). Por el Teorema 1.20 existe $\varepsilon_0$ tal que si $0 < \varepsilon < \varepsilon_0$ entonces $\|g - K_\varepsilon * g\|_\infty < \frac{\eta}{2}$, y entonces
+\[
+\|f - K_\varepsilon * f\|_1 \le \|f-g\|_1(1 + M) + \|g - K_\varepsilon * g\|_\infty < \frac{\eta}{2} + \frac{\eta}{2} = \eta. \qedhere
+\]
+\end{proof}
+
+\begin{nota}{Sobre la elección de $g$ y la numeración}{nota_thm_1_24}
+En los apuntes se elige $g$ con $\|f-g\|_1 < \eta/2$ (con una interrogación al lado); para que la última desigualdad salga hace falta el factor $1+M$, que es lo que se ha puesto aquí.
+
+La numeración de este bloque (Teoremas 1.21--1.31) está contrastada con la versión actualizada de AF\_1 (diapositivas 42--45).
+\end{nota}
+
+\begin{teorema}{Teorema 1.25 (Fejér en $L_1$)}{thm_1_25}
+Si $f \in L_1(\mathbb{T})$, entonces $\sigma_N(f) \to f$ en $L_1(\mathbb{T})$.
+\end{teorema}
+
+\begin{proposicion}{Corolario 1.26}{cor_1_26}
+Los polinomios trigonométricos son densos en $L_1(\mathbb{T})$.
+\end{proposicion}
+
+\begin{proposicion}{Corolario 1.27}{cor_1_27}
+\begin{enumerate}
+\item[(1)] Si $f \in L_1(\mathbb{T})$ y $\hat{f}(n) = 0$ para todo $n \in \mathbb{Z}$, entonces $f = 0$ a.e.
+\item[(2)] Si $f, g \in L_1(\mathbb{T})$ y $\hat{f}(n) = \hat{g}(n)$ para todo $n \in \mathbb{Z}$, entonces $f = g$ a.e.
+\end{enumerate}
+\end{proposicion}
+
+\begin{nota}{Origen de estos enunciados}{nota_origen_1_25}
+El Teorema 1.25 y los Corolarios 1.26 y 1.27 están en AF\_1 pero no en los apuntes de clase: se siguen del Teorema 1.24 aplicado a $K_{\varepsilon_N} = F_N$, igual que 1.21--1.23 se siguen del Teorema 1.20 (para 1.27, $\sigma_N(f) = 0$ y $\sigma_N(f) \to f$ en $L_1$, luego $\|f\|_1 = 0$). El Corolario 1.27 es la demostración pendiente de la Proposición 1.4 (3).
+\end{nota}
+
+\begin{nota}{Inclusiones en $L_p$}{nota_incl_lp_fejer}
+$C(\mathbb{T}) \subseteq L_p(\mathbb{T}) \subseteq L_1(\mathbb{T})$ para todo $1 \le p < \infty$, y $C(\mathbb{T})$ es denso en $L_p(\mathbb{T})$. Con el mismo argumento (usando $\|h\|_\infty \ge \|h\|_p$ para $h$ continua) se prueba el Teorema 1.28.
+\end{nota}
+
+\begin{teorema}{Teorema 1.28}{thm_1_28}
+Sea $(K_\varepsilon)_{\varepsilon>0}$ un núcleo de sumabilidad sobre $\mathbb{T}$. Entonces, para cada $f \in L_p(\mathbb{T})$ (con $1 \le p < \infty$) se tiene $K_\varepsilon * f \to f$ en $L_p(\mathbb{T})$.
+\end{teorema}
+
+\begin{teorema}{Teorema 1.29 (Fejér en $L_p$)}{thm_1_29}
+Si $f \in L_p(\mathbb{T})$ (con $1 \le p < \infty$), entonces $\sigma_N(f) \to f$ en $L_p(\mathbb{T})$.
+\end{teorema}
+
+\begin{observacion}{Consecuencias para las medias de Fejér}{obs_consec_fejer}
+Por el Teorema 1.29 (Fejér), en particular se cumple que si $f \in L_1(\mathbb{T})$ entonces $\|\sigma_N(f) - f\|_1 \to 0$.
+
+También sabemos que si $f \in C(\mathbb{T})$, $(\sigma_N(f))_N$ converge uniformemente y, por tanto, puntualmente para todo $t$.
+
+Si $g_m \to g$ en $L_1$, existe una subsucesión tal que $g_{m_k}(t) \to g(t)$ en casi todo $t$.
+
+En los apuntes sigue una línea incompleta: ``$\varepsilon_n \in \{1,-1\} \Rightarrow \sum \frac{\varepsilon_n}{n^3} \Rightarrow$ para casi toda elección de $(\varepsilon_n)_n$ \dots''.
+\end{observacion}
+
+\subsection{Convergencia puntual de las medias de Fejér}
+
+\begin{teorema}{Teorema 1.30 (Fejér)}{thm_1_30}
+Sea $f \in L_1(\mathbb{T})$ y $t_0 \in [-\pi,\pi[$ tales que existe $\displaystyle\lim_{t\to 0^+}\big(f(t_0+t) + f(t_0-t)\big) = A$. Entonces
+\[
+\sigma_N(f,t_0) \to \frac{A}{2}.
+\]
+\end{teorema}
+
+\begin{proof}[Demostración (incompleta, continúa en la próxima clase)]
+Quiero: dado $\varepsilon > 0$, existe $N_0$ tal que si $N \ge N_0$ entonces $\left|\sigma_N(f,t_0) - \frac{A}{2}\right| < \varepsilon$.
+
+Sabemos que $\lim_{t\to 0^+}(f(t_0+t) + f(t_0-t)) = A$, luego dado $\varepsilon > 0$ existe $\delta > 0$ tal que si $0 < t < \delta$ entonces $|f(t_0+t) + f(t_0-t) - A| < \varepsilon$.
+
+Usando $\sigma_N(f) = F_N * f$ y que $\frac{1}{2\pi}\int_{-\pi}^{\pi}F_N = 1$:
+\[
+\sigma_N(f,t_0) - \frac{A}{2} = \frac{1}{2\pi}\int_{-\pi}^{\pi} f(t_0-s)F_N(s)\,ds - \frac{A}{2}\cdot\frac{1}{2\pi}\int_{-\pi}^{\pi}F_N(s)\,ds = \frac{1}{2\pi}\int_{-\pi}^{\pi}\left(f(t_0-s) - \frac{A}{2}\right)F_N(s)\,ds.
+\]
+Separando en $[-\delta,0]$, $[0,\delta]$ y $\{\delta<|s|<\pi\}$:
+\[
+= \frac{1}{2\pi}\int_{-\delta}^{0}\left(f(t_0-s)-\tfrac{A}{2}\right)F_N(s)\,ds + \frac{1}{2\pi}\int_{0}^{\delta}\left(f(t_0-s)-\tfrac{A}{2}\right)F_N(s)\,ds + \frac{1}{2\pi}\int_{\delta<|s|<\pi}\left(f(t_0-s)-\tfrac{A}{2}\right)F_N(s)\,ds.
+\]
+En la primera integral hacemos $s = -u$ ($ds = -du$; $s=-\delta \mapsto u = \delta$, $s = 0 \mapsto u = 0$) y, como $F_N$ es par, queda $\frac{1}{2\pi}\int_0^\delta\left(f(t_0+u) - \frac{A}{2}\right)F_N(u)\,du$. Juntándola con la segunda:
+\[
+\sigma_N(f,t_0) - \frac{A}{2} = \frac{1}{2\pi}\int_0^{\delta}\big(f(t_0+s) + f(t_0-s) - A\big)F_N(s)\,ds + \frac{1}{2\pi}\int_{\delta<|s|<\pi}\left(f(t_0-s) - \frac{A}{2}\right)F_N(s)\,ds.
+\]
+Tomando módulos (y usando $F_N \ge 0$):
+\[
+\left|\sigma_N(f,t_0) - \frac{A}{2}\right| \le \frac{1}{2\pi}\int_0^{\delta}|f(t_0+s) + f(t_0-s) - A|\,F_N(s)\,ds + \frac{1}{2\pi}\int_{\delta<|s|<\pi}\left|f(t_0-s) - \frac{A}{2}\right|F_N(s)\,ds,
+\]
+y la primera integral es menor que $\varepsilon\cdot\frac{1}{2\pi}\int_0^\delta F_N(s)\,ds < \varepsilon$. Continuará\dots
+\end{proof}
+
+\begin{proposicion}{Corolario 1.31}{cor_1_31}
+Sea $f \in L_1(\mathbb{T})$ y $t_0 \in [-\pi,\pi[$ tales que existen $f(t_0+)$ y $f(t_0-)$. Entonces
+\[
+\sigma_N(f,t_0) \to \frac{f(t_0+) + f(t_0-)}{2}.
+\]
+\end{proposicion}
+
+\begin{teorema}{Convergencia en casi todo punto}{thm_fejer_ae}
+Si $f \in L_1(\mathbb{T})$, entonces $\sigma_N(f,t) \to f(t)$ para casi todo $t$.
+\end{teorema}
+
+\begin{nota}{Origen de estos enunciados}{nota_origen_1_31}
+El Corolario 1.31 y el último teorema (sin número en AF\_1) están en las diapositivas pero todavía no en los apuntes de clase. El Corolario 1.31 se obtiene del Teorema 1.30 con $A = f(t_0+) + f(t_0-)$.
+\end{nota}
+
+\subsection{Series de Fourier en $L_2(\mathbb{T})$}
+
+\begin{nota}{Origen de esta subsección}{nota_origen_l2}
+Las definiciones y la Proposición 1.32 están tomadas de AF\_1 (diapositivas 46--49): no hay apuntes de clase de ellas. El Teorema 1.33 y su demostración vienen de los apuntes extra (\texttt{teorema\_1\_33.pdf}), que no tienen fecha.
+\end{nota}
+
+\begin{definicion}{Producto escalar en $L_2(\mathbb{T})$}{prod_escalar_l2}
+En $L_2(\mathbb{T})$ se define el producto escalar
+\[
+\langle f, g\rangle = \frac{1}{2\pi}\int_{-\pi}^{\pi} f(t)\overline{g(t)}\,dt, \qquad f, g \in L_2(\mathbb{T}).
+\]
+\end{definicion}
+
+\begin{proposicion}{Proposición 1.32}{prop_1_32}
+Si $f, g, h \in L_2(\mathbb{T})$ y $\alpha, \beta \in \mathbb{C}$, entonces
+\begin{enumerate}
+\item[(1)] $\langle f, g\rangle = \overline{\langle g, f\rangle}$.
+\item[(2)] $\langle \alpha f + \beta g, h\rangle = \alpha\langle f, h\rangle + \beta\langle g, h\rangle$ y $\langle h, \alpha f + \beta g\rangle = \overline{\alpha}\langle h, f\rangle + \overline{\beta}\langle h, g\rangle$.
+\item[(3)] $\langle f, f\rangle \ge 0$ para toda $f$, y $\langle f, f\rangle = 0$ si y sólo si $f = 0$.
+\end{enumerate}
+\end{proposicion}
+
+\begin{definicion}{Espacio pre-Hilbert y espacio de Hilbert}{prehilbert}
+Si $H$ es un espacio vectorial en el que puede definirse una operación $\langle x, y\rangle$ (para $x, y \in H$) cumpliendo (1)--(3), se llama \textbf{espacio pre-Hilbert}. En él, $\|x\|_H = \langle x, x\rangle^{1/2}$ define una norma (y por tanto una métrica y una topología). Un espacio pre-Hilbert completo se llama \textbf{espacio de Hilbert}.
+\end{definicion}
+
+\begin{definicion}{Sistema ortonormal}{son}
+Un conjunto $\{\varphi_i\}_{i\in I} \subseteq L_2(\mathbb{T})$ (con $I$ numerable) es un \textbf{sistema ortonormal} (s.o.n.) si
+\[
+\langle \varphi_i, \varphi_j\rangle = \begin{cases} 0, & i \ne j, \\ 1, & i = j. \end{cases}
+\]
+\end{definicion}
+
+\begin{definicion}{Coeficientes y sumas parciales respecto de un s.o.n.}{coef_son}
+Fijado un s.o.n. $\{\varphi_k\}_{k\in\mathbb{N}}$, para cada $f \in L_2(\mathbb{T})$ se define
+\[
+c_k(f) = \langle f, \varphi_k\rangle, \qquad S_n(f) = \sum_{k=1}^n \langle f, \varphi_k\rangle\varphi_k = \sum_{k=1}^n c_k(f)\varphi_k.
+\]
+Si no hay riesgo de confusión escribiremos $c_k$ y $S_n$.
+\end{definicion}
+
+\begin{nota}{Norma del error de $S_n(f)$}{nota_error_sn}
+Si $f \in L_2(\mathbb{T})$ y $\{\varphi_k\}_k$ es un s.o.n., usando $\langle \varphi_k, \varphi_j\rangle = \delta_{kj}$:
+\begin{align*}
+\|f - S_n(f)\|_2^2 &= \left\langle f - \sum_{k=1}^n c_k\varphi_k,\ f - \sum_{k=1}^n c_k\varphi_k\right\rangle \\
+&= \langle f, f\rangle - \left\langle f, \sum_{k=1}^n c_k\varphi_k\right\rangle - \left\langle \sum_{k=1}^n c_k\varphi_k, f\right\rangle + \left\langle \sum_{k=1}^n c_k\varphi_k, \sum_{k=1}^n c_k\varphi_k\right\rangle \\
+&= \|f\|_2^2 - \sum_{k=1}^n \overline{c_k}\underbrace{\langle f, \varphi_k\rangle}_{c_k} - \sum_{k=1}^n c_k\underbrace{\langle \varphi_k, f\rangle}_{\overline{c_k}} + \sum_{k=1}^n |c_k|^2 \\
+&= \|f\|_2^2 - \sum_{k=1}^n |c_k|^2 - \sum_{k=1}^n |c_k|^2 + \sum_{k=1}^n |c_k|^2 = \|f\|_2^2 - \sum_{k=1}^n |c_k|^2.
+\end{align*}
+Como además $\|S_n(f)\|_2^2 = \sum_{k=1}^n |c_k|^2$, es decir:
+\[
+\|f\|_2^2 - \|S_n(f)\|_2^2 = \|f - S_n(f)\|_2^2.
+\]
+\end{nota}
+
+\begin{teorema}{Teorema 1.33}{thm_1_33}
+Sea $\{\varphi_k\}_k$ un s.o.n. de $L_2(\mathbb{T})$ y $f \in L_2(\mathbb{T})$. Para cada $n \in \mathbb{N}$ y $b_1, \dots, b_n \in \mathbb{C}$ se tiene
+\[
+\left\| f - \sum_{k=1}^n c_k(f)\varphi_k \right\|_2 \le \left\| f - \sum_{k=1}^n b_k\varphi_k \right\|_2.
+\]
+La igualdad se da sólo si $b_k = c_k(f)$ para $k = 1, \dots, n$.
+\end{teorema}
+
+\begin{proof}
+Fijamos $b_1, \dots, b_n \in \mathbb{C}$. Para simplificar la notación escribimos $T_n = \sum_{k=1}^n b_k\varphi_k$. Entonces
+\[
+\|f - T_n\|_2^2 = \langle f - T_n, f - T_n\rangle = \langle f, f\rangle - \langle f, T_n\rangle - \langle T_n, f\rangle + \langle T_n, T_n\rangle,
+\]
+con
+\[
+\langle f, T_n\rangle = \left\langle f, \sum_{k=1}^n b_k\varphi_k\right\rangle = \sum_{k=1}^n \overline{b_k}\langle f, \varphi_k\rangle = \sum_{k=1}^n \overline{b_k}c_k, \qquad \langle T_n, f\rangle = \sum_{k=1}^n b_k\overline{c_k}, \qquad \langle T_n, T_n\rangle = \sum_{k=1}^n b_k\overline{b_k}.
+\]
+Luego
+\begin{align*}
+\|f - T_n\|_2^2 &= \|f\|_2^2 - \sum_{k=1}^n \overline{b_k}c_k - \sum_{k=1}^n b_k\overline{c_k} + \sum_{k=1}^n b_k\overline{b_k} = \|f\|_2^2 + \sum_{k=1}^n b_k(\overline{b_k} - \overline{c_k}) - \sum_{k=1}^n \overline{b_k}c_k.
+\end{align*}
+Sumando y restando $\sum_{k=1}^n c_k\overline{c_k}$:
+\begin{align*}
+\|f - T_n\|_2^2 &= \|f\|_2^2 + \sum_{k=1}^n b_k(\overline{b_k} - \overline{c_k}) - \sum_{k=1}^n \overline{b_k}c_k + \sum_{k=1}^n c_k\overline{c_k} - \sum_{k=1}^n c_k\overline{c_k} \\
+&= \|f\|_2^2 + \sum_{k=1}^n b_k(\overline{b_k} - \overline{c_k}) - \sum_{k=1}^n c_k(\overline{b_k} - \overline{c_k}) - \sum_{k=1}^n |c_k|^2.
+\end{align*}
+Por la nota anterior, $\|f\|_2^2 - \sum_{k=1}^n |c_k|^2 = \|f - S_n(f)\|_2^2$, así que
+\[
+\|f - T_n\|_2^2 = \|f - S_n(f)\|_2^2 + \sum_{k=1}^n (b_k - c_k)\overline{(b_k - c_k)} = \|f - S_n(f)\|_2^2 + \sum_{k=1}^n |b_k - c_k|^2.
+\]
+Entonces, despejando,
+\[
+\left\| f - \sum_{k=1}^n c_k(f)\varphi_k \right\|_2^2 = \left\| f - \sum_{k=1}^n b_k\varphi_k \right\|_2^2 - \underbrace{\sum_{k=1}^n |b_k - c_k|^2}_{\ge 0} \le \left\| f - \sum_{k=1}^n b_k\varphi_k \right\|_2^2.
+\]
+Además, la igualdad se da si y sólo si
+\[
+\sum_{k=1}^n |b_k - c_k|^2 = 0 \iff |b_k - c_k|^2 = 0 \ \forall k \iff b_k = c_k \ \forall k = 1, \dots, n. \qedhere
+\]
+\end{proof}
