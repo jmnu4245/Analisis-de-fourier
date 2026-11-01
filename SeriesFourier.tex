@@ -32,7 +32,7 @@ $f: \mathbb{R} \to \mathbb{C}$ es periódica si $\exists T > 0$ tal que $f(x) = 
 \begin{nota}{Construcción de funciones periódicas}{constr_per}
 Para construir una función $T$-periódica basta con definir $\tilde{f}: [0, T[ \to \mathbb{C}$ y extenderla:
 $$ f(x) = \tilde{f}(x - kT) \quad \text{si } kT \le x < (k+1)T, \; k \in \mathbb{Z} $$
-También podemos considerar $\tilde{f}: [-T/2, T/2[ \to \mathbb{C}$ y \"copiar\".
+También podemos considerar $\tilde{f}: [-T/2, T/2[ \to \mathbb{C}$ y ``copiar''.
 
 \textbf{Ejemplos:}
 \begin{enumerate}
@@ -1055,7 +1055,7 @@ $$\Vert{}D_N\Vert{}_\infty = 2N + 1$$
 \\
 Queremos estudiar la convergencia de $(S_N(f,t))_N$. Hemos visto que $S_N(f,t) = (f * D_N)(t)$
 
-\begin{teorema}{}{thm19}
+\begin{teorema}{Teorema 1.9}{thm19}
 $\exists f \in C(\mathbb{T})$ t.q. $(S_n(f,0))_n$ no converge.
 \end{teorema}
 
@@ -1122,7 +1122,7 @@ Con todo, $\vert{}S_{n_0}(f_N, 0)\vert{} \ge N$.
 
 \end{proof}
 
-\begin{observacion}{}{}
+\begin{observacion}{}{obs_banach_steinhaus_l1}
 El Teorema de Banach-Steinhaus funciona si se reemplaza $C(\mathbb{T})$ por $L_1(\mathbb{T})$ con su norma. Luego, puedo tomar:
 
 
@@ -1137,7 +1137,7 @@ $$f_k(t) = \begin{cases} 1 & D_k(t) \ge 0 \\ -1 & D_k(t) < 0 \end{cases} \quad \
 \textbf{Pregunta:} ¿$(S_N(f))_N$ converge en algún sentido? \textbf{Negativo.}
 ¿Hay resultados positivos?
 
-\begin{teorema}{M. Weierstraß}{}
+\begin{teorema}{M. Weierstraß}{weierstrass_m}
 Si $f_n: [a,b] \to \mathbb{C}$ son continuas y satisfacen:
 \begin{enumerate}
 \item $\sup_{t \in [a,b]} \vert{}f_n(t)\vert{} \le M_n$
@@ -1146,7 +1146,7 @@ Si $f_n: [a,b] \to \mathbb{C}$ son continuas y satisfacen:
 Entonces, la serie $\sum_{n=1}^\infty f_n$ converge uniformemente en $[a,b]$.
 \end{teorema}
 
-\begin{ejemplo}{Convergencia uniforme}{}
+\begin{ejemplo}{Convergencia uniforme}{conv_unif_t2}
 Sea $f(t) = t^2$ en $[-1, 1]$ (extendida periódicamente). Su desarrollo en serie de Fourier es:
 
 
@@ -1167,11 +1167,11 @@ Tomando $M_n = \frac{2}{n^2\pi^2}$, comprobamos la convergencia de la serie de c
 Por tanto, la sucesión de sumas parciales $(S_N(f))_N$ converge uniformemente.
 \end{ejemplo}
 
-\begin{observacion}{}{}
+\begin{observacion}{}{obs_suma_cuadrados}
 Si $\sum_{n \in \mathbb{Z}} \vert{}\hat{f}(n)\vert{}^2 < \infty \Rightarrow$ la serie $(S_n(f))$ converge uniformemente y $f \in \mathcal{C}(\mathbb{T})$.
 \end{observacion}
 
-\begin{proposicion}{Lema 1.11 (Lema de Riemann-Lebesgue)}{}
+\begin{proposicion}{Lema 1.11 (Lema de Riemann-Lebesgue)}{riemann_lebesgue}
 Sea $I \subseteq \mathbb{R}$ un intervalo con $\mathring{I} \neq \emptyset$ y $f \in L_1(I)$.
 
 
@@ -1216,7 +1216,7 @@ Por tanto, utilizando la desigualdad triangular:
 \end{align*}
 \end{proof}
 
-\begin{teorema}{Teorema 1.12}{}
+\begin{teorema}{Teorema 1.12}{thm_1_12}
 Sea $f \in L_1(\mathbb{T})$ y $0 < \delta < \pi$. Entonces $S_n(f,t)$ converge si y solo si:
 
 
@@ -1268,7 +1268,7 @@ $$\lim_{n \to \infty} \frac{1}{2\pi} \int_0^\delta (f(t+s) + f(t-s)) D_n(s) ds =
 Las dos integrales restantes tienden a 0 asumiendo condiciones de integrabilidad local (ver Test de Dini).
 \end{proof}
 
-\begin{observacion}{}{}
+\begin{observacion}{}{obs_phi_integrable}
 \begin{itemize}
 \item La función $\sen(x)$ es creciente y $\sen(x) \ge 0$ para todo $x \in [0, \pi/2]$.
 \item Para $\varphi(s) = \frac{f(t+s) + f(t-s)}{\sen(s/2)}$, si $0 < \delta \le s \le \pi \implies 0 < \delta/2 \le s/2 \le \pi/2 \implies \sen(s/2) \neq 0$ en $[\delta, \pi]$.
@@ -1276,7 +1276,7 @@ Las dos integrales restantes tienden a 0 asumiendo condiciones de integrabilidad
 Además, $\vert{}\varphi(s)\vert{} \le \frac{\vert{}f(t+s) + f(t-s)\vert{}}{\sen(\delta/2)}$, que es integrable. Luego $\varphi \in L_1([\delta, \pi])$.
 \end{observacion}
 
-\begin{teorema}{Test de Dini}{}
+\begin{teorema}{Test de Dini}{dini}
 Sean $f \in L_1(\mathbb{T})$ y $t \in \mathbb{R}$ tales que existen los límites laterales:
 
 
@@ -1316,7 +1316,7 @@ Aplicando el Lema de Riemann-Lebesgue, esta integral tiende a 0. Análogamente, 
 Como ya se demostró en el Teorema 1.12, la tercera integral tiende al valor $\frac{f(t+) + f(t-)}{2}$.
 \end{proof}
 
-\begin{proposicion}{Corolario 1.14}{}
+\begin{proposicion}{Corolario 1.14}{cor_1_14}
 Sea $f \in L_1(\mathbb{T})$ y $t \in \mathbb{R}$ tal que existen $f(t+)$ y $f(t-)$. Supongamos que existen las derivadas laterales:
 
 

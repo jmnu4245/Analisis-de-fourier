@@ -56,8 +56,7 @@ CLASE_MANUAL = {
     "def:conv_l1": "1.6",
     "prop:fourier_conv": "1.7",
     "prop:prop_dirichlet": "1.8",
-    "thm:thm19": "1.9",
-    "thm:test-de-dini": "1.13",
+    "thm:dini": "1.13",
 }
 # Citas por nombre (solo en demostraciones y solo hacia resultados anteriores).
 NOMBRES = {
@@ -93,9 +92,10 @@ prop:prop_1_5 1.6
 1.7 obs:unidad_conv
 def:nucleo_dirichlet 1.8
 1.8 1.9 1.12 def:nucleo_fejer 1.19
-1.9 obs:1.11
-thm:m-weierstrass ej:convergencia-uniforme
+1.9 obs:obs_banach_steinhaus_l1
+thm:weierstrass_m ej:conv_unif_t2
 1.11 1.12 1.13
+1.12 obs:obs_phi_integrable
 1.12 1.13
 1.13 1.14
 def:cesaro_sucesion 1.17 def:cesaro_serie
