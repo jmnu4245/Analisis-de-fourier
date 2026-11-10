@@ -1,2 +1,0 @@
-- Pasar apuntes, revisar y ordenar.
-- Hacer ejercicios

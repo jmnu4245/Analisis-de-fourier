@@ -20,7 +20,6 @@ Los archivos generados (`*.aux`, `*.pdf`, `.web/`...) están en `.gitignore`: no
 - **Apuntes de una clase nueva**: en el `.tex` del capítulo, dentro de `teoria/`, empezando con la fecha en negrita `\textbf{dd/mm/aa}`. Las fotos van en `papel/aaaa-mm-dd/`, y se añade una fila en la tabla de `papel/ESTRUCTURA.md` (día, fotos, sección, contenido). Lo que no cuadre con las fotos se anota en ese mismo archivo.
 - **Contenido sacado solo de las diapositivas** (sin apuntes de clase): lleva una `nota` en el LaTeX que lo indica y se lista en `ESTRUCTURA.md`.
 - **Capítulo nuevo**: crea `teoria/Nombre.tex` (empieza con `\section{...}`), añade `\input{teoria/Nombre}` en `main.tex` y añade `("Nombre", n)` a `ARCHIVOS` en `web/mapa/generar.py` (y bloques/colores en `BLOQUES` si procede).
-- **Tarea pendiente / ideas**: `Analisis de Fourier.md`.
 
 ## Convenciones de los apuntes
 
