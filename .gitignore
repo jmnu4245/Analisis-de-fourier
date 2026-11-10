@@ -12,3 +12,7 @@
 *.bbl
 .singularhistory
 v*
+!web/construir.sh
+!web/vista_previa.js
+.web/
+__pycache__/
