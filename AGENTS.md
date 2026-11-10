@@ -37,6 +37,19 @@ web/construir.sh   # web en .web/sitio/ (necesita make4ht); debe acabar con "0 s
 
 La CI (`.github/workflows/`) compila el PDF, publica un *release* y la web en cada push a `main`.
 
+## Pasar apuntes a LaTeX (flujo automático)
+
+**Disparador**: cuando alguien diga algo como «pasa los apuntes», «pasa la clase del dd/mm a LaTeX» o «transcribe las fotos del dd/mm», hazlo directamente, sin pedir más instrucciones. Si no dice qué día, usa la carpeta más reciente de `papel/` que aún no tenga su fecha en `teoria/`.
+
+1. **Fuentes**: lee todas las fotos de `papel/aaaa-mm-dd/` en orden de numeración (los escaneos de WhatsApp pueden estar en `v2/`), `papel/ESTRUCTURA.md` (qué día → qué sección, qué falta) y, si el tema aparece, las diapositivas de `material/` (sirven para resolver letra dudosa y la numeración de resultados; no copies de ellas lo que no esté en clase, salvo con una `nota`).
+2. **Destino**: añade al final del capítulo correspondiente de `teoria/`, empezando con la fecha en negrita `\textbf{dd/mm/aa}`. Si el capítulo no existe, sigue «Capítulo nuevo». Un día por vez.
+3. **Formato**: cajas con etiqueta única, `\cref` solo donde el resultado se use de verdad (ver «Convenciones»). Respeta el orden de la clase, aunque difiera del de las diapositivas, y anótalo en `ESTRUCTURA.md`.
+4. **Fidelidad**: no inventes pasos ni resultados. Lo ilegible o dudoso va como `% REVISAR: <duda>` y se lista al final; lo que completes para que la demostración sea coherente, indícalo. Lo que no cuadre con las fotos o las diapositivas, a «Lo que no cuadre» de `ESTRUCTURA.md`.
+5. **Comprobar** (ver «Comprobar antes de subir»): compila el PDF y `web/construir.sh` debe acabar con «0 sin enlace a los apuntes».
+6. **Git**: rama nueva, commit `Teoría: clase del dd/mm (<tema>)`, sin push a `main`. Cuenta al final qué has añadido, las dudas `REVISAR` y las suposiciones.
+
+Si el usuario manda fotos nuevas, primero colócalas en `papel/aaaa-mm-dd/` (derechas, con nombre descriptivo, 1800×2400 como máximo) y añade su fila a la tabla de `papel/ESTRUCTURA.md`.
+
 ## Git
 
 - Trabaja en una rama y abre una pull request a `main`; no subas archivos generados ni `material/`.
