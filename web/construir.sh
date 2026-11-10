@@ -9,8 +9,9 @@ SRC="$RAIZ/.web/src"
 
 # make4ht escribe sus auxiliares junto al .tex, así que se compila sobre una copia de las fuentes.
 rm -rf "$SRC" "$SALIDA"
-mkdir -p "$SRC" "$SALIDA/apuntes" "$SALIDA/mapa"
+mkdir -p "$SRC/teoria" "$SALIDA/apuntes" "$SALIDA/mapa"
 cp "$RAIZ"/*.tex "$SRC/"
+cp "$RAIZ"/teoria/*.tex "$SRC/teoria/"
 cp "$RAIZ/web/apuntes.cfg" "$RAIZ/web/estilo.css" "$RAIZ/web/main.mk4" "$SRC/"
 
 # Rutas relativas: TeX no admite la ruta absoluta del proyecto (lleva espacio y tilde).

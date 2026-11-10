@@ -1,13 +1,11 @@
 #!/usr/bin/env python3
-"""Convierte el HTML único que genera make4ht (main.html) en la página de los apuntes. Antes se partía en una página por subsección.
+"""Convierte el HTML único de make4ht (main.html) en la web de los apuntes: una sola página continua.
 
-Casi todos los apuntes están en la sección 1 (Series de Fourier), así que se parte por
-\\subsection: tema1-1.html, tema1-2.html, ... La cabecera de cada sección va con su primera
-subsección, y una sección sin subsecciones es una sola página (tema2.html). Lo anterior a la
-primera sección (portada, índice e información de la asignatura) queda en index.html.
-Se reescriben los enlaces internos para que apunten a la página donde está cada id.
+Todo queda en index.html. Donde la versión anterior cortaba en páginas (por sección, y por subsección
+dentro de las partes largas) se deja un ancla (#tema3), y cada página antigua (tema3.html) queda como
+redirección a ese ancla para no romper enlaces. También escribe ids.tsv (id -> página) para el mapa.
 
-Uso: partir_html.py carpeta   (lee carpeta/main.html y escribe index.html, tema1-1.html, ...)
+Uso: partir_html.py carpeta   (lee carpeta/main.html y escribe index.html y las redirecciones, tema1-1.html, ...)
 """
 import re
 import sys

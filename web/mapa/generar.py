@@ -290,7 +290,7 @@ def bloque_de(seccion, subseccion):
 def extraer(raiz, destinos):
     nodos, orden = {}, 0
     for archivo, seccion in ARCHIVOS:
-        ruta = Path(raiz) / f"{archivo}.tex"
+        ruta = Path(raiz) / "teoria" / f"{archivo}.tex"
         if not ruta.exists():
             continue
         s = sin_comentarios(ruta.read_text(encoding="utf-8"))

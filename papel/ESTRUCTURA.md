@@ -1,8 +1,8 @@
 # Estructura de los apuntes
 
-Fuentes: fotos de papel en `apuntespapel/AAAA-MM-DD/` (los escaneos de WhatsApp están en `v2/`), `AF_1_series_fourier_comp.pdf` (diapositivas, hasta la 50/50) y `apuntespapel/teorema_1_33.pdf`.
+Fuentes: fotos de papel en `papel/AAAA-MM-DD/` (los escaneos de WhatsApp están en `v2/`), `material/AF_1_series_fourier_comp.pdf` (diapositivas, hasta la 50/50) y `papel/teorema_1_33.pdf`.
 
-## Por día → sección del LaTeX (`SeriesFourier.tex`)
+## Por día → sección del LaTeX (`teoria/SeriesFourier.tex`)
 
 | Día | Fotos | Sección | Contenido |
 |---|---|---|---|

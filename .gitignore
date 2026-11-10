@@ -16,3 +16,6 @@ v*
 !web/vista_previa.js
 .web/
 __pycache__/
+material/
+!AGENTS.md
+!readme.md
