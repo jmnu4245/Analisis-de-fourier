@@ -1,1 +1,34 @@
-\section{Transformada de Fourier}
+\portadaseccion{Transformada de Fourier}
+\subsection{Motivación}
+
+\textbf{29/10/2026}
+
+Hemos visto, para $f : \mathbb{R} \to \mathbb{C}$ $2\pi$-periódica:
+\begin{itemize}
+\item los coeficientes de Fourier $\hat{f}(n) = \frac{1}{2\pi}\int_{-\pi}^{\pi}f(t)e^{-int}\,dt$;
+\item la serie $\sum_{n\in\mathbb{Z}}\hat{f}(n)e^{int} \sim f$, que ``representa a $f$''.
+\end{itemize}
+
+\textbf{Pregunta:} ¿y si $f$ \underline{no} es periódica?
+
+Sea $f : \mathbb{R} \to \mathbb{C}$ no periódica. Fijo $\ell > 0$, tomo la restricción de $f$ a $[-\ell, \ell]$ y considero su \underline{extensión $2\ell$-periódica} (que tiene serie de Fourier). Para $x \in [-\ell, \ell]$:
+\begin{equation}
+f(x) = \sum_{n\in\mathbb{Z}}\left(\frac{1}{2\ell}\int_{-\ell}^{\ell}f(t)e^{-i\frac{\pi}{\ell}nt}\,dt\right)e^{i\frac{\pi}{\ell}nx}. \tag{$\ast$}
+\end{equation}
+Definimos
+\[
+h(\xi) = \left(\int_{-\ell}^{\ell}f(t)e^{-2\pi i\xi t}\,dt\right)e^{2\pi i\xi x}, \qquad \xi_n = \frac{n}{2\ell},
+\]
+de modo que
+\[
+h(\xi_n) = \left(\int_{-\ell}^{\ell}f(t)e^{-i\pi\frac{n}{\ell}t}\,dt\right)e^{i\pi\frac{n}{\ell}x}, \qquad \xi_{n+1} - \xi_n = \frac{1}{2\ell}.
+\]
+Entonces $(\ast)$ es una suma de Riemann:
+\[
+f(x) = \sum_{n\in\mathbb{Z}}(\xi_{n+1} - \xi_n)\,h(\xi_n) \xrightarrow{\ \ell\to\infty\ } \int_{-\infty}^{\infty}\left(\int_{-\infty}^{\infty}f(t)e^{-2\pi i\xi t}\,dt\right)e^{2\pi i\xi x}\,d\xi.
+\]
+% REVISAR: en el papel h(xi) lleva e^{-i pi (n/l) t} y e^{2 pi i n xi}, la diferencia aparece como xi_n - xi_{n+1}, y la integral final como e^{2 pi i xi t} ... dx. Aquí se ha escrito de forma coherente (signo menos en la exponencial de dentro, d xi).
+
+\begin{observacion}{Esto son trampas}{obs_trampas_tf}
+El paso al límite $\ell \to \infty$ no está justificado: es un argumento heurístico (en clase, ``TRAMPAS''), solo para motivar la definición de la transformada de Fourier.
+\end{observacion}

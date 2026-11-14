@@ -17,6 +17,7 @@ Fuentes: fotos de papel en `papel/AAAA-MM-DD/` (los escaneos de WhatsApp están 
 | 15/10 | 4 PXL (hojas 0–6) | 1.12–1.14 | Repaso de Cesàro, $f_\delta$, $\sigma_N=f*F_N$, Fejér (1.18, 1.19), núcleos de sumabilidad, enunciado 1.20 |
 | 20/10 | 3 v2 | 1.14–1.15 | Demostración 1.20, Teoremas 1.21–1.24, Teorema 1.30 (incompleto) |
 | ¿22/10? | `teorema_1_33.pdf` | 1.16 | Notación del s.o.n., Teorema 1.33 con demostración |
+| 29/10 | 5 (`01`–`05`) | 1.16 y 2.1 | Bessel (1.36, 1.37), Riesz–Fischer (1.38), Lema 1.39, s.o.n. completo, Teorema 1.40, Parseval, $\sum 1/n^2=\pi^2/6$, isometría $L_2(\mathbb T)\cong\ell_2(\mathbb Z)$; Tema 2: motivación de la transformada (`teoria/TransformadaFourier.tex`) |
 
 Las fechas en negrita (`\textbf{dd/mm/aa}`) marcan en el LaTeX dónde empieza cada clase.
 
@@ -45,4 +46,11 @@ Cada uno lleva una `nota` en el LaTeX que lo indica.
    - Du Bois-Reymond 1873 (AF_1: 1876).
    - Notas al margen "Creo, no lo he copiado" y "valdría con N?".
 8. **Orden distinto de AF_1:** la Prop. 1.4 va tras el ejemplo $t^2$; en AF_1, tras las definiciones.
+9. **Hueco antes del 29/10.** El 29/10 empieza en el Teorema 1.36: faltan los resultados 1.34 y 1.35 (¿clase del 27/10?).
+10. **Cambios respecto al papel (29/10):**
+    - Cauchy–Schwarz en Riesz–Fischer: en el papel $\|f\|_2^2\|g\|_2^2$ y cota $\|s_n-f\|_2^2$; corregido sin cuadrados.
+    - Ejemplo $f(t)=t$: el lado izquierdo de Parseval pone $\pi^3/3$; es $\pi^2/3$.
+    - Bessel: en el papel los índices empiezan en $n=0$; se usa $k=1$ como en la definición de s.o.n.
+    - Motivación de la transformada: $h(\xi)$, el signo de $\xi_{n+1}-\xi_n$, la exponencial de dentro ($e^{-2\pi i\xi t}$) y $d\xi$ (en el papel, $dx$) reescritos de forma coherente.
+    - El enunciado del Lema 1.39 aparece en la demostración de Riesz–Fischer y su prueba en la hoja siguiente; en el LaTeX va como caja aparte tras el teorema.
 

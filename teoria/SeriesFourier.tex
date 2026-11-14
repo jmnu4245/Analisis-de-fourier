@@ -2012,3 +2012,186 @@ Además, la igualdad se da si y sólo si
 \sum_{k=1}^n |b_k - c_k|^2 = 0 \iff |b_k - c_k|^2 = 0 \ \forall k \iff b_k = c_k \ \forall k = 1, \dots, n. \qedhere
 \]
 \end{proof}
+
+\textbf{29/10/2026}
+
+\begin{observacion}{Repaso: $S_n(f)$ como mejor aproximación}{obs_sn_mejor_aprox}
+Con $\langle f, g\rangle = \frac{1}{2\pi}\int_{-\pi}^{\pi} f(t)\overline{g(t)}\,dt$ y $f \in L_2(\mathbb{T})$, ya vimos que $\|f - S_n(f)\|_2^2 = \|f\|_2^2 - \|S_n(f)\|_2^2$. Con el s.o.n.\ $\{e^{ikt}\}_{k\in\mathbb{Z}}$ y el \cref{thm:thm_1_33}:
+\begin{enumerate}
+\item[(1)] $S_n(f)(t) = \sum_{k=-n}^{n}\hat{f}(k)e^{ikt}$ es el polinomio trigonométrico (de grado $\le n$) que mejor aproxima a $f$ en $\|\cdot\|_2$.
+\item[(2)] $S_n(f)$ es la proyección ortogonal de $f$ en $\mathcal{P}(\mathbb{T})$ (los polinomios trigonométricos de grado $\le n$).
+\end{enumerate}
+\end{observacion}
+
+\begin{nota}{Norma de una combinación finita}{nota_norma_comb}
+Si $P = \sum_{k=1}^{n} a_k\varphi_k$ con $\{\varphi_k\}_k$ s.o.n., entonces $\|P\|_2 = \left(\sum_{k=1}^{n}|a_k|^2\right)^{1/2}$.
+\end{nota}
+
+\textbf{Pregunta:} si $f \in L_2$, ¿qué relación hay entre $\|f\|_2$ y los coeficientes $(c_k(f))_k$?
+
+\begin{teorema}{Teorema 1.36 (Desigualdad de Bessel)}{thm_1_36}
+Sea $\{\varphi_k\}_k$ un s.o.n.\ en $L_2(\mathbb{T})$. Entonces
+\[
+\sum_{k=1}^{\infty}|\langle f, \varphi_k\rangle|^2 \le \|f\|_2^2 \qquad \forall f \in L_2(\mathbb{T}).
+\]
+\end{teorema}
+
+\begin{proof}
+Fijo $N \in \mathbb{N}$. Por la \cref{not:nota_error_sn},
+\[
+0 \le \Big\|f - \underbrace{\sum_{k=1}^{N}\langle f, \varphi_k\rangle\varphi_k}_{S_N(f)}\Big\|_2^2 = \|f\|_2^2 - \Big\|\sum_{k=1}^{N}\langle f, \varphi_k\rangle\varphi_k\Big\|_2^2 = \|f\|_2^2 - \sum_{k=1}^{N}|\langle f, \varphi_k\rangle|^2,
+\]
+luego $\sum_{k=1}^{N}|\langle f, \varphi_k\rangle|^2 \le \|f\|_2^2$ para todo $N$. Por tanto la serie converge y $\sum_{k=1}^{\infty}|\langle f, \varphi_k\rangle|^2 \le \|f\|_2^2$.
+\end{proof}
+
+\begin{proposicion}{Corolario 1.37 (Bessel)}{cor_1_37}
+Sea $f \in L_2(\mathbb{T})$. Entonces $\displaystyle\sum_{n\in\mathbb{Z}}|\hat{f}(n)|^2 \le \|f\|_2^2$.
+\end{proposicion}
+
+\begin{nota}{Bessel con los coeficientes trigonométricos}{nota_bessel_trig}
+Para $f$ real escribimos
+\[
+S_N(f)(t) = \frac{a_0}{2} + \sum_{n=1}^{N}\left(\frac{a_n}{\sqrt{2}}\,\sqrt{2}\cos(nt) + \frac{b_n}{\sqrt{2}}\,\sqrt{2}\sin(nt)\right).
+\]
+Las funciones $1$, $\varphi_n = \sqrt{2}\cos(nt)$ y $\psi_n = \sqrt{2}\sin(nt)$ forman un s.o.n., con $\langle f, 1\rangle = \frac{a_0}{2}$, $\langle f, \varphi_n\rangle = \frac{a_n}{\sqrt{2}}$ y $\langle f, \psi_n\rangle = \frac{b_n}{\sqrt{2}}$. Bessel da
+\[
+\left(\frac{a_0}{2}\right)^2 + \sum_{n=1}^{\infty}\left(\left(\frac{a_n}{\sqrt{2}}\right)^2 + \left(\frac{b_n}{\sqrt{2}}\right)^2\right) \le \|f\|_2^2,
+\quad\text{es decir}\quad
+\frac{a_0^2}{4} + \sum_{n=1}^{\infty}\left(\frac{a_n^2}{2} + \frac{b_n^2}{2}\right) \le \frac{1}{2\pi}\int_{-\pi}^{\pi}|f(t)|^2\,dt,
+\]
+y multiplicando por $2$:
+\[
+\frac{a_0^2}{2} + \sum_{n=1}^{\infty}(a_n^2 + b_n^2) \le \frac{1}{\pi}\int_{-\pi}^{\pi}|f(t)|^2\,dt.
+\]
+\end{nota}
+
+\textbf{Idea:} si $\{\varphi_n\}_n$ es un s.o.n.\ y $c_1, \dots, c_N \in \mathbb{C}$, entonces $c_1\varphi_1 + \dots + c_N\varphi_N = \sum_{n=1}^{N}c_n\varphi_n \in L_2$.
+
+\textbf{Pregunta:} ¿qué pasa si tengo $(c_n)_{n=1}^{\infty} \subseteq \mathbb{C}$? ¿Qué tiene que cumplir para que $\sum_{n=1}^{\infty}c_n\varphi_n \in L_2$?
+
+\begin{teorema}{Teorema 1.38 (Riesz--Fischer)}{thm_1_38}
+Sea $\{\varphi_n\}_n$ un s.o.n.\ en $L_2(\mathbb{T})$ y $(c_n)_n \subseteq \mathbb{C}$ con $\sum_n |c_n|^2 < \infty$. Entonces existe $f \in L_2(\mathbb{T})$ tal que
+\begin{enumerate}
+\item[(1)] $\langle f, \varphi_n\rangle = c_n$ para todo $n$;
+\item[(2)] $\|f\|_2 = \left(\sum_n |c_n|^2\right)^{1/2}$.
+\end{enumerate}
+\end{teorema}
+
+\begin{proof}
+Quiero $f \in L_2$ tal que $\langle f, \varphi_n\rangle = c_n$. Para $n \in \mathbb{N}$ defino $s_n = \sum_{k=1}^{n}c_k\varphi_k \in L_2(\mathbb{T})$. Si $m > n$,
+\[
+\|s_m - s_n\|_2^2 = \Big\|\sum_{k=1}^{m}c_k\varphi_k - \sum_{k=1}^{n}c_k\varphi_k\Big\|_2^2 = \Big\|\sum_{k=n+1}^{m}c_k\varphi_k\Big\|_2^2 = \sum_{k=n+1}^{m}|c_k|^2.
+\]
+Sabemos que $\sum_{k=1}^{\infty}|c_k|^2 < \infty$, así que dado $\varepsilon > 0$ existe $N_0 \in \mathbb{N}$ tal que si $m > n > N_0$ entonces $\sum_{k=n+1}^{m}|c_k|^2 < \varepsilon^2$. Entonces, si $m > n > N_0$, $\|s_m - s_n\|_2 < \varepsilon$: $(s_n)_n$ es de Cauchy y, como $L_2$ es completo, $(s_n)_n$ es convergente. Es decir, existe $f \in L_2$ tal que $\|f - s_n\|_2 \to 0$.
+
+\textbf{(1)} Veamos que $\langle f, \varphi_k\rangle = c_k$ para todo $k$. Fijamos $k \in \mathbb{N}$ y tomamos $n \ge k$:
+\[
+\langle s_n, \varphi_k\rangle = \Big\langle \sum_{j=1}^{n}c_j\varphi_j, \varphi_k\Big\rangle = \sum_{j=1}^{n}c_j\langle\varphi_j, \varphi_k\rangle = c_k.
+\]
+Por la desigualdad de Cauchy--Schwarz, $|\langle f, g\rangle| \le \|f\|_2\|g\|_2$, y entonces
+\[
+0 \le |c_k - \langle f, \varphi_k\rangle| = |\langle s_n, \varphi_k\rangle - \langle f, \varphi_k\rangle| = |\langle s_n - f, \varphi_k\rangle| \le \|s_n - f\|_2\|\varphi_k\|_2 = \|s_n - f\|_2 \xrightarrow{n\to\infty} 0.
+\]
+Luego $|c_k - \langle f, \varphi_k\rangle| = 0$, es decir, $c_k = \langle f, \varphi_k\rangle$.
+
+\emph{Alternativa:} fijo $k$. Dado $\varepsilon > 0$, existe $n_0$ tal que $\|s_n - f\|_2 < \varepsilon$ para todo $n \ge n_0$. Tomo $n \ge \max(n_0, k)$: $0 \le |c_k - \langle f, \varphi_k\rangle| \le \|s_n - f\|_2 < \varepsilon$. Como vale para todo $\varepsilon > 0$, $c_k = \langle f, \varphi_k\rangle$.
+% REVISAR: en el papel Cauchy-Schwarz aparece como |<f,g>| <= ||f||_2^2 ||g||_2^2 y la cota como ||s_n - f||_2^2; aquí está corregido (sin cuadrados).
+
+\textbf{(2)} Por (1), $s_n = \sum_{k=1}^{n}\langle f, \varphi_k\rangle\varphi_k$ y $\|f - s_n\|_2 \to 0$. Aplicando el \cref{prop:lema_1_39} ((b) $\Rightarrow$ (a)), $\|f\|_2^2 = \sum_{n}|\langle f, \varphi_n\rangle|^2 = \sum_n |c_n|^2$.
+\end{proof}
+
+\begin{proposicion}{Lema 1.39}{lema_1_39}
+Sean $\{\varphi_n\}_n$ un s.o.n.\ y $f \in L_2$. Son equivalentes:
+\begin{enumerate}
+\item[(a)] $\|f\|_2^2 = \sum_{n=1}^{\infty}|\langle f, \varphi_n\rangle|^2$.
+\item[(b)] $\lim_{n}\big\|f - \sum_{k=1}^{n}\langle f, \varphi_k\rangle\varphi_k\big\|_2 = 0$, es decir, $\sum_{k=1}^{n}\langle f, \varphi_k\rangle\varphi_k \to f$ en $L_2$.
+\end{enumerate}
+\end{proposicion}
+
+\begin{proof}
+Sabemos (\cref{not:nota_error_sn}) que $\big\|f - \sum_{k=1}^{n}\langle f, \varphi_k\rangle\varphi_k\big\|_2^2 = \|f\|_2^2 - \sum_{k=1}^{n}|\langle f, \varphi_k\rangle|^2$. Entonces
+\begin{align*}
+\lim_n\Big\|f - \sum_{k=1}^{n}\langle f, \varphi_k\rangle\varphi_k\Big\|_2 = 0
+&\iff \lim_n\Big(\|f\|_2^2 - \sum_{k=1}^{n}|\langle f, \varphi_k\rangle|^2\Big) = 0
+\iff \|f\|_2^2 - \lim_n\sum_{k=1}^{n}|\langle f, \varphi_k\rangle|^2 = 0 \\
+&\iff \lim_n\sum_{k=1}^{n}|\langle f, \varphi_k\rangle|^2 = \|f\|_2^2
+\iff \sum_{k=1}^{\infty}|\langle f, \varphi_k\rangle|^2 = \|f\|_2^2. \qedhere
+\end{align*}
+\end{proof}
+
+\begin{definicion}{Sistema ortonormal completo}{son_completo}
+Un s.o.n.\ $\{\varphi_n\}_n$ en $L_2$ es \textbf{completo} si
+\[
+\langle f, \varphi_n\rangle = 0 \ \ \forall n \implies f = 0 \text{ a.e.}
+\]
+\end{definicion}
+
+\begin{teorema}{Teorema 1.40}{thm_1_40}
+Sea $\{\varphi_k\}_k$ un s.o.n.\ en $L_2(\mathbb{T})$. Son equivalentes:
+\begin{enumerate}
+\item[(1)] $\langle f, \varphi_k\rangle = 0$ para todo $k$ $\iff$ $f = 0$ a.e.\ (el s.o.n.\ es completo).
+\item[(2)] $\|f\|_2^2 = \sum_{k=1}^{\infty}|\langle f, \varphi_k\rangle|^2$ para toda $f \in L_2(\mathbb{T})$.
+\item[(3)] $\sum_{k=1}^{n}\langle f, \varphi_k\rangle\varphi_k \to f$ en $L_2(\mathbb{T})$ para toda $f \in L_2(\mathbb{T})$.
+\end{enumerate}
+\end{teorema}
+
+\begin{proof}
+\textbf{(2) $\Leftrightarrow$ (3)}: visto en el \cref{prop:lema_1_39}.
+
+\textbf{(2) $\Rightarrow$ (1)}: obvio. Si $\langle f, \varphi_k\rangle = 0$ para todo $k$, por (2) $\|f\|_2 = 0$, es decir, $\int|f|^2 = 0$, y entonces $f = 0$ a.e.
+
+\textbf{(1) $\Rightarrow$ (3)}: sea $f \in L_2$. Por Bessel (\cref{thm:thm_1_36}), $\sum_{n=1}^{\infty}|\langle f, \varphi_n\rangle|^2 < \infty$. Por Riesz--Fischer (\cref{thm:thm_1_38}) existe $g \in L_2(\mathbb{T})$ con $\langle g, \varphi_n\rangle = \langle f, \varphi_n\rangle$ para todo $n$ y, por su demostración, $\sum_{k=1}^{n}\langle f, \varphi_k\rangle\varphi_k \to g$ en $L_2$ (es decir, $\|g - \sum_{k=1}^{n}\langle f, \varphi_k\rangle\varphi_k\|_2 \to 0$).
+
+Como $\langle g, \varphi_n\rangle = \langle f, \varphi_n\rangle$ para todo $n$, se tiene $\langle g - f, \varphi_n\rangle = 0$ para todo $n$, y por (1) $g - f = 0$ a.e., es decir, $g = f$ a.e. Entonces $\sum_{k=1}^{n}\langle f, \varphi_k\rangle\varphi_k \xrightarrow{\|\cdot\|_2} f$.
+\end{proof}
+
+\begin{observacion}{El sistema trigonométrico es completo}{obs_trig_completo}
+Si $\hat{f}(n) = 0$ para todo $n \in \mathbb{Z}$, entonces $f = 0$ a.e.\ por el \cref{prop:cor_1_27}. Así, $\{e^{int}\}_{n\in\mathbb{Z}}$ es completo. Por el \cref{thm:thm_1_40},
+\[
+\sum_{k=-n}^{n}\hat{f}(k)e^{ikt} \xrightarrow{\|\cdot\|_2} f \quad \forall f \in L_2(\mathbb{T}),
+\]
+es decir, $\|f - S_n(f)\|_2 \to 0$, con $S_n(f)$ la suma parcial de Fourier.
+\end{observacion}
+
+\begin{proposicion}{Corolario (Parseval)}{cor_parseval}
+Si $f \in L_2(\mathbb{T})$, entonces
+\begin{enumerate}
+\item[(1)] $\displaystyle\frac{1}{2\pi}\int_{-\pi}^{\pi}|f(t)|^2\,dt = \sum_{n\in\mathbb{Z}}|\hat{f}(n)|^2$;
+\item[(2)] $\displaystyle\frac{1}{\pi}\int_{-\pi}^{\pi}|f(t)|^2\,dt = \frac{a_0^2}{2} + \sum_{n=1}^{\infty}(a_n^2 + b_n^2)$.
+\end{enumerate}
+\end{proposicion}
+
+\begin{ejemplo}{$\sum 1/n^2 = \pi^2/6$ con Parseval}{ej_basilea}
+Sea $f(t) = t$, $-\pi \le t \le \pi$. Sabemos que $\hat{f}(0) = 0$ y $\hat{f}(n) = \frac{(-1)^n i}{n}$ para $n \ne 0$. Además
+\[
+\|f\|_2 = \left(\frac{1}{2\pi}\int_{-\pi}^{\pi}t^2\,dt\right)^{1/2} = \left(\frac{1}{2\pi}\left[\frac{t^3}{3}\right]_{-\pi}^{\pi}\right)^{1/2} = \left(\frac{1}{2\pi}\left(\frac{\pi^3}{3} - \frac{(-\pi)^3}{3}\right)\right)^{1/2} = \left(\frac{1}{2\pi}\cdot\frac{2\pi^3}{3}\right)^{1/2} = \left(\frac{\pi^2}{3}\right)^{1/2} < \infty,
+\]
+así que $f \in L_2(\mathbb{T})$. Por Parseval (\cref{prop:cor_parseval}):
+\begin{align*}
+\frac{\pi^2}{3} &= \frac{1}{2\pi}\int_{-\pi}^{\pi}|f(t)|^2\,dt = \sum_{\substack{n\in\mathbb{Z}\\ n\ne0}}\left|\frac{(-1)^n i}{n}\right|^2 = \sum_{n=-\infty}^{-1}\left|\frac{(-1)^n i}{n}\right|^2 + \sum_{n=1}^{\infty}\left|\frac{(-1)^n i}{n}\right|^2 \\
+&= \sum_{k=1}^{\infty}\left|\frac{(-1)^k i}{-k}\right|^2 + \sum_{n=1}^{\infty}\left|\frac{(-1)^n i}{n}\right|^2 = \sum_{k=1}^{\infty}\frac{1}{k^2} + \sum_{n=1}^{\infty}\frac{1}{n^2} = 2\sum_{n=1}^{\infty}\frac{1}{n^2},
+\end{align*}
+luego $\displaystyle\sum_{n=1}^{\infty}\frac{1}{n^2} = \frac{\pi^2}{6}$.
+% REVISAR: en el papel el lado izquierdo pone pi^3/3; por el cálculo anterior es pi^2/3.
+\end{ejemplo}
+
+\begin{nota}{$L_2(\mathbb{T})$ y $\ell_2(\mathbb{Z})$ son isométricos}{nota_l2_isometria}
+Sean
+\[
+L_2(\mathbb{T}) = \left\{f : \mathbb{T} \to \mathbb{C} \ \Big/\ \frac{1}{2\pi}\int_{-\pi}^{\pi}|f(t)|^2\,dt < \infty\right\}, \qquad
+\ell_2(\mathbb{Z}) = \left\{(c_k)_{k\in\mathbb{Z}} \subseteq \mathbb{C} \ \Big/\ \underbrace{\Big(\sum_{k\in\mathbb{Z}}|c_k|^2\Big)^{1/2}}_{\text{norma}} < \infty\right\}.
+\]
+La aplicación
+\[
+(L_2(\mathbb{T}), \|\cdot\|_2) \longrightarrow (\ell_2(\mathbb{Z}), \text{norma}), \qquad f \longmapsto (\hat{f}(n))_{n\in\mathbb{Z}}
+\]
+es
+\begin{itemize}
+\item lineal;
+\item bien definida, por Bessel;
+\item sobreyectiva, por Riesz--Fischer;
+\item inyectiva, porque el s.o.n.\ es completo;
+\item una isometría, por Parseval/Plancherel.
+\end{itemize}
+Es decir, es una isometría biyectiva.
+\end{nota}
