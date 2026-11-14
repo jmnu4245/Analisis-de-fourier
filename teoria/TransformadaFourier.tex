@@ -32,3 +32,397 @@ f(x) = \sum_{n\in\mathbb{Z}}(\xi_{n+1} - \xi_n)\,h(\xi_n) \xrightarrow{\ \ell\to
 \begin{observacion}{Esto son trampas}{obs_trampas_tf}
 El paso al límite $\ell \to \infty$ no está justificado: es un argumento heurístico (en clase, ``TRAMPAS''), solo para motivar la definición de la transformada de Fourier.
 \end{observacion}
+
+\subsection{Definición y ejemplos}
+
+\textbf{03/11/2026}
+
+Tenemos $f : \mathbb{R} \to \mathbb{C}$ y
+\[
+L_1(\mathbb{R}) = \Big\{f : \mathbb{R} \to \mathbb{C} \ \Big/\ \underbrace{\int_{\mathbb{R}}|f(x)|\,dx}_{\text{integral de Lebesgue}} \text{ existe}\Big\}.
+\]
+
+\begin{definicion}{Transformada de Fourier}{transformada_fourier}
+Dada $f \in L_1(\mathbb{R})$, se define la \textbf{transformada de Fourier} de $f$ como la función $\hat{f} = \mathcal{F}(f) : \mathbb{R} \to \mathbb{C}$ dada por
+\[
+\hat{f}(\xi) = \mathcal{F}(f)(\xi) = \int_{\mathbb{R}} f(x)e^{-i\xi x}\,dx.
+\]
+\end{definicion}
+
+\begin{nota}{Otras definiciones}{nota_otras_def_tf}
+Según el texto, la transformada se define de otras maneras, por ejemplo $\hat{f}(\xi) = \int_{\mathbb{R}}f(x)e^{-2\pi i\xi x}\,dx$ o $\hat{f}(\xi) = \frac{1}{\sqrt{2\pi}}\int_{\mathbb{R}}f(x)e^{-i\xi x}\,dx$ (AF\_2\_1, diapositiva 1). En la motivación del 29/10 salía la primera.
+\end{nota}
+
+\textbf{Aviso:} todo lo que vamos a hacer ahora vale igual para funciones $f : \mathbb{R}^n \to \mathbb{C}$.
+
+\textbf{Objetivo:} intentar recuperar $f$ a partir de $\hat{f}$.
+
+\begin{observacion}{$\mathcal{F}(f)$ está bien definida y acotada}{obs_tf_bien_def}
+Para $\xi \in \mathbb{R}$ fijo, la función $x \mapsto f(x)e^{-i\xi x}$ es medible (producto de medibles). Además $|f(x)e^{-i\xi x}| \le |f(x)|$ y $f \in L_1(\mathbb{R})$, así que $[x \mapsto f(x)e^{-i\xi x}] \in L_1(\mathbb{R})$ para todo $\xi \in \mathbb{R}$. Además,
+\[
+|\hat{f}(\xi)| = \left|\int_{\mathbb{R}}f(x)e^{-i\xi x}\,dx\right| \le \int_{\mathbb{R}}|f(x)||e^{-i\xi x}|\,dx = \int_{\mathbb{R}}|f(x)|\,dx = \|f\|_1.
+\]
+Es decir, $\hat{f}$ es acotada y $\|\hat{f}\|_\infty = \sup_{\xi\in\mathbb{R}}|\hat{f}(\xi)| \le \|f\|_1$.
+\end{observacion}
+
+\textbf{Pregunta:} ¿será cierto que $\hat{f} \in L_1(\mathbb{R})$?
+
+\begin{ejemplo}{Transformada de $\chi_{[-1,1]}$}{ej_tf_chi}
+Sea $f(x) = \chi_{[-1,1]}(x)$. Entonces
+\[
+\mathcal{F}(\chi_{[-1,1]})(\xi) = \hat{\chi}_{[-1,1]}(\xi) = \int_{\mathbb{R}}\chi_{[-1,1]}(x)e^{-i\xi x}\,dx = \int_{-1}^{1}e^{-i\xi x}\,dx.
+\]
+Distinguimos dos casos.
+\begin{enumerate}
+\item[(1)] $\xi = 0$: $\hat{\chi}_{[-1,1]}(0) = \int_{-1}^{1}1\,dx = 2$.
+\item[(2)] $\xi \ne 0$:
+\begin{align*}
+\hat{\chi}_{[-1,1]}(\xi) &= \int_{-1}^{1}e^{-i\xi x}\,dx = \frac{-1}{i\xi}\Big[e^{-i\xi x}\Big]_{x=-1}^{x=1} = \frac{-1}{i\xi}\big[e^{-i\xi} - e^{i\xi}\big] \\
+&= \frac{2}{\xi}\left[\frac{e^{i\xi} - e^{-i\xi}}{2i}\right] = \frac{2}{\xi}\sin\xi.
+\end{align*}
+\end{enumerate}
+Es decir,
+\[
+\hat{\chi}_{[-1,1]}(\xi) = \begin{cases} 2, & \xi = 0, \\[2pt] \dfrac{2\sin\xi}{\xi}, & \xi \ne 0, \end{cases}
+\]
+y $\hat{\chi}_{[-1,1]} \notin L_1(\mathbb{R})$. Así que la respuesta a la pregunta es \textbf{no}.
+% REVISAR: en el papel pone "chi_{[-1,1]} no está en L_1(R)" sin gorro; se entiende que es la transformada (chi sí es integrable).
+\end{ejemplo}
+
+\begin{ejemplo}{Transformada de $e^{-|x|}$}{ej_tf_exp_abs}
+Sea $f(x) = e^{-|x|}$. Entonces
+\begin{align*}
+\hat{f}(\xi) &= \int_{\mathbb{R}}f(x)e^{-i\xi x}\,dx = \int_{\mathbb{R}}e^{-|x|}e^{-i\xi x}\,dx \\
+&= \int_{-\infty}^{0}e^{x}e^{-i\xi x}\,dx + \int_{0}^{\infty}e^{-x}e^{-i\xi x}\,dx \\
+&= \int_{-\infty}^{0}e^{x(1-i\xi)}\,dx + \int_{0}^{\infty}e^{-x(1+i\xi)}\,dx \\
+&= \frac{1}{1-i\xi}\Big[e^{x(1-i\xi)}\Big]_{x=-\infty}^{0} + \frac{-1}{1+i\xi}\Big[e^{-x(1+i\xi)}\Big]_{x=0}^{+\infty}.
+\end{align*}
+El primer corchete vale $1$:
+\begin{align*}
+\Big[e^{x(1-i\xi)}\Big]_{x=-\infty}^{0} &= \lim_{n\to\infty}\Big[e^{x(1-i\xi)}\Big]_{x=-n}^{0} = \lim_{n\to\infty}\big(e^{0} - e^{-n(1-i\xi)}\big) \\
+&= \lim_{n\to\infty}\big(1 - e^{-n(1-i\xi)}\big) = 1,
+\end{align*}
+porque $|e^{-n(1-i\xi)}| = e^{\operatorname{Re}(-n(1-i\xi))} = e^{-n} \to 0$. Por lo mismo, $\Big[e^{-x(1+i\xi)}\Big]_{x=0}^{\infty} = -1$. Luego
+\[
+\hat{f}(\xi) = \frac{1}{1-i\xi} + \frac{1}{1+i\xi} = \frac{1+i\xi + 1-i\xi}{(1-i\xi)(1+i\xi)} = \frac{2}{1+\xi^2},
+\]
+es decir, $\mathcal{F}(e^{-|x|})(\xi) = \dfrac{2}{1+\xi^2}$.
+\end{ejemplo}
+
+\begin{ejemplo}{Transformada de la gaussiana $e^{-x^2}$}{ej_tf_gaussiana}
+Sea $f(x) = e^{-x^2}$.
+
+\textbf{En $\xi = 0$:} $\hat{f}(0) = \int_{\mathbb{R}}f(x)\,dx = \int_{\mathbb{R}}e^{-x^2}\,dx$. Por Fubini y pasando a polares,
+\begin{align*}
+\left(\int_{\mathbb{R}}e^{-x^2}\,dx\right)^2 &= \left(\int_{\mathbb{R}}e^{-x^2}\,dx\right)\left(\int_{\mathbb{R}}e^{-y^2}\,dy\right) = \int_{\mathbb{R}^2}e^{-(x^2+y^2)}\,d(x,y) \\
+&= \int_0^{2\pi}\int_0^{+\infty}e^{-\rho^2}\rho\,d\rho\,d\theta = \left(\int_0^{2\pi}d\theta\right)\left(\int_0^{+\infty}\rho e^{-\rho^2}\,d\rho\right) \\
+&= 2\pi\cdot\frac{1}{2}\Big[-e^{-\rho^2}\Big]_{\rho=0}^{+\infty} = \pi,
+\end{align*}
+así que $\int_{\mathbb{R}}e^{-x^2}\,dx = \sqrt{\pi}$.
+
+\textbf{Ejercicio:} si $f$ es par, entonces $\hat{f}$ es par.
+
+Como $f(x) = e^{-x^2}$ es par, basta calcular $\hat{f}(\xi)$ para $\xi > 0$. Fijamos $\xi > 0$. Completando el cuadrado,
+\begin{align*}
+\hat{f}(\xi) &= \int_{\mathbb{R}}e^{-x^2}e^{-i\xi x}\,dx = \int_{\mathbb{R}}e^{-(x^2+i\xi x)}\,dx = \int_{\mathbb{R}}e^{-(x^2+i\xi x - \frac{\xi^2}{4}) - \frac{\xi^2}{4}}\,dx \\
+&= \int_{\mathbb{R}}e^{-(x+i\xi/2)^2}e^{-\xi^2/4}\,dx = e^{-\xi^2/4}\int_{\mathbb{R}}e^{-(x+i\xi/2)^2}\,dx.
+\end{align*}
+Para calcular la última integral usamos el rectángulo de vértices $-N$, $N$, $N + i\frac{\xi}{2}$ y $-N + i\frac{\xi}{2}$, recorrido así: $\gamma_{N1}$ es el lado de arriba (de $-N + i\frac{\xi}{2}$ a $N + i\frac{\xi}{2}$), $\gamma_{N2}$ el lado derecho (bajando hasta $N$), $\gamma_{N3}$ el lado de abajo (de $N$ a $-N$) y $\gamma_{N4}$ el lado izquierdo (subiendo de $-N$ a $-N + i\frac{\xi}{2}$). Llamamos $\gamma_N$ al camino cerrado. Observemos que
+\[
+\int_{\mathbb{R}}e^{-(x+i\xi/2)^2}\,dx = \lim_{N}\int_{\gamma_{N1}}e^{-z^2}\,dz.
+\]
+Como $e^{-z^2}$ es entera, por el teorema de Cauchy
+\[
+\sum_{j=1}^{4}\int_{\gamma_{Nj}}e^{-z^2}\,dz = \int_{\gamma_N}e^{-z^2}\,dz = 0,
+\]
+luego
+\[
+\int_{\mathbb{R}}e^{-(x+i\xi/2)^2}\,dx = -\lim_{N}\sum_{j=2}^{4}\int_{\gamma_{Nj}}e^{-z^2}\,dz.
+\]
+
+\emph{Lados verticales.} $\gamma_{N4}(t) = -N + ti$, $0 \le t \le \frac{\xi}{2}$, $\gamma_{N4}'(t) = i$. Como
+\begin{align*}
+|e^{-(-N+it)^2}| &= e^{-\operatorname{Re}((-N+it)^2)} = e^{-\operatorname{Re}(N^2 - 2iNt - t^2)} \\
+&= e^{-N^2+t^2} \le e^{-N^2+\frac{\xi^2}{4}} \qquad (0 \le t \le \tfrac{\xi}{2}),
+\end{align*}
+se tiene
+\begin{align*}
+\left|\int_{\gamma_{N4}}e^{-z^2}\,dz\right| &= \left|\int_0^{\xi/2}e^{-(-N+ti)^2}\,i\,dt\right| \le \int_0^{\xi/2}|e^{-(-N+ti)^2}|\,dt \\
+&\le \frac{\xi}{2}e^{-N^2+\frac{\xi^2}{4}} \xrightarrow{N\to\infty} 0.
+\end{align*}
+Luego $\lim_{N\to\infty}\left|\int_{\gamma_{N4}}e^{-z^2}\,dz\right| = 0$, e igual $\lim_{N\to\infty}\left|\int_{\gamma_{N2}}e^{-z^2}\,dz\right| = 0$.
+
+\emph{Lado de abajo.} $\gamma_{N3}(t) = -t$, $-N \le t \le N$, $\gamma_{N3}'(t) = -1$:
+\[
+\int_{\gamma_{N3}}e^{-z^2}\,dz = \int_{-N}^{N}e^{-t^2}\cdot(-1)\,dt \xrightarrow{N\to\infty} -\sqrt{\pi}.
+\]
+% REVISAR: en el papel este límite aparece como sqrt(pi) (con un tachón); con el signo de gamma_N3' es -sqrt(pi), que es lo que da el resultado final.
+
+Con todo esto, $\int_{\mathbb{R}}e^{-(x+i\xi/2)^2}\,dx = \sqrt{\pi}$, y entonces
+\[
+\hat{f}(\xi) = \mathcal{F}(e^{-x^2})(\xi) = \sqrt{\pi}\,e^{-\xi^2/4}.
+\]
+\end{ejemplo}
+
+\begin{observacion}{Tabla de transformadas}{obs_tabla_tf}
+\[
+\begin{array}{c|c}
+f & \mathcal{F}(f)(\xi) \\ \hline
+\chi_{[-1,1]}(x) & \dfrac{2\sin\xi}{\xi} \\[8pt]
+e^{-|x|} & \dfrac{2}{1+\xi^2} \\[8pt]
+e^{-x^2} & \sqrt{\pi}\,e^{-\xi^2/4}
+\end{array}
+\]
+\end{observacion}
+
+\subsection{Propiedades}
+
+\begin{proposicion}{Proposición 2.1}{prop_2_1}
+Sean $f, g \in L_1(\mathbb{R})$ y $a, b \in \mathbb{C}$. Entonces
+\[
+\mathcal{F}(af + bg) = a\mathcal{F}(f) + b\mathcal{F}(g).
+\]
+\end{proposicion}
+
+\begin{proof}
+Aplicar la linealidad de la integral.
+\end{proof}
+
+\begin{proposicion}{Proposición 2.2}{prop_2_2}
+Sea $f \in L_1(\mathbb{R})$. Entonces
+\begin{enumerate}
+\item[(1)] $\hat{f}$ es acotada y $\|\hat{f}\|_\infty = \sup_{\xi\in\mathbb{R}}|\hat{f}(\xi)| \le \|f\|_1$;
+\item[(2)] $\hat{f}$ es uniformemente continua;
+\item[(3)] $\lim_{|\xi|\to\infty}\hat{f}(\xi) = 0$ (Riemann--Lebesgue).
+\end{enumerate}
+\end{proposicion}
+
+\begin{proof}
+\textbf{(1)} Ya visto (\cref{obs:obs_tf_bien_def}).
+
+\textbf{(2)} Recordemos que $T : \mathbb{R} \to \mathbb{C}$ es uniformemente continua si
+\[
+\forall\varepsilon > 0\ \exists\delta > 0 \ / \ \forall s, t \in \mathbb{R}, \quad |s - t| < \delta \implies |T(s) - T(t)| < \varepsilon,
+\]
+o, lo que es lo mismo, $\forall\varepsilon > 0\ \exists\delta > 0 \ / \ \forall t, h \in \mathbb{R}$, $|h| < \delta \implies |T(t+h) - T(t)| < \varepsilon$.
+
+Dado $\varepsilon > 0$, quiero $\delta$ tal que para todo $\xi$ y todo $h$ con $|h| < \delta$ se tenga $|\hat{f}(\xi+h) - \hat{f}(\xi)| < \varepsilon$. Para $\xi, h \in \mathbb{R}$:
+\begin{align*}
+|\hat{f}(\xi+h) - \hat{f}(\xi)| &= \left|\int_{\mathbb{R}}f(x)e^{-i(\xi+h)x}\,dx - \int_{\mathbb{R}}f(x)e^{-i\xi x}\,dx\right| \\
+&= \left|\int_{\mathbb{R}}f(x)\big(e^{-i\xi x}e^{-ihx} - e^{-i\xi x}\big)\,dx\right| \\
+&= \left|\int_{\mathbb{R}}f(x)e^{-i\xi x}\big(e^{-ihx} - 1\big)\,dx\right| \\
+&\le \int_{\mathbb{R}}|f(x)|\underbrace{|e^{-i\xi x}|}_{1}|e^{-ihx} - 1|\,dx = \int_{\mathbb{R}}|f(x)||e^{-ihx} - 1|\,dx.
+\end{align*}
+Sabemos que $\lim_{t\to0}(e^{-it} - 1) = 0$: existe $\delta > 0$ tal que si $|t| < \delta$ entonces $|e^{-it} - 1| < \frac{\varepsilon}{2(\|f\|_1 + 1)}$. Por otro lado, como $f \in L_1(\mathbb{R})$, existe $M > 0$ tal que $\int_{|x|\ge M}|f(x)|\,dx < \frac{\varepsilon}{4}$.
+
+Tomo $|h| < \frac{\delta}{M}$ y separo:
+\[
+|\hat{f}(\xi+h) - \hat{f}(\xi)| \le \int_{|x|<M}|f(x)||e^{-ihx} - 1|\,dx + \int_{|x|\ge M}|f(x)||e^{-ihx} - 1|\,dx.
+\]
+Si $|x| < M$, entonces $|-ihx| = |h||x| < \frac{\delta}{M}\cdot M = \delta$, luego $|e^{-ihx} - 1| < \frac{\varepsilon}{2(\|f\|_1+1)}$ y
+\begin{align*}
+\int_{|x|<M}|f(x)||e^{-ihx} - 1|\,dx &\le \frac{\varepsilon}{2(\|f\|_1+1)}\int_{\mathbb{R}}|f(x)|\,dx \\
+&= \frac{\varepsilon}{2(\|f\|_1+1)}\|f\|_1 < \frac{\varepsilon}{2}.
+\end{align*}
+Además,
+\begin{align*}
+\int_{|x|\ge M}|f(x)||e^{-ihx} - 1|\,dx &\le \int_{|x|\ge M}|f(x)|\big(|e^{-ihx}| + 1\big)\,dx \\
+&= 2\int_{|x|\ge M}|f(x)|\,dx \le 2\cdot\frac{\varepsilon}{4} = \frac{\varepsilon}{2}.
+\end{align*}
+Entonces $|\hat{f}(\xi+h) - \hat{f}(\xi)| < \varepsilon$ para todo $\xi$ si $|h| < \frac{\delta}{M}$.
+% REVISAR: en el papel la cota de |e^{-it}-1| se escribe primero "< epsilon" y luego se usa epsilon/(2(||f||_1+1)); aquí se elige directamente esa.
+
+\textbf{(3)} Se demuestra en la clase siguiente (ver abajo, 05/11).
+\end{proof}
+
+\textbf{05/11/2026}
+
+\begin{proof}[Demostración de (3) de la \cref{prop:prop_2_2}]
+Queremos ver que $\lim_{|\xi|\to\infty}\hat{f}(\xi) = 0$. Vimos que $\hat{\chi}_{[-1,1]}(\xi) = \frac{2\sin\xi}{\xi}$. Es fácil ver que
+\[
+\hat{\chi}_{[a,b]}(\xi) = \frac{2\sin\big(\xi\,\frac{b-a}{2}\big)}{\xi}\,e^{-i\frac{b+a}{2}\xi} \qquad \forall\xi \ne 0.
+\]
+Entonces
+\[
+|\hat{\chi}_{[a,b]}(\xi)| = \frac{2\big|\sin\big(\xi\,\frac{b-a}{2}\big)\big|}{|\xi|}\big|e^{-i\frac{b+a}{2}\xi}\big| \le \frac{2}{|\xi|} \xrightarrow{|\xi|\to\infty} 0,
+\]
+porque el seno está acotado por $1$ y la exponencial tiene módulo $1$.
+Supongamos que $\varphi$ es una función simple (escalonada): existen $c_1, \dots, c_N$ e intervalos $[a_1, b_1], \dots, [a_N, b_N]$ disjuntos dos a dos con $\varphi = \sum_{j=1}^{N}c_j\chi_{[a_j,b_j]}$. Por la \cref{prop:prop_2_1},
+\[
+\hat{\varphi}(\xi) = \Big(\sum_{j=1}^{N}c_j\chi_{[a_j,b_j]}\Big)^{\wedge}(\xi) = \sum_{j=1}^{N}c_j\hat{\chi}_{[a_j,b_j]}(\xi),
+\]
+luego
+\[
+\lim_{|\xi|\to\infty}\hat{\varphi}(\xi) = \sum_{j=1}^{N}c_j\lim_{|\xi|\to\infty}\hat{\chi}_{[a_j,b_j]}(\xi) = 0.
+\]
+Sea ahora $f \in L_1(\mathbb{R})$. Dado $\varepsilon > 0$, existe $\varphi$ simple con $\|f - \varphi\|_1 < \frac{\varepsilon}{2}$. Como $\lim_{|\xi|\to\infty}\hat{\varphi}(\xi) = 0$, existe $M > 0$ tal que $|\xi| > M \implies |\hat{\varphi}(\xi)| < \frac{\varepsilon}{2}$. Entonces, si $|\xi| > M$,
+\begin{align*}
+|\hat{f}(\xi)| &= |\hat{f}(\xi) - \hat{\varphi}(\xi) + \hat{\varphi}(\xi)| \le \underbrace{|\hat{f}(\xi) - \hat{\varphi}(\xi)|}_{|(f-\varphi)^{\wedge}(\xi)|} + \underbrace{|\hat{\varphi}(\xi)|}_{<\varepsilon/2} \\
+&< \frac{\varepsilon}{2} + \frac{\varepsilon}{2} = \varepsilon,
+\end{align*}
+porque $\sup_{\xi\in\mathbb{R}}|(f-\varphi)^{\wedge}(\xi)| \le \|f - \varphi\|_1 < \frac{\varepsilon}{2}$ por (1).
+\end{proof}
+
+\begin{definicion}{El espacio $C_0(\mathbb{R})$}{c0}
+\[
+C_0(\mathbb{R}) = \Big\{g : \mathbb{R} \to \mathbb{C} \ \Big/\ g \text{ continua y } \lim_{|x|\to\infty}g(x) = 0\Big\}.
+\]
+Es un espacio vectorial. Además, $\sup_{x\in\mathbb{R}}|g(x)| < \infty$, y $\|g\|_\infty = \sup_{x\in\mathbb{R}}|g(x)|$ define una norma.
+\end{definicion}
+
+\begin{observacion}{$\mathcal{F} : L_1(\mathbb{R}) \to C_0(\mathbb{R})$}{obs_tf_c0}
+Por las \cref{prop:prop_2_1} y \cref{prop:prop_2_2}, si $f \in L_1(\mathbb{R})$ entonces $\hat{f} \in C_0(\mathbb{R})$, y
+\[
+\mathcal{F} : L_1(\mathbb{R}) \longrightarrow C_0(\mathbb{R}), \qquad f \longmapsto \hat{f}
+\]
+es una aplicación bien definida, lineal y continua. Además es inyectiva (lo veremos). ¿Es biyectiva? \textbf{No}. Por ejemplo,
+\[
+g(x) = \begin{cases} \dfrac{1}{\log x}, & x \ge e, \\[6pt] \dfrac{x}{e}, & x < e. \end{cases}
+\]
+% REVISAR: tal como está, g no tiende a 0 cuando x -> -infinito (x/e -> -infinito). Probablemente es x/e en [0,e[ y g se extiende de forma impar; el contraejemplo clásico es la función impar que vale 1/log x para x > e.
+
+\textbf{¿$\mathcal{F}$ es continua?} $\mathcal{F} : L_1(\mathbb{R}) \to C_0(\mathbb{R})$ es continua en $f_0$ si $f_n \to f_0$ implica $\mathcal{F}(f_n) \to \mathcal{F}(f_0)$. Supongamos que $f_n \to f_0$ en $L_1(\mathbb{R})$, es decir, $\|f_n - f_0\|_1 \to 0$. Quiero ver que $\mathcal{F}(f_n) \to \mathcal{F}(f_0)$ en $C_0(\mathbb{R})$:
+\[
+0 \le \|\mathcal{F}(f_n) - \mathcal{F}(f_0)\|_\infty \underset{\text{linealidad}}{=} \|\mathcal{F}(f_n - f_0)\|_\infty \le \|f_n - f_0\|_1 \longrightarrow 0.
+\]
+\end{observacion}
+
+\begin{teorema}{Teorema 2.3}{thm_2_3}
+Sea $f \in L_1(\mathbb{R})$. Para $a, \xi \in \mathbb{R}$ y $\lambda > 0$ se tiene
+\begin{enumerate}
+\item[(1)] $\mathcal{F}\big(f(a+x)\big)(\xi) = e^{i\xi a}\hat{f}(\xi)$;
+\item[(2)] $\mathcal{F}\big(e^{iax}f(x)\big)(\xi) = \hat{f}(\xi - a)$;
+\item[(3)] $\mathcal{F}\big(f(\lambda x)\big)(\xi) = \frac{1}{\lambda}\hat{f}(\xi/\lambda)$;
+\item[(4)] $\mathcal{F}\big(f(-x)\big)(\xi) = \hat{f}(-\xi)$;
+\item[(5)] $\mathcal{F}\big(\overline{f(x)}\big)(\xi) = \overline{\hat{f}(-\xi)}$.
+\end{enumerate}
+\end{teorema}
+% REVISAR: el enunciado viene de AF_2_1 (en los apuntes solo pone "Teor 2.3" y la demostración). En (5) el texto extraído del pdf pierde las barras de conjugado; se ha puesto la versión estándar.
+
+\begin{proof}
+\textbf{(1)} Con el cambio $u = a + x$ ($x = u - a$, $du = dx$):
+\begin{align*}
+\mathcal{F}\big(x \mapsto f(a+x)\big)(\xi) &= \int_{\mathbb{R}}f(a+x)e^{-i\xi x}\,dx \\
+&= \int_{\mathbb{R}}f(u)e^{-i\xi(u-a)}\,du = \int_{\mathbb{R}}f(u)e^{-i\xi u}e^{i\xi a}\,du \\
+&= e^{i\xi a}\int_{\mathbb{R}}f(u)e^{-i\xi u}\,du = e^{i\xi a}\mathcal{F}(f)(\xi).
+\end{align*}
+\textbf{(2)}
+\[
+\mathcal{F}\big(e^{iax}f(x)\big)(\xi) = \int_{\mathbb{R}}e^{iax}f(x)e^{-i\xi x}\,dx = \int_{\mathbb{R}}f(x)e^{-i(\xi-a)x}\,dx = \mathcal{F}(f)(\xi - a).
+\]
+\textbf{(3)} Con $\lambda > 0$ y el cambio $u = \lambda x$ ($x = u/\lambda$, $du = \lambda\,dx$):
+\begin{align*}
+\mathcal{F}\big(f(\lambda x)\big)(\xi) &= \int_{\mathbb{R}}f(\lambda x)e^{-i\xi x}\,dx = \int_{\mathbb{R}}f(u)e^{-i\xi\frac{u}{\lambda}}\frac{1}{\lambda}\,du \\
+&= \frac{1}{\lambda}\int_{\mathbb{R}}f(u)e^{-i\frac{\xi}{\lambda}u}\,du = \frac{1}{\lambda}\mathcal{F}(f)\Big(\frac{\xi}{\lambda}\Big).
+\end{align*}
+\textbf{(4)} y \textbf{(5)}: iguales.
+\end{proof}
+
+\begin{proposicion}{Proposición 2.4 (cambio de gorro)}{prop_2_4}
+Sean $f, g \in L_1(\mathbb{R})$. Entonces
+\[
+\int_{\mathbb{R}}\hat{f}(x)g(x)\,dx = \int_{\mathbb{R}}f(x)\hat{g}(x)\,dx.
+\]
+\end{proposicion}
+
+\begin{proof}
+Por Fubini,
+\begin{align*}
+\int_{\mathbb{R}}\hat{f}(x)g(x)\,dx &= \int_{\mathbb{R}}\left(\int_{\mathbb{R}}f(y)e^{-ixy}\,dy\right)g(x)\,dx = \int_{\mathbb{R}}\left(\int_{\mathbb{R}}f(y)e^{-ixy}g(x)\,dy\right)dx \\
+&= \int_{\mathbb{R}}\left(\int_{\mathbb{R}}f(y)e^{-ixy}g(x)\,dx\right)dy = \int_{\mathbb{R}}f(y)\underbrace{\left(\int_{\mathbb{R}}e^{-ixy}g(x)\,dx\right)}_{\hat{g}(y)}dy \\
+&= \int_{\mathbb{R}}f(y)\hat{g}(y)\,dy. \qedhere
+\end{align*}
+\end{proof}
+
+\subsection{Transformada y derivación}
+
+Para $f \in L_1(\mathbb{R})$ hay dos caminos:
+\begin{itemize}
+\item derivar y luego hacer la transformada: $\mathcal{F}(f')$;
+\item hacer la transformada y luego derivar: $\frac{d}{d\xi}\mathcal{F}(f)$.
+\end{itemize}
+
+\begin{teorema}{Teorema 2.5 (transformada de la derivada)}{thm_2_5}
+Sea $f \in C^1(\mathbb{R})$ tal que $f, f' \in L_1(\mathbb{R})$. Entonces
+\[
+\widehat{f'}(\xi) = (i\xi)\hat{f}(\xi) \qquad \forall\xi \in \mathbb{R}.
+\]
+Necesitamos que $f$ sea derivable ($f \in C^1(\mathbb{R})$) y que $f' \in L_1$ (para poder calcular $\mathcal{F}(f')$).
+\end{teorema}
+
+\begin{proof}
+Por el teorema de la convergencia dominada,
+\[
+\mathcal{F}(f')(\xi) = \int_{\mathbb{R}}f'(x)e^{-i\xi x}\,dx = \lim_{N\to\infty}\int_{-N}^{N}f'(x)e^{-i\xi x}\,dx.
+\]
+Integrando por partes,
+\begin{align*}
+\int_{-N}^{N}f'(x)e^{-i\xi x}\,dx &= \Big[f(x)e^{-i\xi x}\Big]_{x=-N}^{N} - \int_{-N}^{N}f(x)(-i\xi)e^{-i\xi x}\,dx \\
+&= \big(f(N)e^{-i\xi N} - f(-N)e^{i\xi N}\big) + i\xi\int_{-N}^{N}f(x)e^{-i\xi x}\,dx.
+\end{align*}
+Además $|f(N)e^{-i\xi N}| = |f(N)||e^{-i\xi N}| = |f(N)| \to 0$, e igual $|f(-N)e^{i\xi N}| \to 0$. En efecto, como $f' \in L_1$, existe $\lim_{x\to\pm\infty}f(x) = f(0) + \lim_{x\to\pm\infty}\int_0^x f'$, y como $f \in L_1$ ese límite tiene que ser $0$.
+% REVISAR: en el papel se justifica con "si |h| es integrable en R, entonces lim_{|x|->oo} h(x) = 0", que en general es falso (picos cada vez más estrechos). Aquí funciona porque además f' está en L_1; se ha puesto ese argumento.
+
+Entonces
+\[
+\mathcal{F}(f')(\xi) = \lim_{N\to\infty}(i\xi)\int_{-N}^{N}f(x)e^{-i\xi x}\,dx = (i\xi)\int_{\mathbb{R}}f(x)e^{-i\xi x}\,dx = (i\xi)\mathcal{F}(f)(\xi). \qedhere
+\]
+\end{proof}
+
+\textbf{Pregunta:} ¿y la derivada segunda? Necesito $f \in C^2(\mathbb{R})$ con $f, f', f'' \in L_1(\mathbb{R})$. Entonces
+\[
+\mathcal{F}(f'')(\xi) = \mathcal{F}\big((f')'\big)(\xi) = (i\xi)\mathcal{F}(f')(\xi) = (i\xi)(i\xi)\mathcal{F}(f)(\xi) = (i\xi)^2\mathcal{F}(f)(\xi).
+\]
+
+\begin{proposicion}{Proposición 2.6}{prop_2_6}
+Sea $f \in C^m(\mathbb{R})$ tal que $f, f', \dots, f^{(m)} \in L_1(\mathbb{R})$. Entonces, para cada $k \le m$,
+\[
+\widehat{f^{(k)}}(\xi) = (i\xi)^k\hat{f}(\xi) \qquad \forall\xi \in \mathbb{R}.
+\]
+En particular, $\xi \mapsto \xi^k\hat{f}(\xi)$ está acotada para todo $k \le m$.
+\end{proposicion}
+
+\begin{proof}[Idea]
+Repetir el razonamiento anterior. Para lo segundo, sea $h(x) = \frac{1}{i^k}f^{(k)}(x)$. Entonces $\hat{h}(\xi) = \frac{1}{i^k}\widehat{f^{(k)}}(\xi) = \xi^k\hat{f}(\xi)$, y por la \cref{prop:prop_2_2} sabemos que $\hat{h}$ es uniformemente continua, acotada y $\lim_{|\xi|\to\infty}\hat{h}(\xi) = 0$.
+\end{proof}
+% REVISAR: el enunciado viene de AF_2_1. En la foto 05 la línea de arriba (h y su transformada) está cortada y el límite de h-gorro se queda en blanco; además se repite el final de la demostración del Teorema 2.5, que aquí se omite.
+
+\begin{teorema}{Teorema 2.7 (derivada de la transformada)}{thm_2_7}
+Sea $f \in L_1(\mathbb{R})$ tal que $xf(x) \in L_1(\mathbb{R})$. Entonces $\hat{f} \in C^1(\mathbb{R})$ y
+\[
+\frac{d\hat{f}}{d\xi}(\xi) = (-i)\,\widehat{xf}(\xi) = (-i)\mathcal{F}\big(xf(x)\big)(\xi).
+\]
+Necesitamos $f \in L_1$ (para $\mathcal{F}$) y queremos $\hat{f} \in C^1$ (derivable).
+\end{teorema}
+
+\begin{proof}
+Tenemos $\hat{f} : \mathbb{R} \to \mathbb{C}$, $\xi \mapsto \hat{f}(\xi) = \int_{\mathbb{R}}f(x)e^{-i\xi x}\,dx$. Llamo $F(x, \xi) = f(x)e^{-i\xi x}$, de modo que $\hat{f}(\xi) = \int_{\mathbb{R}}F(x, \xi)\,dx$. Para cada $\xi \in \mathbb{R}$ fijo tenemos $F_\xi(x) = f(x)e^{-i\xi x}$, y para cada $x \in \mathbb{R}$ fijo, $F_x(\xi) = f(x)e^{-ix\xi}$.
+
+Comprobamos que se cumplen las hipótesis del teorema de derivación bajo el signo integral:
+\begin{itemize}
+\item $\big(x \mapsto f(x)e^{-i\xi x}\big) \in L_1$ (medible y acotada por $|f|$);
+\item $\big(\xi \mapsto f(x)e^{-i\xi x}\big)$ es continua;
+\item $|F(x, \xi)| = |f(x)||e^{-i\xi x}| \le |f(x)|$ y $|f| \in L_1$;
+\item si fijo $x \in \mathbb{R}$, $\frac{d}{d\xi}\big[\xi \mapsto f(x)e^{-i\xi x}\big]$ existe y $\left|\frac{\partial}{\partial\xi}\big(f(x)e^{-i\xi x}\big)\right| \le |xf(x)|$, que es integrable.
+\end{itemize}
+Por el teorema, existe $\frac{d}{d\xi}\hat{f}$. Además, como $\frac{\partial F}{\partial\xi}(x, \xi) = f(x)(-ix)e^{-i\xi x}$,
+\begin{align*}
+\frac{d\hat{f}}{d\xi} &= \frac{d}{d\xi}\int_{\mathbb{R}}F(x, \xi)\,dx = \int_{\mathbb{R}}\frac{\partial F}{\partial\xi}(x, \xi)\,dx = \int_{\mathbb{R}}f(x)(-ix)e^{-i\xi x}\,dx \\
+&= (-i)\int_{\mathbb{R}}\big(xf(x)\big)e^{-i\xi x}\,dx = (-i)\mathcal{F}\big(xf(x)\big)(\xi). \qedhere
+\end{align*}
+\end{proof}
+% REVISAR: en los apuntes no aparece el número del teorema; el enunciado y la numeración (2.7) vienen de AF_2_1.
+
+\begin{ejemplo}{La gaussiana otra vez, con una EDO}{ej_gaussiana_edo}
+Sea $f(x) = e^{-x^2}$. ¿Cuánto vale $\hat{f}(\xi)$? Llamo $g = \hat{f}$. Como $f'(x) = -2xe^{-x^2} = (-2x)f(x)$, por el \cref{thm:thm_2_7} y el \cref{thm:thm_2_5},
+\begin{align*}
+g'(\xi) &= (-i)\mathcal{F}\big(xf(x)\big)(\xi) = \frac{i}{2}\mathcal{F}\big(-2xf(x)\big)(\xi) = \frac{i}{2}\mathcal{F}(f')(\xi) \\
+&= \frac{i}{2}(i\xi)\hat{f}(\xi) = -\frac{\xi}{2}g(\xi).
+\end{align*}
+Es decir, $g$ cumple $g'(\xi) = -\frac{1}{2}\xi g(\xi)$. Entonces
+\[
+\int\frac{g'(\xi)}{g(\xi)}\,d\xi = -\frac{1}{2}\int\xi\,d\xi, \qquad \log(g(\xi)) = -\frac{1}{4}\xi^2 + C, \qquad g(\xi) = Ke^{-\xi^2/4},
+\]
+con $K = g(0) = \hat{f}(0) = \int_{\mathbb{R}}e^{-x^2}\,dx = \sqrt{\pi}$. Por tanto $\hat{f}(\xi) = \sqrt{\pi}\,e^{-\xi^2/4}$, como en el \cref{ej:ej_tf_gaussiana}.
+% REVISAR: dividir por g supone g distinto de 0; la forma rigurosa es ver que (g(xi) e^{xi^2/4})' = 0.
+\end{ejemplo}

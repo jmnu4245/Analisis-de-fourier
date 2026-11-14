@@ -2134,7 +2134,9 @@ S_N(f)(t) = \frac{a_0}{2} + \sum_{n=1}^{N}\left(\frac{a_n}{\sqrt{2}}\,\sqrt{2}\c
 Las funciones $1$, $\varphi_n = \sqrt{2}\cos(nt)$ y $\psi_n = \sqrt{2}\sin(nt)$ forman un s.o.n., con $\langle f, 1\rangle = \frac{a_0}{2}$, $\langle f, \varphi_n\rangle = \frac{a_n}{\sqrt{2}}$ y $\langle f, \psi_n\rangle = \frac{b_n}{\sqrt{2}}$. Bessel da
 \[
 \left(\frac{a_0}{2}\right)^2 + \sum_{n=1}^{\infty}\left(\left(\frac{a_n}{\sqrt{2}}\right)^2 + \left(\frac{b_n}{\sqrt{2}}\right)^2\right) \le \|f\|_2^2,
-\quad\text{es decir}\quad
+\]
+es decir,
+\[
 \frac{a_0^2}{4} + \sum_{n=1}^{\infty}\left(\frac{a_n^2}{2} + \frac{b_n^2}{2}\right) \le \frac{1}{2\pi}\int_{-\pi}^{\pi}|f(t)|^2\,dt,
 \]
 y multiplicando por $2$:
@@ -2167,9 +2169,10 @@ Sabemos que $\sum_{k=1}^{\infty}|c_k|^2 < \infty$, así que dado $\varepsilon > 
 \langle s_n, \varphi_k\rangle = \Big\langle \sum_{j=1}^{n}c_j\varphi_j, \varphi_k\Big\rangle = \sum_{j=1}^{n}c_j\langle\varphi_j, \varphi_k\rangle = c_k.
 \]
 Por la desigualdad de Cauchy--Schwarz, $|\langle f, g\rangle| \le \|f\|_2\|g\|_2$, y entonces
-\[
-0 \le |c_k - \langle f, \varphi_k\rangle| = |\langle s_n, \varphi_k\rangle - \langle f, \varphi_k\rangle| = |\langle s_n - f, \varphi_k\rangle| \le \|s_n - f\|_2\|\varphi_k\|_2 = \|s_n - f\|_2 \xrightarrow{n\to\infty} 0.
-\]
+\begin{align*}
+0 \le |c_k - \langle f, \varphi_k\rangle| &= |\langle s_n, \varphi_k\rangle - \langle f, \varphi_k\rangle| = |\langle s_n - f, \varphi_k\rangle| \\
+&\le \|s_n - f\|_2\|\varphi_k\|_2 = \|s_n - f\|_2 \xrightarrow{n\to\infty} 0.
+\end{align*}
 Luego $|c_k - \langle f, \varphi_k\rangle| = 0$, es decir, $c_k = \langle f, \varphi_k\rangle$.
 
 \emph{Alternativa:} fijo $k$. Dado $\varepsilon > 0$, existe $n_0$ tal que $\|s_n - f\|_2 < \varepsilon$ para todo $n \ge n_0$. Tomo $n \ge \max(n_0, k)$: $0 \le |c_k - \langle f, \varphi_k\rangle| \le \|s_n - f\|_2 < \varepsilon$. Como vale para todo $\varepsilon > 0$, $c_k = \langle f, \varphi_k\rangle$.
@@ -2189,11 +2192,11 @@ Sean $\{\varphi_n\}_n$ un s.o.n.\ y $f \in L_2$. Son equivalentes:
 \begin{proof}
 Sabemos (\cref{not:nota_error_sn}) que $\big\|f - \sum_{k=1}^{n}\langle f, \varphi_k\rangle\varphi_k\big\|_2^2 = \|f\|_2^2 - \sum_{k=1}^{n}|\langle f, \varphi_k\rangle|^2$. Entonces
 \begin{align*}
-\lim_n\Big\|f - \sum_{k=1}^{n}\langle f, \varphi_k\rangle\varphi_k\Big\|_2 = 0
-&\iff \lim_n\Big(\|f\|_2^2 - \sum_{k=1}^{n}|\langle f, \varphi_k\rangle|^2\Big) = 0
-\iff \|f\|_2^2 - \lim_n\sum_{k=1}^{n}|\langle f, \varphi_k\rangle|^2 = 0 \\
-&\iff \lim_n\sum_{k=1}^{n}|\langle f, \varphi_k\rangle|^2 = \|f\|_2^2
-\iff \sum_{k=1}^{\infty}|\langle f, \varphi_k\rangle|^2 = \|f\|_2^2. \qedhere
+&\lim_n\Big\|f - \sum_{k=1}^{n}\langle f, \varphi_k\rangle\varphi_k\Big\|_2 = 0
+\iff \lim_n\Big(\|f\|_2^2 - \sum_{k=1}^{n}|\langle f, \varphi_k\rangle|^2\Big) = 0 \\
+&\iff \|f\|_2^2 - \lim_n\sum_{k=1}^{n}|\langle f, \varphi_k\rangle|^2 = 0
+\iff \lim_n\sum_{k=1}^{n}|\langle f, \varphi_k\rangle|^2 = \|f\|_2^2 \\
+&\iff \sum_{k=1}^{\infty}|\langle f, \varphi_k\rangle|^2 = \|f\|_2^2. \qedhere
 \end{align*}
 \end{proof}
 
@@ -2249,13 +2252,16 @@ Si $f \in L_2(\mathbb{T})$, entonces
 
 \begin{ejemplo}{$\sum 1/n^2 = \pi^2/6$ con Parseval}{ej_basilea}
 Sea $f(t) = t$, $-\pi \le t \le \pi$. Sabemos que $\hat{f}(0) = 0$ y $\hat{f}(n) = \frac{(-1)^n i}{n}$ para $n \ne 0$. Además
-\[
-\|f\|_2 = \left(\frac{1}{2\pi}\int_{-\pi}^{\pi}t^2\,dt\right)^{1/2} = \left(\frac{1}{2\pi}\left[\frac{t^3}{3}\right]_{-\pi}^{\pi}\right)^{1/2} = \left(\frac{1}{2\pi}\left(\frac{\pi^3}{3} - \frac{(-\pi)^3}{3}\right)\right)^{1/2} = \left(\frac{1}{2\pi}\cdot\frac{2\pi^3}{3}\right)^{1/2} = \left(\frac{\pi^2}{3}\right)^{1/2} < \infty,
-\]
+\begin{align*}
+\|f\|_2 &= \left(\frac{1}{2\pi}\int_{-\pi}^{\pi}t^2\,dt\right)^{1/2} = \left(\frac{1}{2\pi}\left[\frac{t^3}{3}\right]_{-\pi}^{\pi}\right)^{1/2} \\
+&= \left(\frac{1}{2\pi}\left(\frac{\pi^3}{3} - \frac{(-\pi)^3}{3}\right)\right)^{1/2} = \left(\frac{1}{2\pi}\cdot\frac{2\pi^3}{3}\right)^{1/2} = \left(\frac{\pi^2}{3}\right)^{1/2} < \infty,
+\end{align*}
 así que $f \in L_2(\mathbb{T})$. Por Parseval (\cref{prop:cor_parseval}):
 \begin{align*}
-\frac{\pi^2}{3} &= \frac{1}{2\pi}\int_{-\pi}^{\pi}|f(t)|^2\,dt = \sum_{\substack{n\in\mathbb{Z}\\ n\ne0}}\left|\frac{(-1)^n i}{n}\right|^2 = \sum_{n=-\infty}^{-1}\left|\frac{(-1)^n i}{n}\right|^2 + \sum_{n=1}^{\infty}\left|\frac{(-1)^n i}{n}\right|^2 \\
-&= \sum_{k=1}^{\infty}\left|\frac{(-1)^k i}{-k}\right|^2 + \sum_{n=1}^{\infty}\left|\frac{(-1)^n i}{n}\right|^2 = \sum_{k=1}^{\infty}\frac{1}{k^2} + \sum_{n=1}^{\infty}\frac{1}{n^2} = 2\sum_{n=1}^{\infty}\frac{1}{n^2},
+\frac{\pi^2}{3} &= \frac{1}{2\pi}\int_{-\pi}^{\pi}|f(t)|^2\,dt = \sum_{\substack{n\in\mathbb{Z}\\ n\ne0}}\left|\frac{(-1)^n i}{n}\right|^2 \\
+&= \sum_{n=-\infty}^{-1}\left|\frac{(-1)^n i}{n}\right|^2 + \sum_{n=1}^{\infty}\left|\frac{(-1)^n i}{n}\right|^2 \\
+&= \sum_{k=1}^{\infty}\left|\frac{(-1)^k i}{-k}\right|^2 + \sum_{n=1}^{\infty}\left|\frac{(-1)^n i}{n}\right|^2 \\
+&= \sum_{k=1}^{\infty}\frac{1}{k^2} + \sum_{n=1}^{\infty}\frac{1}{n^2} = 2\sum_{n=1}^{\infty}\frac{1}{n^2},
 \end{align*}
 luego $\displaystyle\sum_{n=1}^{\infty}\frac{1}{n^2} = \frac{\pi^2}{6}$.
 % REVISAR: en el papel el lado izquierdo pone pi^3/3; por el cálculo anterior es pi^2/3.
@@ -2264,7 +2270,9 @@ luego $\displaystyle\sum_{n=1}^{\infty}\frac{1}{n^2} = \frac{\pi^2}{6}$.
 \begin{nota}{$L_2(\mathbb{T})$ y $\ell_2(\mathbb{Z})$ son isométricos}{nota_l2_isometria}
 Sean
 \[
-L_2(\mathbb{T}) = \left\{f : \mathbb{T} \to \mathbb{C} \ \Big/\ \frac{1}{2\pi}\int_{-\pi}^{\pi}|f(t)|^2\,dt < \infty\right\}, \qquad
+L_2(\mathbb{T}) = \left\{f : \mathbb{T} \to \mathbb{C} \ \Big/\ \frac{1}{2\pi}\int_{-\pi}^{\pi}|f(t)|^2\,dt < \infty\right\},
+\]
+\[
 \ell_2(\mathbb{Z}) = \left\{(c_k)_{k\in\mathbb{Z}} \subseteq \mathbb{C} \ \Big/\ \underbrace{\Big(\sum_{k\in\mathbb{Z}}|c_k|^2\Big)^{1/2}}_{\text{norma}} < \infty\right\}.
 \]
 La aplicación

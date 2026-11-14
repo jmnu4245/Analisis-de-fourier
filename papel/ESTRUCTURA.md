@@ -1,8 +1,8 @@
 # Estructura de los apuntes
 
-Fuentes: fotos de papel en `papel/AAAA-MM-DD/` (los escaneos de WhatsApp están en `v2/`), `material/AF_1_series_fourier_comp.pdf` (diapositivas, hasta la 50/50) y `papel/teorema_1_33.pdf`.
+Fuentes: fotos de papel en `papel/AAAA-MM-DD/` (los escaneos de WhatsApp están en `v2/`), `material/AF_1_series_fourier_comp.pdf` (diapositivas, 56 en total), `material/AF_2_1_transformada_fourier_comp.pdf` (Tema 2, de momento hasta la diapositiva 6/31: resultados 2.1–2.8) y `papel/teorema_1_33.pdf`.
 
-## Por día → sección del LaTeX (`teoria/SeriesFourier.tex`)
+## Por día → sección del LaTeX (`teoria/SeriesFourier.tex` y, desde el 29/10, `teoria/TransformadaFourier.tex`)
 
 | Día | Fotos | Sección | Contenido |
 |---|---|---|---|
@@ -18,6 +18,8 @@ Fuentes: fotos de papel en `papel/AAAA-MM-DD/` (los escaneos de WhatsApp están 
 | 20/10 | 3 v2 | 1.14–1.15 | Demostración 1.20, Teoremas 1.21–1.24, Teorema 1.30 (incompleto) |
 | ¿22/10? | `teorema_1_33.pdf` | 1.16 | Notación del s.o.n., Teorema 1.33 con demostración |
 | 29/10 | 5 (`01`–`05`) | 1.16 y 2.1 | Bessel (1.36, 1.37), Riesz–Fischer (1.38), Lema 1.39, s.o.n. completo, Teorema 1.40, Parseval, $\sum 1/n^2=\pi^2/6$, isometría $L_2(\mathbb T)\cong\ell_2(\mathbb Z)$; Tema 2: motivación de la transformada (`teoria/TransformadaFourier.tex`) |
+| 03/11 | 5 (`01`–`05`) | 2.2–2.3 | Definición de $\mathcal F$, $\|\hat f\|_\infty\le\|f\|_1$, ejemplos $\chi_{[-1,1]}$, $e^{-\lvert x\rvert}$, $e^{-x^2}$ (por contorno), tabla, Prop. 2.1, Prop. 2.2 (1)–(2) |
+| 05/11 | 6 (`01`–`06`) | 2.3–2.4 | Prop. 2.2 (3) (Riemann–Lebesgue), $C_0(\mathbb R)$, $\mathcal F:L_1\to C_0$, Teorema 2.3, Prop. 2.4, Teorema 2.5, Prop. 2.6, Teorema 2.7, gaussiana por EDO |
 
 Las fechas en negrita (`\textbf{dd/mm/aa}`) marcan en el LaTeX dónde empieza cada clase.
 
@@ -54,4 +56,15 @@ Cada uno lleva una `nota` en el LaTeX que lo indica.
     - Bessel: en el papel los índices empiezan en $n=0$; se usa $k=1$ como en la definición de s.o.n.
     - Motivación de la transformada: $h(\xi)$, el signo de $\xi_{n+1}-\xi_n$, la exponencial de dentro ($e^{-2\pi i\xi t}$) y $d\xi$ (en el papel, $dx$) reescritos de forma coherente.
     - El enunciado del Lema 1.39 aparece en la demostración de Riesz–Fischer y su prueba en la hoja siguiente; en el LaTeX va como caja aparte tras el teorema.
+11. **Orden de las fotos del 03/11:** la hoja `05` (gaussiana por contorno) continúa la `02`; en el LaTeX va justo después, antes de la tabla y de las Props. 2.1 y 2.2.
+12. **Cambios respecto al papel (03/11):**
+    - Gaussiana: el lado $\gamma_{N3}$ da $-\sqrt\pi$ (en el papel, $\sqrt\pi$ con un tachón); con ese signo sale el resultado final.
+    - "$\chi_{[-1,1]}\notin L_1(\mathbb R)$" se ha leído como $\hat\chi_{[-1,1]}\notin L_1(\mathbb R)$.
+    - Prop. 2.2 (2): la cota de $|e^{-it}-1|$ se elige directamente como $\varepsilon/(2(\|f\|_1+1))$.
+13. **05/11, enunciados sacados de AF_2_1:** en los apuntes solo aparecen "Teor 2.3" (con la demostración) y la derivada de $\hat f$ sin número. Los enunciados del Teorema 2.3, la Prop. 2.6 y el Teorema 2.7 (y su numeración) vienen de las diapositivas.
+14. **Cambios respecto al papel (05/11):**
+    - Teorema 2.5: en el papel, que $f(N)\to0$ se justifica con "si $h$ es integrable, $h(x)\to0$", que es falso en general. Se usa que $f'\in L_1$ (existe el límite) y que $f\in L_1$ (tiene que ser $0$).
+    - Contraejemplo de la no sobreyectividad: tal como está, $g(x)=x/e$ para $x<e$ no tiende a $0$ en $-\infty$; probablemente era la extensión impar.
+    - La hoja `05` tiene la línea de arriba cortada (la $h=\frac1{i^k}f^{(k)}$ de la Prop. 2.6) y repite el final de la demostración del Teorema 2.5, que se omite.
+    - Gaussiana por EDO: se divide por $g$ sin comprobar que no se anula.
 
