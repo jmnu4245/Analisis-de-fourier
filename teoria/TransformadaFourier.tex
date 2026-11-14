@@ -138,6 +138,36 @@ Es decir,
 \hat{\chi}_{[-1,1]}(\xi) = \begin{cases} 2, & \xi = 0, \\[2pt] \dfrac{2\sin\xi}{\xi}, & \xi \ne 0, \end{cases}
 \]
 y $\hat{\chi}_{[-1,1]} \notin L_1(\mathbb{R})$. Así que la respuesta a la pregunta es \textbf{no}.
+
+% Figura añadida: no está en los apuntes de clase.
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    width=11cm, height=5cm,
+    axis x line=bottom, axis y line=middle,
+    xmin=-21, xmax=21, ymin=-0.7, ymax=2.3,
+    xlabel={$\xi$}, xlabel style={at={(ticklabel* cs:1)}, anchor=west},
+    xtick={-6.2832,6.2832,-12.566,12.566,-18.850,18.850},
+    xticklabels={$-2\pi$,$2\pi$,$-4\pi$,$4\pi$,$-6\pi$,$6\pi$},
+    ytick={2}, yticklabel style={font=\small},
+    samples=400,
+    axis on top,
+    legend columns=2,
+    legend style={at={(0.5,-0.28)}, anchor=north, draw=gray!50, fill=gray!5, font=\small, /tikz/every even column/.append style={column sep=0.6cm}}
+]
+    \draw[gray!60] (axis cs:-21,0) -- (axis cs:21,0);
+    \addplot[thick, teal, domain=-21:21] {2*sin(deg(x))/x};
+    \addlegendentry{$\hat{\chi}_{[-1,1]}(\xi) = \frac{2\sin\xi}{\xi}$}
+    \addplot[dashed, gray, domain=1:21] {2/x};
+    \addlegendentry{$\pm\frac{2}{|\xi|}$}
+    \addplot[dashed, gray, domain=1:21, forget plot] {-2/x};
+    \addplot[dashed, gray, domain=-21:-1, forget plot] {-2/x};
+    \addplot[dashed, gray, domain=-21:-1, forget plot] {2/x};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+La transformada es continua y tiende a $0$ (como dirá la \cref{prop:prop_2_2}), pero lo hace como $\frac{1}{|\xi|}$, demasiado despacio: $\int_{\mathbb{R}}\big|\frac{2\sin\xi}{\xi}\big|\,d\xi = \infty$.
 % REVISAR: en el papel pone "chi_{[-1,1]} no está en L_1(R)" sin gorro; se entiende que es la transformada (chi sí es integrable).
 \end{ejemplo}
 
