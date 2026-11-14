@@ -239,7 +239,7 @@ Como ejemplo clásico se recordó en clase el caso real: $C([a,b]) = \{f : [a,b]
 La proposición siguiente es la \textbf{Proposición 1.1} de los apuntes y de AF\_1.
 \end{nota}
 
-\begin{proposicion}{Densidad en $C(\mathbb{T})$}{densidad_ct}
+\begin{proposicion}{Proposición 1.1: densidad en $C(\mathbb{T})$}{densidad_ct}
 En nuestro caso $C(K) = C(\mathbb{T})$.
 
 Si $f, g$ son polinomios trigonométricos:
@@ -296,7 +296,7 @@ Imaginemos dos funciones $f \in L_r(\mathbb{T})$ y $g \in L_{r'}(\mathbb{T})$, d
 De forma más compacta, esto se escribe como $\|fg\|_1 \le \|f\|_r \cdot \|g\|_{r'}$.
 \end{teorema}
 
-\begin{proposicion}{Inclusión de espacios $L_p$ y densidad}{incl_dens_lp}
+\begin{proposicion}{Proposición 1.2: inclusión de espacios $L_p$ y densidad}{incl_dens_lp}
 Se cumplen las siguientes propiedades fundamentales para los espacios $L_p(\mathbb{T})$:
 \begin{enumerate}
     \item \textbf{Inclusión de espacios:} Si un exponente es estrictamente menor que otro ($p < q$), el espacio $L_q$ está totalmente contenido en $L_p$. Es decir, si $\|f\|_q < \infty$, entonces $\|f\|_p < \infty$.
@@ -796,7 +796,22 @@ Efectuando el cambio de variable $u = t - s$ ($du = -ds$, con $s = -\varepsilon 
 \textbf{Respuesta:} \textbf{No}. Se puede demostrar como consecuencia de la \cref{prop:fourier_conv} (ver ejercicio a continuación).
 \end{observacion}
 
-\begin{proposicion}{Coeficientes de Fourier de una convolución}{fourier_conv}
+\begin{proposicion}{Proposición 1.6}{prop_1_6}
+Sean $f, g, h \in L_1(\mathbb{T})$ y $\alpha \in \mathbb{C}$. Entonces
+\begin{enumerate}
+\item[(1)] $f * g = g * f$;
+\item[(2)] $f * (g + h) = f * g + f * h$;
+\item[(3)] $(\alpha f) * g = \alpha(f * g)$;
+\item[(4)] $\|f * g\|_1 \le \|f\|_1\|g\|_1$.
+\end{enumerate}
+Es decir, $(L_1(\mathbb{T}), *)$ es un álgebra de Banach (sin unidad).
+\end{proposicion}
+
+\begin{nota}{Origen de la Proposición 1.6}{nota_origen_1_6}
+El enunciado completo está en AF\_1 (diapositiva 15). En clase solo se vio (4), dentro de la \cref{prop:prop_1_5}.
+\end{nota}
+
+\begin{proposicion}{Proposición 1.7: coeficientes de Fourier de una convolución}{fourier_conv}
 Sean $f, g \in L_1(\mathbb{T})$ y $n \in \mathbb{Z}$. Entonces:
 \[
 \widehat{(f * g)}(n) = \hat{f}(n) \cdot \hat{g}(n).
@@ -860,7 +875,7 @@ Si $(a_n)_n, (b_n)_n \subseteq \mathbb{C}$, se define:
 \]
 \end{nota}
 
-\begin{proposicion}{Propiedades del núcleo de Dirichlet}{prop_dirichlet}
+\begin{proposicion}{Proposición 1.8: propiedades del núcleo de Dirichlet}{prop_dirichlet}
 \begin{enumerate}
     \item $S_N(f, t) = (f * D_N)(t)$ para toda $f \in L_1(\mathbb{T})$.
     \item Expresión cerrada:
@@ -1130,6 +1145,15 @@ $$f_k(t) = \begin{cases} 1 & D_k(t) \ge 0 \\ -1 & D_k(t) < 0 \end{cases} \quad \
 
 
 \end{observacion}
+
+\begin{teorema}{Teorema 1.10}{thm_1_10}
+Existe $f \in L_1(\mathbb{T})$ tal que $(S_n(f))_n$ no converge en $L_1(\mathbb{T})$.
+\end{teorema}
+
+\begin{nota}{Origen del Teorema 1.10}{nota_origen_1_10}
+El enunciado está en AF\_1 (diapositiva 23), pero no en los apuntes de clase. La observación anterior apunta a la idea: el mismo argumento de Banach--Steinhaus en $L_1(\mathbb{T})$.
+\end{nota}
+
 \subsection{Resultados positivos de convergencia}
 
 \textbf{06/10/2026}
@@ -1276,7 +1300,7 @@ Las dos integrales restantes tienden a 0 asumiendo condiciones de integrabilidad
 Además, $\vert{}\varphi(s)\vert{} \le \frac{\vert{}f(t+s) + f(t-s)\vert{}}{\sen(\delta/2)}$, que es integrable. Luego $\varphi \in L_1([\delta, \pi])$.
 \end{observacion}
 
-\begin{teorema}{Test de Dini}{dini}
+\begin{teorema}{Teorema 1.13 (Test de Dini)}{dini}
 Sean $f \in L_1(\mathbb{T})$ y $t \in \mathbb{R}$ tales que existen los límites laterales:
 
 
@@ -1346,6 +1370,18 @@ $$\left\vert{} \frac{f(t-s) - f(t-)}{s} \right\vert{} \le 1 + \vert{}f'_-(t)\ver
 
 La función integrando es acotada en $[0, \delta]$, y por tanto, integrable. Razonando de forma análoga con $f'_+(t)$, se satisfacen plenamente las condiciones exigidas por el Test de Dini, garantizando la convergencia del desarrollo de Fourier a la semisuma de los límites laterales.
 \end{proof}
+
+\begin{proposicion}{Corolario 1.15}{cor_1_15}
+Si $f \in L_1(\mathbb{T})$ es continua y derivable en $t \in \mathbb{R}$, entonces $S_n(f, t) \to f(t)$.
+\end{proposicion}
+
+\begin{proposicion}{Corolario 1.16}{cor_1_16}
+Si $f \in C^1(\mathbb{T})$, entonces $S_n(f) \to f$ puntualmente en $[-\pi, \pi[$.
+\end{proposicion}
+
+\begin{nota}{Origen de los Corolarios 1.15 y 1.16}{nota_origen_1_15}
+Están en AF\_1 (diapositiva 29), pero no en los apuntes de clase. Ambos son casos particulares del \cref{prop:cor_1_14}: si $f$ es continua en $t$, $f(t+) = f(t-) = f(t)$, y si es derivable existen las derivadas laterales.
+\end{nota}
 
 \textbf{08/10/2026}
 
@@ -1441,6 +1477,36 @@ Evaluando la serie en $t=0$ ($\cos 0 = 1$, $\operatorname{sen} 0 = 0$):
 2\pi^2 = \frac{4\pi^2}{3} + \sum_{n=1}^\infty \frac{4}{n^2} \implies \sum_{n=1}^\infty \frac{4}{n^2} = 2\pi^2 - \frac{4\pi^2}{3} = \frac{2\pi^2}{3} \implies \sum_{n=1}^\infty \frac{1}{n^2} = \frac{\pi^2}{6}.
 \]
 \end{ejemplo}
+
+\subsubsection{Otros resultados positivos}
+
+\begin{nota}{Origen de este apartado}{nota_origen_otros_positivos}
+Los enunciados de este apartado están en AF\_1 (diapositiva 30), sin número ni demostración, y no en los apuntes de clase. La definición de variación acotada aparece en AF\_1 solo como ``$f$ es de variación acotada si\dots''.
+\end{nota}
+
+\begin{proposicion}{Condición de Hölder}{prop_holder_conv}
+Sea $f \in L_1(\mathbb{T})$ tal que existen $\alpha, L > 0$ con $|f(x) - f(y)| \le L|x - y|^\alpha$ para todos $x, y \in [-\pi, \pi]$. Entonces $S_n(f) \to f$ puntualmente.
+\end{proposicion}
+
+\begin{definicion}{Variación acotada}{variacion_acotada}
+$f \in L_1(\mathbb{T})$ es \textbf{de variación acotada} en $[a, b]$ si
+\[
+\sup\left\{\sum_{j=1}^{m}|f(x_j) - f(x_{j-1})| \ : \ a = x_0 < x_1 < \dots < x_m = b\right\} < \infty.
+\]
+% REVISAR: AF_1 deja la definición en puntos suspensivos; esta es la definición estándar.
+\end{definicion}
+
+\begin{proposicion}{Variación acotada}{prop_va_conv}
+Si $f \in L_1(\mathbb{T})$ es de variación acotada en un entorno de $t$, entonces
+\[
+S_n(f, t) \to \frac{f(t+) + f(t-)}{2}.
+\]
+\end{proposicion}
+
+\begin{proposicion}{Funciones crecientes y continuas}{prop_creciente_conv}
+Sea $f \in L_1(\mathbb{T})$ creciente y continua en $[a, b] \subseteq [-\pi, \pi]$. Entonces $S_n(f) \to f$ uniformemente en $J$ para todo $J \subseteq [a, b]$.
+% REVISAR: así aparece en AF_1; lo habitual es J compacto contenido en el interior de ]a,b[.
+\end{proposicion}
 
 \subsection{Convergencia de Cesàro}
 
@@ -2013,6 +2079,18 @@ Además, la igualdad se da si y sólo si
 \]
 \end{proof}
 
+\begin{proposicion}{Corolario 1.34}{cor_1_34}
+Si $f \in L_2(\mathbb{T})$, entonces $\|f - S_n(f)\|_2 \le \|f - P_n\|_2$ para todo polinomio trigonométrico $P_n$ de grado $n$.
+\end{proposicion}
+
+\begin{proposicion}{Corolario 1.35}{cor_1_35}
+Si $f \in L_2(\mathbb{T})$, entonces $\|f - S_n(f)\|_2 \to 0$.
+\end{proposicion}
+
+\begin{nota}{Origen de los Corolarios 1.34 y 1.35}{nota_origen_1_34}
+Están en AF\_1 (diapositiva 50), pero no en los apuntes de clase. El 1.34 es el \cref{thm:thm_1_33} con el s.o.n.\ $\{e^{ikt}\}_k$. El 1.35 se demuestra en clase más adelante: ver la observación tras el \cref{thm:thm_1_40}.
+\end{nota}
+
 \textbf{29/10/2026}
 
 \begin{observacion}{Repaso: $S_n(f)$ como mejor aproximación}{obs_sn_mejor_aprox}
@@ -2153,7 +2231,15 @@ Si $\hat{f}(n) = 0$ para todo $n \in \mathbb{Z}$, entonces $f = 0$ a.e.\ por el 
 es decir, $\|f - S_n(f)\|_2 \to 0$, con $S_n(f)$ la suma parcial de Fourier.
 \end{observacion}
 
-\begin{proposicion}{Corolario (Parseval)}{cor_parseval}
+\begin{proposicion}{Corolario 1.41}{cor_1_41}
+Si $f \in L_2(\mathbb{T})$, entonces $S_n(f) \to f$ en $L_2(\mathbb{T})$.
+\end{proposicion}
+
+\begin{nota}{Numeración de AF\_1}{nota_numeracion_1_41}
+En clase lo anterior se vio como observación. En AF\_1 es el Corolario 1.41, y el siguiente es el Corolario 1.42 (Parseval/Plancherel), cuyo apartado (2) es la isometría de la nota de después del ejemplo.
+\end{nota}
+
+\begin{proposicion}{Corolario 1.42 (Parseval / Plancherel)}{cor_parseval}
 Si $f \in L_2(\mathbb{T})$, entonces
 \begin{enumerate}
 \item[(1)] $\displaystyle\frac{1}{2\pi}\int_{-\pi}^{\pi}|f(t)|^2\,dt = \sum_{n\in\mathbb{Z}}|\hat{f}(n)|^2$;

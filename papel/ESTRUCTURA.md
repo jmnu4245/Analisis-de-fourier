@@ -29,13 +29,14 @@ Cada uno lleva una `nota` en el LaTeX que lo indica.
 - 1.14: Teorema 1.25, Corolarios 1.26 y 1.27, Teoremas 1.28 y 1.29.
 - 1.15: Corolario 1.31 y teorema de convergencia en casi todo punto.
 - 1.16: producto escalar en $L_2$, Prop. 1.32, pre-Hilbert/Hilbert, s.o.n.
+- Añadido el 14/11, tras revisar AF_1 completo (56 diapositivas): Prop. 1.6 (álgebra de Banach $(L_1,*)$), Teorema 1.10, Corolarios 1.15 y 1.16, condición de Hölder, variación acotada y funciones crecientes (diap. 30, sin número), Corolarios 1.34, 1.35 y 1.41. El corolario de Parseval pasa a llamarse Corolario 1.42. Además, la Prop. 1.1, la Prop. 1.2, la Prop. 1.7, la Prop. 1.8 y el Teorema 1.13 ya estaban en el LaTeX, pero sin número en el título: ahora lo llevan. El Lema 1.3 (ortogonalidad de $e^{int}$) está como ejemplo, sin número.
 
 ## Lo que no cuadra
 
 1. **Hueco entre el 10/09 y el 18/09.** El principio de la forma compleja (Euler, $n\ge1$) está en el LaTeX pero en ninguna foto. Faltan las págs. 1–2 del cuaderno escaneado. ¿Hubo clase el 15 o el 17/09?
 2. **Hueco tras el 20/10.** La prueba del Teorema 1.30 queda en "continuará". `teorema_1_33.pdf` no tiene fecha. Falta el 22/10.
 3. **13/10 sin apuntes.** El 15/10 repite Cesàro del 8/10. Probablemente no hubo clase.
-4. **En AF_1 y nunca en clase:** Teorema 1.10 (no convergencia en $L_1$), Corolarios 1.15 y 1.16, condición de Hölder y variación acotada. Tampoco están en el LaTeX.
+4. **En AF_1 y nunca en clase:** Teorema 1.10 (no convergencia en $L_1$), Corolarios 1.15 y 1.16, condición de Hölder y variación acotada. Desde el 14/11 están en el LaTeX con una `nota` (solo enunciados).
 5. **Línea ilegible del 20/10:** "$\varepsilon_n\in\{1,-1\}\Rightarrow\sum\varepsilon_n/n^3\dots$ HR escrita". Está copiada literal.
 6. **Cambios respecto al papel:**
    - $f_\delta=\frac1{2\delta}$ (en la foto pone "$-\frac12\delta$").
