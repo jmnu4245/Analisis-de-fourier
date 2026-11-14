@@ -11,7 +11,37 @@ Hemos visto, para $f : \mathbb{R} \to \mathbb{C}$ $2\pi$-periódica:
 
 \textbf{Pregunta:} ¿y si $f$ \underline{no} es periódica?
 
-Sea $f : \mathbb{R} \to \mathbb{C}$ no periódica. Fijo $\ell > 0$, tomo la restricción de $f$ a $[-\ell, \ell]$ y considero su \underline{extensión $2\ell$-periódica} (que tiene serie de Fourier). Para $x \in [-\ell, \ell]$:
+Sea $f : \mathbb{R} \to \mathbb{C}$ no periódica. Fijo $\ell > 0$, tomo la restricción de $f$ a $[-\ell, \ell]$ y considero su \underline{extensión $2\ell$-periódica} (que tiene serie de Fourier).
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    width=12cm, height=5cm,
+    axis lines=middle,
+    xmin=-9.5, xmax=9.5, ymin=-0.4, ymax=1.7,
+    xlabel={$x$}, ylabel={},
+    xtick={-3,3}, xticklabels={$-\ell$, $\ell$},
+    ytick=\empty,
+    samples=120,
+    axis on top,
+    legend columns=2,
+    legend style={at={(0.5,-0.12)}, anchor=north, draw=gray!50, fill=gray!5, font=\small, /tikz/every even column/.append style={column sep=0.6cm}}
+]
+    % Franja [-l, l]
+    \fill[teal!10] (axis cs:-3,-0.4) rectangle (axis cs:3,1.7);
+    % f no periódica
+    \addplot[thick, purple!80!black, domain=-9.5:9.5] {exp(-x^2/12)*(1+0.5*sin(deg(1.3*x))) + 0.04*x};
+    \addlegendentry{$f$}
+    % Extensión 2l-periódica de f|[-l,l]
+    \addplot[very thick, teal, domain=-3:3] {exp(-x^2/12)*(1+0.5*sin(deg(1.3*x))) + 0.04*x};
+    \addlegendentry{extensión $2\ell$-periódica}
+    \addplot[very thick, teal, dashed, domain=3:9, forget plot] {exp(-(x-6)^2/12)*(1+0.5*sin(deg(1.3*(x-6)))) + 0.04*(x-6)};
+    \addplot[very thick, teal, dashed, domain=-9:-3, forget plot] {exp(-(x+6)^2/12)*(1+0.5*sin(deg(1.3*(x+6)))) + 0.04*(x+6)};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+Para $x \in [-\ell, \ell]$:
 \begin{equation}
 f(x) = \sum_{n\in\mathbb{Z}}\left(\frac{1}{2\ell}\int_{-\ell}^{\ell}f(t)e^{-i\frac{\pi}{\ell}nt}\,dt\right)e^{i\frac{\pi}{\ell}nx}. \tag{$\ast$}
 \end{equation}
@@ -68,7 +98,29 @@ Es decir, $\hat{f}$ es acotada y $\|\hat{f}\|_\infty = \sup_{\xi\in\mathbb{R}}|\
 \textbf{Pregunta:} ¿será cierto que $\hat{f} \in L_1(\mathbb{R})$?
 
 \begin{ejemplo}{Transformada de $\chi_{[-1,1]}$}{ej_tf_chi}
-Sea $f(x) = \chi_{[-1,1]}(x)$. Entonces
+Sea $f(x) = \chi_{[-1,1]}(x)$.
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    width=7cm, height=4.2cm,
+    axis lines=middle,
+    xmin=-2.5, xmax=2.5, ymin=-0.3, ymax=1.5,
+    xlabel={$x$},
+    xtick={-1,1}, ytick=\empty,
+]
+    \node[left, font=\small] at (axis cs:-1,1) {$1$};
+    \node[above, font=\small] at (axis cs:1.6,1) {$\chi_{[-1,1]}$};
+    \addplot[very thick, teal] coordinates {(-2.5,0) (-1,0)};
+    \addplot[very thick, teal] coordinates {(-1,1) (1,1)};
+    \addplot[very thick, teal] coordinates {(1,0) (2.5,0)};
+    \addplot[dashed, gray] coordinates {(-1,0) (-1,1)};
+    \addplot[dashed, gray] coordinates {(1,0) (1,1)};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+Entonces
 \[
 \mathcal{F}(\chi_{[-1,1]})(\xi) = \hat{\chi}_{[-1,1]}(\xi) = \int_{\mathbb{R}}\chi_{[-1,1]}(x)e^{-i\xi x}\,dx = \int_{-1}^{1}e^{-i\xi x}\,dx.
 \]
@@ -127,7 +179,36 @@ Como $f(x) = e^{-x^2}$ es par, basta calcular $\hat{f}(\xi)$ para $\xi > 0$. Fij
 \hat{f}(\xi) &= \int_{\mathbb{R}}e^{-x^2}e^{-i\xi x}\,dx = \int_{\mathbb{R}}e^{-(x^2+i\xi x)}\,dx = \int_{\mathbb{R}}e^{-(x^2+i\xi x - \frac{\xi^2}{4}) - \frac{\xi^2}{4}}\,dx \\
 &= \int_{\mathbb{R}}e^{-(x+i\xi/2)^2}e^{-\xi^2/4}\,dx = e^{-\xi^2/4}\int_{\mathbb{R}}e^{-(x+i\xi/2)^2}\,dx.
 \end{align*}
-Para calcular la última integral usamos el rectángulo de vértices $-N$, $N$, $N + i\frac{\xi}{2}$ y $-N + i\frac{\xi}{2}$, recorrido así: $\gamma_{N1}$ es el lado de arriba (de $-N + i\frac{\xi}{2}$ a $N + i\frac{\xi}{2}$), $\gamma_{N2}$ el lado derecho (bajando hasta $N$), $\gamma_{N3}$ el lado de abajo (de $N$ a $-N$) y $\gamma_{N4}$ el lado izquierdo (subiendo de $-N$ a $-N + i\frac{\xi}{2}$). Llamamos $\gamma_N$ al camino cerrado. Observemos que
+Para calcular la última integral usamos el rectángulo de vértices $-N$, $N$, $N + i\frac{\xi}{2}$ y $-N + i\frac{\xi}{2}$, recorrido así: $\gamma_{N1}$ es el lado de arriba (de $-N + i\frac{\xi}{2}$ a $N + i\frac{\xi}{2}$), $\gamma_{N2}$ el lado derecho (bajando hasta $N$), $\gamma_{N3}$ el lado de abajo (de $N$ a $-N$) y $\gamma_{N4}$ el lado izquierdo (subiendo de $-N$ a $-N + i\frac{\xi}{2}$). Llamamos $\gamma_N$ al camino cerrado.
+
+\begin{center}
+\begin{tikzpicture}[>=latex, scale=1.1]
+    % Ejes
+    \draw[->, gray!70!black] (-3.6,0) -- (3.6,0) node[right, black] {$\operatorname{Re} z$};
+    \draw[->, gray!70!black] (0,-0.5) -- (0,1.9) node[above, black] {$\operatorname{Im} z$};
+    % Rectángulo
+    \fill[teal!8] (-3,0) rectangle (3,1.2);
+    \draw[very thick, teal!90!black] (-3,1.2) -- (3,1.2) -- (3,0) -- (-3,0) -- cycle;
+    % Flechas de orientación
+    \draw[->, very thick, teal!90!black] (-0.9,1.2) -- (-0.8,1.2);
+    \draw[->, very thick, teal!90!black] (3,0.65) -- (3,0.55);
+    \draw[->, very thick, teal!90!black] (0.9,0) -- (0.8,0);
+    \draw[->, very thick, teal!90!black] (-3,0.55) -- (-3,0.65);
+    % Nombres de los lados
+    \node[above] at (-1.6,1.2) {$\gamma_{N1}$};
+    \node[right] at (3,0.6) {$\gamma_{N2}$};
+    \node[below] at (1.6,0) {$\gamma_{N3}$};
+    \node[left] at (-3,0.6) {$\gamma_{N4}$};
+    % Vértices
+    \node[below, font=\small] at (-3,0) {$-N$};
+    \node[below, font=\small] at (3,0) {$N$};
+    \node[above right, font=\small] at (3,1.2) {$N + i\frac{\xi}{2}$};
+    \node[above left, font=\small] at (-3,1.2) {$-N + i\frac{\xi}{2}$};
+    \draw[gray!60] (-0.08,1.2) -- (0.08,1.2) node[above right, font=\small, black] {$\frac{\xi}{2}$};
+\end{tikzpicture}
+\end{center}
+
+Observemos que
 \[
 \int_{\mathbb{R}}e^{-(x+i\xi/2)^2}\,dx = \lim_{N}\int_{\gamma_{N1}}e^{-z^2}\,dz.
 \]
