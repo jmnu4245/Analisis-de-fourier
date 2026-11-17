@@ -239,7 +239,7 @@ Como ejemplo clásico se recordó en clase el caso real: $C([a,b]) = \{f : [a,b]
 La proposición siguiente es la \textbf{Proposición 1.1} de los apuntes y de AF\_1.
 \end{nota}
 
-\begin{proposicion}{Densidad en $C(\mathbb{T})$}{densidad_ct}
+\begin{proposicion}{Proposición 1.1: densidad en $C(\mathbb{T})$}{densidad_ct}
 En nuestro caso $C(K) = C(\mathbb{T})$.
 
 Si $f, g$ son polinomios trigonométricos:
@@ -296,7 +296,7 @@ Imaginemos dos funciones $f \in L_r(\mathbb{T})$ y $g \in L_{r'}(\mathbb{T})$, d
 De forma más compacta, esto se escribe como $\|fg\|_1 \le \|f\|_r \cdot \|g\|_{r'}$.
 \end{teorema}
 
-\begin{proposicion}{Inclusión de espacios $L_p$ y densidad}{incl_dens_lp}
+\begin{proposicion}{Proposición 1.2: inclusión de espacios $L_p$ y densidad}{incl_dens_lp}
 Se cumplen las siguientes propiedades fundamentales para los espacios $L_p(\mathbb{T})$:
 \begin{enumerate}
     \item \textbf{Inclusión de espacios:} Si un exponente es estrictamente menor que otro ($p < q$), el espacio $L_q$ está totalmente contenido en $L_p$. Es decir, si $\|f\|_q < \infty$, entonces $\|f\|_p < \infty$.
@@ -796,7 +796,22 @@ Efectuando el cambio de variable $u = t - s$ ($du = -ds$, con $s = -\varepsilon 
 \textbf{Respuesta:} \textbf{No}. Se puede demostrar como consecuencia de la \cref{prop:fourier_conv} (ver ejercicio a continuación).
 \end{observacion}
 
-\begin{proposicion}{Coeficientes de Fourier de una convolución}{fourier_conv}
+\begin{proposicion}{Proposición 1.6}{prop_1_6}
+Sean $f, g, h \in L_1(\mathbb{T})$ y $\alpha \in \mathbb{C}$. Entonces
+\begin{enumerate}
+\item[(1)] $f * g = g * f$;
+\item[(2)] $f * (g + h) = f * g + f * h$;
+\item[(3)] $(\alpha f) * g = \alpha(f * g)$;
+\item[(4)] $\|f * g\|_1 \le \|f\|_1\|g\|_1$.
+\end{enumerate}
+Es decir, $(L_1(\mathbb{T}), *)$ es un álgebra de Banach (sin unidad).
+\end{proposicion}
+
+\begin{nota}{Origen de la Proposición 1.6}{nota_origen_1_6}
+El enunciado completo está en AF\_1 (diapositiva 15). En clase solo se vio (4), dentro de la \cref{prop:prop_1_5}.
+\end{nota}
+
+\begin{proposicion}{Proposición 1.7: coeficientes de Fourier de una convolución}{fourier_conv}
 Sean $f, g \in L_1(\mathbb{T})$ y $n \in \mathbb{Z}$. Entonces:
 \[
 \widehat{(f * g)}(n) = \hat{f}(n) \cdot \hat{g}(n).
@@ -860,7 +875,7 @@ Si $(a_n)_n, (b_n)_n \subseteq \mathbb{C}$, se define:
 \]
 \end{nota}
 
-\begin{proposicion}{Propiedades del núcleo de Dirichlet}{prop_dirichlet}
+\begin{proposicion}{Proposición 1.8: propiedades del núcleo de Dirichlet}{prop_dirichlet}
 \begin{enumerate}
     \item $S_N(f, t) = (f * D_N)(t)$ para toda $f \in L_1(\mathbb{T})$.
     \item Expresión cerrada:
@@ -1130,6 +1145,15 @@ $$f_k(t) = \begin{cases} 1 & D_k(t) \ge 0 \\ -1 & D_k(t) < 0 \end{cases} \quad \
 
 
 \end{observacion}
+
+\begin{teorema}{Teorema 1.10}{thm_1_10}
+Existe $f \in L_1(\mathbb{T})$ tal que $(S_n(f))_n$ no converge en $L_1(\mathbb{T})$.
+\end{teorema}
+
+\begin{nota}{Origen del Teorema 1.10}{nota_origen_1_10}
+El enunciado está en AF\_1 (diapositiva 23), pero no en los apuntes de clase. La observación anterior apunta a la idea: el mismo argumento de Banach--Steinhaus en $L_1(\mathbb{T})$.
+\end{nota}
+
 \subsection{Resultados positivos de convergencia}
 
 \textbf{06/10/2026}
@@ -1276,7 +1300,7 @@ Las dos integrales restantes tienden a 0 asumiendo condiciones de integrabilidad
 Además, $\vert{}\varphi(s)\vert{} \le \frac{\vert{}f(t+s) + f(t-s)\vert{}}{\sen(\delta/2)}$, que es integrable. Luego $\varphi \in L_1([\delta, \pi])$.
 \end{observacion}
 
-\begin{teorema}{Test de Dini}{dini}
+\begin{teorema}{Teorema 1.13 (Test de Dini)}{dini}
 Sean $f \in L_1(\mathbb{T})$ y $t \in \mathbb{R}$ tales que existen los límites laterales:
 
 
@@ -1346,6 +1370,18 @@ $$\left\vert{} \frac{f(t-s) - f(t-)}{s} \right\vert{} \le 1 + \vert{}f'_-(t)\ver
 
 La función integrando es acotada en $[0, \delta]$, y por tanto, integrable. Razonando de forma análoga con $f'_+(t)$, se satisfacen plenamente las condiciones exigidas por el Test de Dini, garantizando la convergencia del desarrollo de Fourier a la semisuma de los límites laterales.
 \end{proof}
+
+\begin{proposicion}{Corolario 1.15}{cor_1_15}
+Si $f \in L_1(\mathbb{T})$ es continua y derivable en $t \in \mathbb{R}$, entonces $S_n(f, t) \to f(t)$.
+\end{proposicion}
+
+\begin{proposicion}{Corolario 1.16}{cor_1_16}
+Si $f \in C^1(\mathbb{T})$, entonces $S_n(f) \to f$ puntualmente en $[-\pi, \pi[$.
+\end{proposicion}
+
+\begin{nota}{Origen de los Corolarios 1.15 y 1.16}{nota_origen_1_15}
+Están en AF\_1 (diapositiva 29), pero no en los apuntes de clase. Ambos son casos particulares del \cref{prop:cor_1_14}: si $f$ es continua en $t$, $f(t+) = f(t-) = f(t)$, y si es derivable existen las derivadas laterales.
+\end{nota}
 
 \textbf{08/10/2026}
 
@@ -1441,6 +1477,36 @@ Evaluando la serie en $t=0$ ($\cos 0 = 1$, $\operatorname{sen} 0 = 0$):
 2\pi^2 = \frac{4\pi^2}{3} + \sum_{n=1}^\infty \frac{4}{n^2} \implies \sum_{n=1}^\infty \frac{4}{n^2} = 2\pi^2 - \frac{4\pi^2}{3} = \frac{2\pi^2}{3} \implies \sum_{n=1}^\infty \frac{1}{n^2} = \frac{\pi^2}{6}.
 \]
 \end{ejemplo}
+
+\subsubsection{Otros resultados positivos}
+
+\begin{nota}{Origen de este apartado}{nota_origen_otros_positivos}
+Los enunciados de este apartado están en AF\_1 (diapositiva 30), sin número ni demostración, y no en los apuntes de clase. La definición de variación acotada aparece en AF\_1 solo como ``$f$ es de variación acotada si\dots''.
+\end{nota}
+
+\begin{proposicion}{Condición de Hölder}{prop_holder_conv}
+Sea $f \in L_1(\mathbb{T})$ tal que existen $\alpha, L > 0$ con $|f(x) - f(y)| \le L|x - y|^\alpha$ para todos $x, y \in [-\pi, \pi]$. Entonces $S_n(f) \to f$ puntualmente.
+\end{proposicion}
+
+\begin{definicion}{Variación acotada}{variacion_acotada}
+$f \in L_1(\mathbb{T})$ es \textbf{de variación acotada} en $[a, b]$ si
+\[
+\sup\left\{\sum_{j=1}^{m}|f(x_j) - f(x_{j-1})| \ : \ a = x_0 < x_1 < \dots < x_m = b\right\} < \infty.
+\]
+% REVISAR: AF_1 deja la definición en puntos suspensivos; esta es la definición estándar.
+\end{definicion}
+
+\begin{proposicion}{Variación acotada}{prop_va_conv}
+Si $f \in L_1(\mathbb{T})$ es de variación acotada en un entorno de $t$, entonces
+\[
+S_n(f, t) \to \frac{f(t+) + f(t-)}{2}.
+\]
+\end{proposicion}
+
+\begin{proposicion}{Funciones crecientes y continuas}{prop_creciente_conv}
+Sea $f \in L_1(\mathbb{T})$ creciente y continua en $[a, b] \subseteq [-\pi, \pi]$. Entonces $S_n(f) \to f$ uniformemente en $J$ para todo $J \subseteq [a, b]$.
+% REVISAR: así aparece en AF_1; lo habitual es J compacto contenido en el interior de ]a,b[.
+\end{proposicion}
 
 \subsection{Convergencia de Cesàro}
 
@@ -2012,3 +2078,214 @@ Además, la igualdad se da si y sólo si
 \sum_{k=1}^n |b_k - c_k|^2 = 0 \iff |b_k - c_k|^2 = 0 \ \forall k \iff b_k = c_k \ \forall k = 1, \dots, n. \qedhere
 \]
 \end{proof}
+
+\begin{proposicion}{Corolario 1.34}{cor_1_34}
+Si $f \in L_2(\mathbb{T})$, entonces $\|f - S_n(f)\|_2 \le \|f - P_n\|_2$ para todo polinomio trigonométrico $P_n$ de grado $n$.
+\end{proposicion}
+
+\begin{proposicion}{Corolario 1.35}{cor_1_35}
+Si $f \in L_2(\mathbb{T})$, entonces $\|f - S_n(f)\|_2 \to 0$.
+\end{proposicion}
+
+\begin{nota}{Origen de los Corolarios 1.34 y 1.35}{nota_origen_1_34}
+Están en AF\_1 (diapositiva 50), pero no en los apuntes de clase. El 1.34 es el \cref{thm:thm_1_33} con el s.o.n.\ $\{e^{ikt}\}_k$. El 1.35 se demuestra en clase más adelante: ver la observación tras el \cref{thm:thm_1_40}.
+\end{nota}
+
+\textbf{29/10/2026}
+
+\begin{observacion}{Repaso: $S_n(f)$ como mejor aproximación}{obs_sn_mejor_aprox}
+Con $\langle f, g\rangle = \frac{1}{2\pi}\int_{-\pi}^{\pi} f(t)\overline{g(t)}\,dt$ y $f \in L_2(\mathbb{T})$, ya vimos que $\|f - S_n(f)\|_2^2 = \|f\|_2^2 - \|S_n(f)\|_2^2$. Con el s.o.n.\ $\{e^{ikt}\}_{k\in\mathbb{Z}}$ y el \cref{thm:thm_1_33}:
+\begin{enumerate}
+\item[(1)] $S_n(f)(t) = \sum_{k=-n}^{n}\hat{f}(k)e^{ikt}$ es el polinomio trigonométrico (de grado $\le n$) que mejor aproxima a $f$ en $\|\cdot\|_2$.
+\item[(2)] $S_n(f)$ es la proyección ortogonal de $f$ en $\mathcal{P}(\mathbb{T})$ (los polinomios trigonométricos de grado $\le n$).
+\end{enumerate}
+\end{observacion}
+
+\begin{nota}{Norma de una combinación finita}{nota_norma_comb}
+Si $P = \sum_{k=1}^{n} a_k\varphi_k$ con $\{\varphi_k\}_k$ s.o.n., entonces $\|P\|_2 = \left(\sum_{k=1}^{n}|a_k|^2\right)^{1/2}$.
+\end{nota}
+
+\textbf{Pregunta:} si $f \in L_2$, ¿qué relación hay entre $\|f\|_2$ y los coeficientes $(c_k(f))_k$?
+
+\begin{teorema}{Teorema 1.36 (Desigualdad de Bessel)}{thm_1_36}
+Sea $\{\varphi_k\}_k$ un s.o.n.\ en $L_2(\mathbb{T})$. Entonces
+\[
+\sum_{k=1}^{\infty}|\langle f, \varphi_k\rangle|^2 \le \|f\|_2^2 \qquad \forall f \in L_2(\mathbb{T}).
+\]
+\end{teorema}
+
+\begin{proof}
+Fijo $N \in \mathbb{N}$. Por la \cref{not:nota_error_sn},
+\[
+0 \le \Big\|f - \underbrace{\sum_{k=1}^{N}\langle f, \varphi_k\rangle\varphi_k}_{S_N(f)}\Big\|_2^2 = \|f\|_2^2 - \Big\|\sum_{k=1}^{N}\langle f, \varphi_k\rangle\varphi_k\Big\|_2^2 = \|f\|_2^2 - \sum_{k=1}^{N}|\langle f, \varphi_k\rangle|^2,
+\]
+luego $\sum_{k=1}^{N}|\langle f, \varphi_k\rangle|^2 \le \|f\|_2^2$ para todo $N$. Por tanto la serie converge y $\sum_{k=1}^{\infty}|\langle f, \varphi_k\rangle|^2 \le \|f\|_2^2$.
+\end{proof}
+
+\begin{proposicion}{Corolario 1.37 (Bessel)}{cor_1_37}
+Sea $f \in L_2(\mathbb{T})$. Entonces $\displaystyle\sum_{n\in\mathbb{Z}}|\hat{f}(n)|^2 \le \|f\|_2^2$.
+\end{proposicion}
+
+\begin{nota}{Bessel con los coeficientes trigonométricos}{nota_bessel_trig}
+Para $f$ real escribimos
+\[
+S_N(f)(t) = \frac{a_0}{2} + \sum_{n=1}^{N}\left(\frac{a_n}{\sqrt{2}}\,\sqrt{2}\cos(nt) + \frac{b_n}{\sqrt{2}}\,\sqrt{2}\sin(nt)\right).
+\]
+Las funciones $1$, $\varphi_n = \sqrt{2}\cos(nt)$ y $\psi_n = \sqrt{2}\sin(nt)$ forman un s.o.n., con $\langle f, 1\rangle = \frac{a_0}{2}$, $\langle f, \varphi_n\rangle = \frac{a_n}{\sqrt{2}}$ y $\langle f, \psi_n\rangle = \frac{b_n}{\sqrt{2}}$. Bessel da
+\[
+\left(\frac{a_0}{2}\right)^2 + \sum_{n=1}^{\infty}\left(\left(\frac{a_n}{\sqrt{2}}\right)^2 + \left(\frac{b_n}{\sqrt{2}}\right)^2\right) \le \|f\|_2^2,
+\]
+es decir,
+\[
+\frac{a_0^2}{4} + \sum_{n=1}^{\infty}\left(\frac{a_n^2}{2} + \frac{b_n^2}{2}\right) \le \frac{1}{2\pi}\int_{-\pi}^{\pi}|f(t)|^2\,dt,
+\]
+y multiplicando por $2$:
+\[
+\frac{a_0^2}{2} + \sum_{n=1}^{\infty}(a_n^2 + b_n^2) \le \frac{1}{\pi}\int_{-\pi}^{\pi}|f(t)|^2\,dt.
+\]
+\end{nota}
+
+\textbf{Idea:} si $\{\varphi_n\}_n$ es un s.o.n.\ y $c_1, \dots, c_N \in \mathbb{C}$, entonces $c_1\varphi_1 + \dots + c_N\varphi_N = \sum_{n=1}^{N}c_n\varphi_n \in L_2$.
+
+\textbf{Pregunta:} ¿qué pasa si tengo $(c_n)_{n=1}^{\infty} \subseteq \mathbb{C}$? ¿Qué tiene que cumplir para que $\sum_{n=1}^{\infty}c_n\varphi_n \in L_2$?
+
+\begin{teorema}{Teorema 1.38 (Riesz--Fischer)}{thm_1_38}
+Sea $\{\varphi_n\}_n$ un s.o.n.\ en $L_2(\mathbb{T})$ y $(c_n)_n \subseteq \mathbb{C}$ con $\sum_n |c_n|^2 < \infty$. Entonces existe $f \in L_2(\mathbb{T})$ tal que
+\begin{enumerate}
+\item[(1)] $\langle f, \varphi_n\rangle = c_n$ para todo $n$;
+\item[(2)] $\|f\|_2 = \left(\sum_n |c_n|^2\right)^{1/2}$.
+\end{enumerate}
+\end{teorema}
+
+\begin{proof}
+Quiero $f \in L_2$ tal que $\langle f, \varphi_n\rangle = c_n$. Para $n \in \mathbb{N}$ defino $s_n = \sum_{k=1}^{n}c_k\varphi_k \in L_2(\mathbb{T})$. Si $m > n$,
+\[
+\|s_m - s_n\|_2^2 = \Big\|\sum_{k=1}^{m}c_k\varphi_k - \sum_{k=1}^{n}c_k\varphi_k\Big\|_2^2 = \Big\|\sum_{k=n+1}^{m}c_k\varphi_k\Big\|_2^2 = \sum_{k=n+1}^{m}|c_k|^2.
+\]
+Sabemos que $\sum_{k=1}^{\infty}|c_k|^2 < \infty$, así que dado $\varepsilon > 0$ existe $N_0 \in \mathbb{N}$ tal que si $m > n > N_0$ entonces $\sum_{k=n+1}^{m}|c_k|^2 < \varepsilon^2$. Entonces, si $m > n > N_0$, $\|s_m - s_n\|_2 < \varepsilon$: $(s_n)_n$ es de Cauchy y, como $L_2$ es completo, $(s_n)_n$ es convergente. Es decir, existe $f \in L_2$ tal que $\|f - s_n\|_2 \to 0$.
+
+\textbf{(1)} Veamos que $\langle f, \varphi_k\rangle = c_k$ para todo $k$. Fijamos $k \in \mathbb{N}$ y tomamos $n \ge k$:
+\[
+\langle s_n, \varphi_k\rangle = \Big\langle \sum_{j=1}^{n}c_j\varphi_j, \varphi_k\Big\rangle = \sum_{j=1}^{n}c_j\langle\varphi_j, \varphi_k\rangle = c_k.
+\]
+Por la desigualdad de Cauchy--Schwarz, $|\langle f, g\rangle| \le \|f\|_2\|g\|_2$, y entonces
+\begin{align*}
+0 \le |c_k - \langle f, \varphi_k\rangle| &= |\langle s_n, \varphi_k\rangle - \langle f, \varphi_k\rangle| = |\langle s_n - f, \varphi_k\rangle| \\
+&\le \|s_n - f\|_2\|\varphi_k\|_2 = \|s_n - f\|_2 \xrightarrow{n\to\infty} 0.
+\end{align*}
+Luego $|c_k - \langle f, \varphi_k\rangle| = 0$, es decir, $c_k = \langle f, \varphi_k\rangle$.
+
+\emph{Alternativa:} fijo $k$. Dado $\varepsilon > 0$, existe $n_0$ tal que $\|s_n - f\|_2 < \varepsilon$ para todo $n \ge n_0$. Tomo $n \ge \max(n_0, k)$: $0 \le |c_k - \langle f, \varphi_k\rangle| \le \|s_n - f\|_2 < \varepsilon$. Como vale para todo $\varepsilon > 0$, $c_k = \langle f, \varphi_k\rangle$.
+% REVISAR: en el papel Cauchy-Schwarz aparece como |<f,g>| <= ||f||_2^2 ||g||_2^2 y la cota como ||s_n - f||_2^2; aquí está corregido (sin cuadrados).
+
+\textbf{(2)} Por (1), $s_n = \sum_{k=1}^{n}\langle f, \varphi_k\rangle\varphi_k$ y $\|f - s_n\|_2 \to 0$. Aplicando el \cref{prop:lema_1_39} ((b) $\Rightarrow$ (a)), $\|f\|_2^2 = \sum_{n}|\langle f, \varphi_n\rangle|^2 = \sum_n |c_n|^2$.
+\end{proof}
+
+\begin{proposicion}{Lema 1.39}{lema_1_39}
+Sean $\{\varphi_n\}_n$ un s.o.n.\ y $f \in L_2$. Son equivalentes:
+\begin{enumerate}
+\item[(a)] $\|f\|_2^2 = \sum_{n=1}^{\infty}|\langle f, \varphi_n\rangle|^2$.
+\item[(b)] $\lim_{n}\big\|f - \sum_{k=1}^{n}\langle f, \varphi_k\rangle\varphi_k\big\|_2 = 0$, es decir, $\sum_{k=1}^{n}\langle f, \varphi_k\rangle\varphi_k \to f$ en $L_2$.
+\end{enumerate}
+\end{proposicion}
+
+\begin{proof}
+Sabemos (\cref{not:nota_error_sn}) que $\big\|f - \sum_{k=1}^{n}\langle f, \varphi_k\rangle\varphi_k\big\|_2^2 = \|f\|_2^2 - \sum_{k=1}^{n}|\langle f, \varphi_k\rangle|^2$. Entonces
+\begin{align*}
+&\lim_n\Big\|f - \sum_{k=1}^{n}\langle f, \varphi_k\rangle\varphi_k\Big\|_2 = 0
+\iff \lim_n\Big(\|f\|_2^2 - \sum_{k=1}^{n}|\langle f, \varphi_k\rangle|^2\Big) = 0 \\
+&\iff \|f\|_2^2 - \lim_n\sum_{k=1}^{n}|\langle f, \varphi_k\rangle|^2 = 0
+\iff \lim_n\sum_{k=1}^{n}|\langle f, \varphi_k\rangle|^2 = \|f\|_2^2 \\
+&\iff \sum_{k=1}^{\infty}|\langle f, \varphi_k\rangle|^2 = \|f\|_2^2. \qedhere
+\end{align*}
+\end{proof}
+
+\begin{definicion}{Sistema ortonormal completo}{son_completo}
+Un s.o.n.\ $\{\varphi_n\}_n$ en $L_2$ es \textbf{completo} si
+\[
+\langle f, \varphi_n\rangle = 0 \ \ \forall n \implies f = 0 \text{ a.e.}
+\]
+\end{definicion}
+
+\begin{teorema}{Teorema 1.40}{thm_1_40}
+Sea $\{\varphi_k\}_k$ un s.o.n.\ en $L_2(\mathbb{T})$. Son equivalentes:
+\begin{enumerate}
+\item[(1)] $\langle f, \varphi_k\rangle = 0$ para todo $k$ $\iff$ $f = 0$ a.e.\ (el s.o.n.\ es completo).
+\item[(2)] $\|f\|_2^2 = \sum_{k=1}^{\infty}|\langle f, \varphi_k\rangle|^2$ para toda $f \in L_2(\mathbb{T})$.
+\item[(3)] $\sum_{k=1}^{n}\langle f, \varphi_k\rangle\varphi_k \to f$ en $L_2(\mathbb{T})$ para toda $f \in L_2(\mathbb{T})$.
+\end{enumerate}
+\end{teorema}
+
+\begin{proof}
+\textbf{(2) $\Leftrightarrow$ (3)}: visto en el \cref{prop:lema_1_39}.
+
+\textbf{(2) $\Rightarrow$ (1)}: obvio. Si $\langle f, \varphi_k\rangle = 0$ para todo $k$, por (2) $\|f\|_2 = 0$, es decir, $\int|f|^2 = 0$, y entonces $f = 0$ a.e.
+
+\textbf{(1) $\Rightarrow$ (3)}: sea $f \in L_2$. Por Bessel (\cref{thm:thm_1_36}), $\sum_{n=1}^{\infty}|\langle f, \varphi_n\rangle|^2 < \infty$. Por Riesz--Fischer (\cref{thm:thm_1_38}) existe $g \in L_2(\mathbb{T})$ con $\langle g, \varphi_n\rangle = \langle f, \varphi_n\rangle$ para todo $n$ y, por su demostración, $\sum_{k=1}^{n}\langle f, \varphi_k\rangle\varphi_k \to g$ en $L_2$ (es decir, $\|g - \sum_{k=1}^{n}\langle f, \varphi_k\rangle\varphi_k\|_2 \to 0$).
+
+Como $\langle g, \varphi_n\rangle = \langle f, \varphi_n\rangle$ para todo $n$, se tiene $\langle g - f, \varphi_n\rangle = 0$ para todo $n$, y por (1) $g - f = 0$ a.e., es decir, $g = f$ a.e. Entonces $\sum_{k=1}^{n}\langle f, \varphi_k\rangle\varphi_k \xrightarrow{\|\cdot\|_2} f$.
+\end{proof}
+
+\begin{observacion}{El sistema trigonométrico es completo}{obs_trig_completo}
+Si $\hat{f}(n) = 0$ para todo $n \in \mathbb{Z}$, entonces $f = 0$ a.e.\ por el \cref{prop:cor_1_27}. Así, $\{e^{int}\}_{n\in\mathbb{Z}}$ es completo. Por el \cref{thm:thm_1_40},
+\[
+\sum_{k=-n}^{n}\hat{f}(k)e^{ikt} \xrightarrow{\|\cdot\|_2} f \quad \forall f \in L_2(\mathbb{T}),
+\]
+es decir, $\|f - S_n(f)\|_2 \to 0$, con $S_n(f)$ la suma parcial de Fourier.
+\end{observacion}
+
+\begin{proposicion}{Corolario 1.41}{cor_1_41}
+Si $f \in L_2(\mathbb{T})$, entonces $S_n(f) \to f$ en $L_2(\mathbb{T})$.
+\end{proposicion}
+
+\begin{nota}{Numeración de AF\_1}{nota_numeracion_1_41}
+En clase lo anterior se vio como observación. En AF\_1 es el Corolario 1.41, y el siguiente es el Corolario 1.42 (Parseval/Plancherel), cuyo apartado (2) es la isometría de la nota de después del ejemplo.
+\end{nota}
+
+\begin{proposicion}{Corolario 1.42 (Parseval / Plancherel)}{cor_parseval}
+Si $f \in L_2(\mathbb{T})$, entonces
+\begin{enumerate}
+\item[(1)] $\displaystyle\frac{1}{2\pi}\int_{-\pi}^{\pi}|f(t)|^2\,dt = \sum_{n\in\mathbb{Z}}|\hat{f}(n)|^2$;
+\item[(2)] $\displaystyle\frac{1}{\pi}\int_{-\pi}^{\pi}|f(t)|^2\,dt = \frac{a_0^2}{2} + \sum_{n=1}^{\infty}(a_n^2 + b_n^2)$.
+\end{enumerate}
+\end{proposicion}
+
+\begin{ejemplo}{$\sum 1/n^2 = \pi^2/6$ con Parseval}{ej_basilea}
+Sea $f(t) = t$, $-\pi \le t \le \pi$. Sabemos que $\hat{f}(0) = 0$ y $\hat{f}(n) = \frac{(-1)^n i}{n}$ para $n \ne 0$. Además
+\begin{align*}
+\|f\|_2 &= \left(\frac{1}{2\pi}\int_{-\pi}^{\pi}t^2\,dt\right)^{1/2} = \left(\frac{1}{2\pi}\left[\frac{t^3}{3}\right]_{-\pi}^{\pi}\right)^{1/2} \\
+&= \left(\frac{1}{2\pi}\left(\frac{\pi^3}{3} - \frac{(-\pi)^3}{3}\right)\right)^{1/2} = \left(\frac{1}{2\pi}\cdot\frac{2\pi^3}{3}\right)^{1/2} = \left(\frac{\pi^2}{3}\right)^{1/2} < \infty,
+\end{align*}
+así que $f \in L_2(\mathbb{T})$. Por Parseval (\cref{prop:cor_parseval}):
+\begin{align*}
+\frac{\pi^2}{3} &= \frac{1}{2\pi}\int_{-\pi}^{\pi}|f(t)|^2\,dt = \sum_{\substack{n\in\mathbb{Z}\\ n\ne0}}\left|\frac{(-1)^n i}{n}\right|^2 \\
+&= \sum_{n=-\infty}^{-1}\left|\frac{(-1)^n i}{n}\right|^2 + \sum_{n=1}^{\infty}\left|\frac{(-1)^n i}{n}\right|^2 \\
+&= \sum_{k=1}^{\infty}\left|\frac{(-1)^k i}{-k}\right|^2 + \sum_{n=1}^{\infty}\left|\frac{(-1)^n i}{n}\right|^2 \\
+&= \sum_{k=1}^{\infty}\frac{1}{k^2} + \sum_{n=1}^{\infty}\frac{1}{n^2} = 2\sum_{n=1}^{\infty}\frac{1}{n^2},
+\end{align*}
+luego $\displaystyle\sum_{n=1}^{\infty}\frac{1}{n^2} = \frac{\pi^2}{6}$.
+% REVISAR: en el papel el lado izquierdo pone pi^3/3; por el cálculo anterior es pi^2/3.
+\end{ejemplo}
+
+\begin{nota}{$L_2(\mathbb{T})$ y $\ell_2(\mathbb{Z})$ son isométricos}{nota_l2_isometria}
+Sean
+\[
+L_2(\mathbb{T}) = \left\{f : \mathbb{T} \to \mathbb{C} \ \Big/\ \frac{1}{2\pi}\int_{-\pi}^{\pi}|f(t)|^2\,dt < \infty\right\},
+\]
+\[
+\ell_2(\mathbb{Z}) = \left\{(c_k)_{k\in\mathbb{Z}} \subseteq \mathbb{C} \ \Big/\ \underbrace{\Big(\sum_{k\in\mathbb{Z}}|c_k|^2\Big)^{1/2}}_{\text{norma}} < \infty\right\}.
+\]
+La aplicación
+\[
+(L_2(\mathbb{T}), \|\cdot\|_2) \longrightarrow (\ell_2(\mathbb{Z}), \text{norma}), \qquad f \longmapsto (\hat{f}(n))_{n\in\mathbb{Z}}
+\]
+es
+\begin{itemize}
+\item lineal;
+\item bien definida, por Bessel;
+\item sobreyectiva, por Riesz--Fischer;
+\item inyectiva, porque el s.o.n.\ es completo;
+\item una isometría, por Parseval/Plancherel.
+\end{itemize}
+Es decir, es una isometría biyectiva.
+\end{nota}
