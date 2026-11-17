@@ -20,6 +20,7 @@ Fuentes: fotos de papel en `papel/AAAA-MM-DD/` (los escaneos de WhatsApp están 
 | 29/10 | 5 (`01`–`05`) | 1.16 y 2.1 | Bessel (1.36, 1.37), Riesz–Fischer (1.38), Lema 1.39, s.o.n. completo, Teorema 1.40, Parseval, $\sum 1/n^2=\pi^2/6$, isometría $L_2(\mathbb T)\cong\ell_2(\mathbb Z)$; Tema 2: motivación de la transformada (`teoria/TransformadaFourier.tex`) |
 | 03/11 | 5 (`01`–`05`) | 2.2–2.3 | Definición de $\mathcal F$, $\|\hat f\|_\infty\le\|f\|_1$, ejemplos $\chi_{[-1,1]}$, $e^{-\lvert x\rvert}$, $e^{-x^2}$ (por contorno), tabla, Prop. 2.1, Prop. 2.2 (1)–(2) |
 | 05/11 | 6 (`01`–`06`) | 2.3–2.4 | Prop. 2.2 (3) (Riemann–Lebesgue), $C_0(\mathbb R)$, $\mathcal F:L_1\to C_0$, Teorema 2.3, Prop. 2.4, Teorema 2.5, Prop. 2.6, Teorema 2.7, gaussiana por EDO |
+| 17/11 | 6 (`01`–`06`) | 2.5–2.7 | $L_p(\Omega)$, Prop. 2.12 (inclusión si $m(\Omega)<\infty$), ejemplos en $\mathbb R$; coeficientes y transformada vistos en grupos: $\mathbb T$, $\mathbb R$, integral de Haar, $\hat G$, $\hat{\mathbb T}\cong\mathbb Z$, $\hat{\mathbb R}\cong\mathbb R$, $\hat f(\gamma)$; $\mathcal F$ no sobreyectiva; convolución en $\mathbb R$, ejemplo $\chi_{[-1/2,1/2]}$, Props. 2.13 y 2.14 |
 
 Las fechas en negrita (`\textbf{dd/mm/aa}`) marcan en el LaTeX dónde empieza cada clase.
 
@@ -67,4 +68,14 @@ Cada uno lleva una `nota` en el LaTeX que lo indica.
     - Contraejemplo de la no sobreyectividad: tal como está, $g(x)=x/e$ para $x<e$ no tiende a $0$ en $-\infty$; probablemente era la extensión impar.
     - La hoja `05` tiene la línea de arriba cortada (la $h=\frac1{i^k}f^{(k)}$ de la Prop. 2.6) y repite el final de la demostración del Teorema 2.5, que se omite.
     - Gaussiana por EDO: se divide por $g$ sin comprobar que no se anula.
+15. **Hueco entre el 05/11 y el 17/11.** Faltan los resultados 2.9–2.11 (¿clases del 10/11 y 12/11?). Las diapositivas `AF_2_1` que hay llegan solo hasta la 2.8.
+16. **17/11, cosas que no están en el papel:**
+    - El enunciado de la Prop. 2.13 no se copió (solo la demostración). Se ha reconstruido a partir de ella, como análogo de la Prop. 1.5, y lleva una `nota`.
+    - Prop. 2.14: solo pone «(2)(3)(4) álgebra, (1) conmutativa, (5) Banach» y que no hay unidad («a jueves»). No se sabe qué dice cada uno de (2)–(4).
+    - En el ejemplo de $L_p(\mathbb T)\subseteq L_1(\mathbb T)$ falta el «(1) $\Omega=\mathbb T$»: se ha supuesto.
+17. **Cambios respecto al papel (17/11):**
+    - Prop. 2.13: en el papel $F(x,y)=f(x)g(x)$; se ha puesto $g(y)$.
+    - Transformada en un grupo: en el papel $\hat f:\hat G\to G$; se ha puesto $\to\mathbb C$.
+    - Ejemplo $f*\chi_{[-1/2,1/2]}$: los límites del cambio de variable están emborronados; se ha reescrito el cambio entero.
+    - La clase aclara el contraejemplo del 05/11 (punto 14): $g(x)=x/e$ solo en $[0,e)$ y $h$ es la extensión impar. Se ha cambiado el `REVISAR` del 05/11 por una aclaración.
 
